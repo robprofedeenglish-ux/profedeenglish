@@ -1,25 +1,38 @@
 ---
-// Vídeo de YouTube que solo carga cuando se pulsa: la página va rápida y
-// no se instala ninguna cookie de YouTube hasta que la persona decide verlo.
+// Vídeo de YouTube que solo se carga cuando la persona pulsa.
+// - La miniatura se descarga al compilar y va incrustada en la página, así que al abrir
+//   el artículo no se hace ninguna petición a YouTube ni a Google.
+// - Al pulsar se carga youtube-nocookie.com; el aviso debajo del vídeo lo explica,
+//   y ese clic es la decisión de la persona de cargar YouTube.
 interface Props {
   id: string;
   title: string;
   short?: boolean;
 }
 const { id, title, short = false } = Astro.props;
-const poster = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+
+let poster: string | null = null;
+try {
+  const res = await fetch(`https://i.ytimg.com/vi/${id}/hqdefault.jpg`, { signal: AbortSignal.timeout(8000) });
+  if (res.ok) poster = `data:image/jpeg;base64,${Buffer.from(await res.arrayBuffer()).toString('base64')}`;
+} catch {
+  poster = null; // sin red al compilar: se muestra el botón sin miniatura
+}
 ---
 
-<button
-  type="button"
-  class:list={['lite-yt', { 'lite-yt--short': short }]}
-  data-yt={id}
-  data-title={title}
-  style={`background-image:url(${poster})`}
-  aria-label={`Ver el vídeo: ${title}`}
->
-  <span class="lite-yt__play" aria-hidden="true"></span>
-</button>
+<div class="lite-yt-wrap">
+  <button
+    type="button"
+    class:list={['lite-yt', { 'lite-yt--short': short }]}
+    data-yt={id}
+    data-title={title}
+    style={poster ? `background-image:url(${poster})` : undefined}
+    aria-label={`Ver el vídeo: ${title}`}
+  >
+    <span class="lite-yt__play" aria-hidden="true"></span>
+  </button>
+  <p class="lite-yt__note">Al pulsar, el vídeo se carga desde YouTube, que a partir de ese momento puede usar cookies. <a href="/cookies">Más información</a>.</p>
+</div>
 
 <script>
   document.querySelectorAll<HTMLButtonElement>('.lite-yt').forEach((btn) => {
@@ -38,3 +51,11 @@ const poster = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
     );
   });
 </script>
+
+<style>
+  .lite-yt__note {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin: 0.5rem 0 0;
+  }
+</style>
