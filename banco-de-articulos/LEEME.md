@@ -6,4 +6,4 @@ Para publicar uno: copiar el archivo a `src/content/articulos/`, quitar `draft: 
 
 | Archivo | Estado | Notas |
 |---|---|---|
-| duolingo-sirve-para-aprender-ingles.md | Aprobado por Rob (7 nov 2026), compila con la plantilla | Revisar antes de publicar: planes y precios de Duolingo (Max se retira en noviembre de 2026), y falta `videoTitle` opcional |
+| duolingo-sirve-para-aprender-ingles.md | Aprobado por Rob (7 nov 2026), compila con la plantilla | Revisar antes de publicar: planes y precios de Duolingo (Max se retira en noviembre de 2026) |

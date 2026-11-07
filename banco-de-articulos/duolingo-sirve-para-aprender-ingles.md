@@ -6,6 +6,7 @@ published: 2026-11-07
 category: apps-y-clases
 intent: compra
 youtubeId: "ZeCXzoVRdR8"
+videoTitle: "¿Duolingo sirve para aprender inglés en 2027? Lo que hace bien y lo que no"
 comparison: true
 exercise: "Cuando termines tu sesión de Duolingo de hoy, elige cinco palabras o frases que hayas visto, di en voz alta una frase tuya con cada una sobre algo de tu día y grábate con el teléfono para escucharte después, aunque te equivoques."
 faq:
