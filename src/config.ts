@@ -8,8 +8,11 @@ export const SITE = {
   email: 'hola@profedeenglish.com',
   instagram: 'https://www.instagram.com/profedeenglish_/',
   // Añade aquí los enlaces exactos cuando los tengas a mano:
-  tiktok: '',
-  youtube: '',
+  tiktok: 'https://www.tiktok.com/@profedeenglish',
+  youtube: 'https://www.youtube.com/@Profedeenglish',
+  // WhatsApp de empresa, con un mensaje ya escrito
+  whatsapp: 'https://wa.me/34673246937?text=' + encodeURIComponent('Hola Rob, tengo una pregunta sobre la comunidad.'),
+  whatsappDisplay: '+34 673 24 69 37',
   // Mientras esté en false, Google no indexa el sitio (meta noindex).
   // Cámbialo a true el día del lanzamiento.
   launched: false,

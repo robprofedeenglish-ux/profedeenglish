@@ -1,6 +1,8 @@
 ---
 import Base from '../layouts/Base.astro';
 import Photo from '../components/Photo.astro';
+import ReviewCard from '../components/ReviewCard.astro';
+import { reviews, REVIEWS_RATING } from '../data/opiniones';
 import { getCollection } from 'astro:content';
 import { PRICES, SITE, skoolLink } from '../config';
 import { organization, website } from '../lib/schema';
@@ -8,6 +10,8 @@ import { organization, website } from '../lib/schema';
 const articles = (await getCollection('articulos', ({ data }) => !data.draft))
   .sort((a, b) => b.data.published.valueOf() - a.data.published.valueOf())
   .slice(0, 3);
+
+const featured = reviews.filter((r) => r.featured);
 
 const freezes = [
   'Lo entiendo casi todo, pero luego no me sale nada.',
@@ -79,7 +83,7 @@ const fmt = (d: Date) => d.toLocaleDateString('es-ES', { day: 'numeric', month: 
           Entiendes inglés, pero cuando te toca hablar te quedas en <span class="blank"><span class="sr-only">blanco</span></span>
         </h1>
         <p class="lede">
-          Soy Rob, profesor británico, y llevo unos diez años enseñando a hispanohablantes. En mi comunidad practicas hablando cada semana, con
+          Soy Rob, profesor británico, y llevo casi diez años enseñando a hispanohablantes. En mi comunidad practicas hablando cada semana, con
           clases en directo y gente real, hasta que dejas de bloquearte.
         </p>
         <div class="hero__actions">
@@ -87,17 +91,17 @@ const fmt = (d: Date) => d.toLocaleDateString('es-ES', { day: 'numeric', month: 
           <a class="hero__secondary" href="#primera-semana">Mira cómo es tu primera semana</a>
         </div>
         <p class="microcopy">
-          Después, {PRICES.standardMonth} $ al mes con Standard o {PRICES.premiumMonth} $ con Premium, y puedes cancelar desde Skool cuando quieras.
+          Después, {PRICES.standardMonth} $ al mes con Standard o {PRICES.premiumMonth} $ con Premium, más impuestos, y puedes cancelar desde Skool cuando quieras.
         </p>
       </div>
-      <Photo alt="Rob dando una clase de inglés" class="hero__photo" />
+      <Photo src="/fotos/rob-retrato.jpg" alt="Rob, profesor británico de inglés" class="hero__photo" eager />
     </div>
   </section>
 
   <section class="proof" aria-label="Quién soy en números">
     <ul class="wrap proof__list">
       <li><strong>Más de 200.000</strong> personas me siguen en Instagram como @profedeenglish_</li>
-      <li><strong>Unos 10 años</strong> dando clase a hispanohablantes</li>
+      <li><strong>Casi 10 años</strong> dando clase a hispanohablantes</li>
       <li><strong>Británico en España</strong> y aprendí español por inmersión</li>
     </ul>
   </section>
@@ -159,13 +163,26 @@ const fmt = (d: Date) => d.toLocaleDateString('es-ES', { day: 'numeric', month: 
     </div>
   </section>
 
+  <section class="section section--sheet">
+    <div class="wrap">
+      <h2>Lo que dicen los miembros</h2>
+      <p class="prose-width section-intro">
+        La comunidad tiene una valoración de {REVIEWS_RATING} sobre 5 en Skool. Estas son tres de las reseñas, copiadas tal cual.
+      </p>
+      <div class="reviews">
+        {featured.map((r) => <ReviewCard {...r} />)}
+      </div>
+      <p class="reviews__more"><a href="/opiniones">Lee todas las opiniones</a></p>
+    </div>
+  </section>
+
   <section class="section">
     <div class="wrap about">
-      <Photo alt="Retrato de Rob" class="about__photo" />
+      <Photo src="/fotos/rob-madrid.jpg" alt="Rob en una cafetería con vistas a la Puerta del Sol, en Madrid" class="about__photo" />
       <div class="about__text">
         <h2>Hola, soy Rob</h2>
         <p>
-          Soy británico y llevo unos diez años enseñando inglés a hispanohablantes. Vivo en España y aprendí español igual que te propongo a ti,
+          Soy británico y llevo casi diez años enseñando inglés a hispanohablantes. Vivo en España y aprendí español igual que te propongo a ti,
           hablándolo, equivocándome y volviendo a intentarlo, así que conozco bien los sitios en los que uno se atasca, porque yo me atasqué en
           los mismos pero al revés.
         </p>
@@ -184,7 +201,7 @@ const fmt = (d: Date) => d.toLocaleDateString('es-ES', { day: 'numeric', month: 
       <div class="plans">
         <article class="plan">
           <h3>Standard</h3>
-          <p class="plan__price"><span>{PRICES.standardMonth} $</span> al mes</p>
+          <p class="plan__price"><span>{PRICES.standardMonth} $</span> al mes más impuestos</p>
           <p class="plan__alt">o {PRICES.standardYear} $ al año</p>
           <ul>
             <li>Una clase semanal en directo de gramática o pronunciación</li>
@@ -197,7 +214,7 @@ const fmt = (d: Date) => d.toLocaleDateString('es-ES', { day: 'numeric', month: 
         </article>
         <article class="plan plan--featured">
           <h3>Premium</h3>
-          <p class="plan__price"><span>{PRICES.premiumMonth} $</span> al mes</p>
+          <p class="plan__price"><span>{PRICES.premiumMonth} $</span> al mes más impuestos</p>
           <p class="plan__alt">o {PRICES.premiumYear} $ al año</p>
           <ul>
             <li>Todo lo que incluye Standard</li>
@@ -212,9 +229,10 @@ const fmt = (d: Date) => d.toLocaleDateString('es-ES', { day: 'numeric', month: 
         </article>
       </div>
       <p class="microcopy plans__note">
-        Precios en dólares estadounidenses. Skool te muestra el importe final antes de confirmar, y la garantía tiene condiciones (nivel intermedio y
-        las 90 tareas completadas) que verás el primer día del programa.
+        Precios en dólares estadounidenses y sin impuestos. Skool añade el IVA u otros impuestos si corresponden en tu país y te muestra el importe
+        final antes de confirmar. La garantía tiene condiciones (nivel intermedio y las 90 tareas completadas) que verás el primer día del programa.
       </p>
+      <p class="plans__whatsapp">¿Tienes dudas antes de empezar? <a href={SITE.whatsapp} rel="noopener">Escríbeme por WhatsApp</a>.</p>
     </div>
   </section>
 
@@ -256,7 +274,7 @@ const fmt = (d: Date) => d.toLocaleDateString('es-ES', { day: 'numeric', month: 
     <div class="wrap final__inner">
       <h2>Empieza a hablar esta misma semana</h2>
       <a class="btn btn--primary" href={skoolLink('home', 'final')}>Prueba {PRICES.trialDays} días gratis</a>
-      <p class="microcopy">Después, desde {PRICES.standardMonth} $ al mes, y cancelas desde Skool cuando quieras.</p>
+      <p class="microcopy">Después, desde {PRICES.standardMonth} $ al mes más impuestos, y cancelas desde Skool cuando quieras.</p>
     </div>
   </section>
 </Base>
@@ -442,6 +460,20 @@ const fmt = (d: Date) => d.toLocaleDateString('es-ES', { day: 'numeric', month: 
     color: var(--wine);
   }
 
+  /* Opiniones */
+  .reviews {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+  .reviews__more {
+    margin: 1.5rem 0 0;
+    font-weight: 500;
+  }
+  .plans__whatsapp {
+    margin: 1rem 0 0;
+  }
+
   /* Sobre mí */
   .about {
     display: grid;
@@ -545,6 +577,7 @@ const fmt = (d: Date) => d.toLocaleDateString('es-ES', { day: 'numeric', month: 
 
   @media (max-width: 52rem) {
     .hero__grid,
+    .reviews,
     .two-col,
     .about,
     .plans {

@@ -192,6 +192,7 @@ p {
 
 /* Foto (hasta que Rob mande las suyas) */
 .photo {
+  margin: 0;
   position: relative;
   aspect-ratio: 4 / 5;
   background: #e8dfcd;

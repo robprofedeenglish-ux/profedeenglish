@@ -17,7 +17,9 @@ const social = [
     <nav aria-label="Pie de página" class="site-footer__links">
       <a href="/articulos">Artículos</a>
       <a href="/sobre-mi">Sobre mí</a>
-      <a href={`mailto:${SITE.email}`}>Contacto</a>
+      <a href="/opiniones">Opiniones</a>
+      <a href={SITE.whatsapp} rel="noopener">WhatsApp</a>
+      <a href={`mailto:${SITE.email}`}>Correo</a>
       {social.map((s) => <a href={s.href} rel="me noopener">{s.label}</a>)}
     </nav>
     <nav aria-label="Legal" class="site-footer__links site-footer__legal">

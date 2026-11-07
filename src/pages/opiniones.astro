@@ -1,0 +1,59 @@
+---
+import Base from '../layouts/Base.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import ReviewCard from '../components/ReviewCard.astro';
+import { reviews, REVIEWS_CHECKED, REVIEWS_RATING } from '../data/opiniones';
+import { PRICES, skoolLink } from '../config';
+import { breadcrumbs } from '../lib/schema';
+
+const crumbs = [
+  { label: 'Inicio', href: '/' },
+  { label: 'Opiniones', href: '/opiniones' },
+];
+---
+
+<Base
+  title="Opiniones de los miembros"
+  description="Opiniones reales de miembros de Real English With Rob, la comunidad de Rob para hablar inglés sin bloquearte, copiadas tal cual de Skool."
+  schema={[breadcrumbs(crumbs)]}
+>
+  <section class="section">
+    <div class="wrap">
+      <Breadcrumbs items={crumbs} />
+      <h1>Opiniones de los miembros</h1>
+      <p class="lede">
+        Estas son todas las reseñas que han dejado los miembros en la página de la comunidad en Skool, con una valoración media de {REVIEWS_RATING}
+        sobre 5. Las copio tal cual, sin corregir ni quitar ninguna, y solo acorto los apellidos.
+      </p>
+      <div class="grid">
+        {reviews.map((r) => <ReviewCard {...r} />)}
+      </div>
+      <p class="microcopy note">
+        Revisadas en {REVIEWS_CHECKED}. Puedes verlas en la
+        <a href={skoolLink('opiniones', 'verificar')}>página de la comunidad en Skool</a>.
+      </p>
+      <div class="cta">
+        <a class="btn btn--primary" href={skoolLink('opiniones', 'final')}>Prueba {PRICES.trialDays} días gratis</a>
+        <p class="microcopy">Después, desde {PRICES.standardMonth} $ al mes más impuestos, y cancelas desde Skool cuando quieras.</p>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .lede {
+    max-width: 56ch;
+    margin-bottom: 2.5rem;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr));
+    gap: 1.25rem;
+  }
+  .note {
+    margin-top: 1.5rem;
+  }
+  .cta {
+    margin-top: 2.5rem;
+  }
+</style>

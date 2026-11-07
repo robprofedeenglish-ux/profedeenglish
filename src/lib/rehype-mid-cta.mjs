@@ -43,7 +43,7 @@ export default function rehypeMidCta() {
         el('a', { href, className: ['btn', 'btn--primary'], rel: ['noopener'] }, [text('Prueba 7 días gratis')]),
       ]),
       el('p', { className: ['microcopy'] }, [
-        text('Después, desde 25 $ al mes. Puedes cancelar desde Skool antes de que acabe la prueba.'),
+        text('Después, desde 25 $ al mes más impuestos. Puedes cancelar desde Skool antes de que acabe la prueba.'),
       ]),
     ]);
 

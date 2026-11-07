@@ -13,6 +13,7 @@ export const person = {
   url: `${SITE.url}/sobre-mi`,
   jobTitle: 'Profesor de inglés',
   knowsLanguage: ['en', 'es'],
+  hasCredential: { '@type': 'EducationalOccupationalCredential', name: 'TEFL' },
   nationality: { '@type': 'Country', name: 'Reino Unido' },
   sameAs,
 };

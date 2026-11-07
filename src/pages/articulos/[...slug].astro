@@ -69,7 +69,7 @@ const articleSchema = {
       <h1>{data.title}</h1>
 
       <div class="byline">
-        <Photo alt="Rob" class="byline__photo" label="Rob" />
+        <Photo src="/fotos/rob-avatar.jpg" alt="Rob" class="byline__photo" />
         <p>
           Por <a href="/sobre-mi" rel="author">Rob Tyson</a>, profesor británico de inglés para hispanohablantes<br />
           <span>Actualizado el <time datetime={updated.toISOString()}>{fmtDate(updated)}</time></span>
@@ -145,16 +145,16 @@ const articleSchema = {
         <h2>{endAsk.title}</h2>
         <p>{endAsk.text}</p>
         <a class="btn end-ask__btn" href={skoolLink('articulo', 'final', slug)}>Prueba {PRICES.trialDays} días gratis</a>
-        <p class="end-ask__micro">Después, desde {PRICES.standardMonth} $ al mes, y puedes cancelar desde Skool cuando quieras.</p>
+        <p class="end-ask__micro">Después, desde {PRICES.standardMonth} $ al mes más impuestos, y puedes cancelar desde Skool cuando quieras.</p>
       </aside>
 
       <section class="author" aria-label="Sobre el autor">
-        <Photo alt="Rob" class="author__photo" label="Rob" />
+        <Photo src="/fotos/rob-avatar.jpg" alt="Rob" class="author__photo" />
         <div>
           <p class="author__name">Rob Tyson</p>
           <p>
-            Profesor británico con unos diez años de experiencia enseñando a hispanohablantes. Vive en España, aprendió español por inmersión y
-            escribe sus propios materiales. En Instagram es <a href={SITE.instagram} rel="me noopener">@profedeenglish_</a>.
+            Profesor británico con certificado TEFL y casi diez años de experiencia enseñando a hispanohablantes. Vive en España, aprendió
+            español por inmersión y escribe sus propios materiales. En Instagram es <a href={SITE.instagram} rel="me noopener">@profedeenglish_</a>.
           </p>
         </div>
       </section>
