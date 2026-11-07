@@ -1,0 +1,40 @@
+---
+// Vídeo de YouTube que solo carga cuando se pulsa: la página va rápida y
+// no se instala ninguna cookie de YouTube hasta que la persona decide verlo.
+interface Props {
+  id: string;
+  title: string;
+  short?: boolean;
+}
+const { id, title, short = false } = Astro.props;
+const poster = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+---
+
+<button
+  type="button"
+  class:list={['lite-yt', { 'lite-yt--short': short }]}
+  data-yt={id}
+  data-title={title}
+  style={`background-image:url(${poster})`}
+  aria-label={`Ver el vídeo: ${title}`}
+>
+  <span class="lite-yt__play" aria-hidden="true"></span>
+</button>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('.lite-yt').forEach((btn) => {
+    btn.addEventListener(
+      'click',
+      () => {
+        const iframe = document.createElement('iframe');
+        iframe.src = `https://www.youtube-nocookie.com/embed/${btn.dataset.yt}?autoplay=1&rel=0`;
+        iframe.title = btn.dataset.title || 'Vídeo';
+        iframe.allow = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture';
+        iframe.allowFullscreen = true;
+        btn.replaceChildren(iframe);
+        iframe.focus();
+      },
+      { once: true }
+    );
+  });
+</script>

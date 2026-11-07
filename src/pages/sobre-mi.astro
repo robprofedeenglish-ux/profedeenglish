@@ -1,0 +1,103 @@
+---
+import Base from '../layouts/Base.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import Photo from '../components/Photo.astro';
+import { PRICES, SITE, skoolLink } from '../config';
+import { breadcrumbs, person } from '../lib/schema';
+
+const crumbs = [
+  { label: 'Inicio', href: '/' },
+  { label: 'Sobre mí', href: '/sobre-mi' },
+];
+
+const profile = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfilePage',
+  url: `${SITE.url}/sobre-mi`,
+  inLanguage: 'es',
+  mainEntity: person,
+};
+---
+
+<Base
+  title="Sobre mí"
+  description="Soy Rob, profesor británico de inglés. Llevo unos diez años enseñando a hispanohablantes, vivo en España y aprendí español por inmersión."
+  schema={[profile, breadcrumbs(crumbs)]}
+>
+  <section class="section">
+    <div class="wrap about-page">
+      <div class="about-page__text">
+        <Breadcrumbs items={crumbs} />
+        <h1>Hola, soy Rob</h1>
+        <p class="lede">
+          Soy británico, vivo en España y llevo unos diez años enseñando inglés a hispanohablantes. En Instagram me conocen como Profe de English, y
+          mi comunidad se llama Real English With Rob.
+        </p>
+
+        <h2>Aprendí español igual que te propongo aprender inglés</h2>
+        <p>
+          Cuando llegué a España no aprendí el idioma con una app, sino hablándolo todos los días, equivocándome delante de la gente y volviendo a
+          intentarlo. Por eso sé lo que se siente cuando entiendes lo que te dicen pero no te sale la respuesta, y por eso conozco tan bien los
+          sitios en los que se atasca un hispanohablante con el inglés, porque yo me atasqué en los mismos pero al revés.
+        </p>
+
+        <h2>Lo que hago</h2>
+        <p>
+          Doy clases desde hace unos diez años, sobre todo a adultos de España y Latinoamérica, y he preparado a muchos alumnos para exámenes como
+          los de Cambridge, Aptis y la EOI. Escribo mis propios materiales y cursos, desde nivel cero hasta C1, y en mis vídeos de Instagram, TikTok
+          y YouTube enseño el inglés que de verdad vas a necesitar.
+        </p>
+        <p>
+          Todo lo que he aprendido en este tiempo lo he ordenado en el método ATLAS, que es la base de mi comunidad: primero vemos qué te bloquea,
+          luego te doy un plan con tareas cortas y, sobre todo, te pongo a hablar cada semana con gente real.
+        </p>
+
+        <h2>Por qué escribo esta web</h2>
+        <p>
+          En los mensajes que recibo se repiten las mismas preguntas, y aquí las respondo con calma y con ejemplos de lo que veo en clase. Si después
+          de leer quieres practicarlo conmigo, puedes probar la comunidad.
+        </p>
+        <a class="btn btn--primary" href={skoolLink('sobre-mi', 'final')}>Prueba {PRICES.trialDays} días gratis</a>
+        <p class="microcopy">Después, desde {PRICES.standardMonth} $ al mes, y cancelas desde Skool cuando quieras.</p>
+      </div>
+      <div class="about-page__photos">
+        <Photo alt="Rob dando clase" />
+        <Photo alt="Rob grabando un vídeo para Instagram" label="Otra foto real de Rob (grabando, en clase o en España)" />
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .about-page {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: clamp(2rem, 5vw, 4.5rem);
+    align-items: start;
+  }
+  .about-page__text {
+    max-width: var(--measure);
+  }
+  .about-page h2 {
+    margin-top: 2rem;
+    font-size: 1.75rem;
+  }
+  .about-page .btn {
+    margin-top: 1rem;
+  }
+  .about-page__photos {
+    display: grid;
+    gap: 1.25rem;
+    position: sticky;
+    top: 2rem;
+  }
+  @media (max-width: 52rem) {
+    .about-page {
+      grid-template-columns: 1fr;
+    }
+    .about-page__photos {
+      position: static;
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>

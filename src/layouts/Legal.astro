@@ -1,0 +1,36 @@
+---
+import Base from './Base.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  path: string;
+}
+const { title, description, path } = Astro.props;
+---
+
+<Base title={title} description={description}>
+  <section class="section">
+    <div class="wrap legal">
+      <Breadcrumbs items={[{ label: 'Inicio', href: '/' }, { label: title, href: path }]} />
+      <h1>{title}</h1>
+      <slot />
+    </div>
+  </section>
+</Base>
+
+<style>
+  .legal {
+    max-width: calc(var(--measure) + 2 * var(--gutter));
+  }
+  .legal :global(h2) {
+    font-size: 1.5rem;
+    margin-top: 2rem;
+  }
+  .legal :global(.todo) {
+    background: var(--mustard-soft);
+    padding: 0 0.25em;
+    border-radius: 2px;
+  }
+</style>

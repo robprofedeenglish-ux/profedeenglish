@@ -1,0 +1,585 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { getCollection } from 'astro:content';
+import { PRICES, SITE, skoolLink } from '../config';
+import { organization, website } from '../lib/schema';
+
+const articles = (await getCollection('articulos', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.published.valueOf() - a.data.published.valueOf())
+  .slice(0, 3);
+
+const freezes = [
+  'Lo entiendo casi todo, pero luego no me sale nada.',
+  'Tengo la frase en español y la voy traduciendo mientras hablo.',
+  'En cuanto alguien me habla rápido, me quedo en blanco.',
+  'Llevo años estudiando y cuando tengo que hablar sigo igual.',
+];
+
+const atlas = [
+  ['A', 'Análisis', 'Al empezar vemos qué te bloquea a ti en concreto, ya sea el vocabulario, la velocidad, los nervios o la costumbre de traducir.'],
+  ['T', 'Trayectoria', 'Con eso tienes un plan de tareas cortas, de 15 minutos o menos al día, para avanzar sin tener que dejar tu vida.'],
+  ['L', 'Lenguaje real', 'Practicas el inglés que se usa de verdad, con frases que te sirven en reuniones, viajes y conversaciones del día a día.'],
+  ['A', 'Adaptación', 'Vamos revisando cómo vas y ajustamos el plan según lo que te siga costando.'],
+  ['S', 'Speaking', 'Y sobre todo hablas, en clases en directo, con tu compañero de práctica y en intercambios con nativos.'],
+];
+
+const week = [
+  ['Día 1', 'Una videollamada de bienvenida conmigo para ver tu nivel y qué es lo que te bloquea.'],
+  ['Días 2 y 3', 'Conoces a tu compañero de práctica y empiezas a apuntar los momentos en los que te bloqueas.'],
+  ['Días 4 y 5', 'Recibes tu plan personalizado y vas a tu primera clase en directo, donde puedes limitarte a escuchar si te da corte.'],
+  ['Días 6 y 7', 'Haces tu primer intercambio con un hablante nativo.'],
+];
+
+const faq = [
+  {
+    q: '¿Me piden tarjeta para la prueba gratis?',
+    a: 'Sí, Skool te pide un método de pago al empezar los 7 días de prueba. Si cancelas antes de que terminen, no se te cobra nada.',
+  },
+  {
+    q: '¿Cómo cancelo?',
+    a: 'Desde los ajustes de tu cuenta en Skool, en un par de clics, sin tener que escribirme ni dar explicaciones.',
+  },
+  {
+    q: '¿Qué nivel necesito?',
+    a: 'Hay cursos desde cero hasta C1, así que puedes entrar con cualquier nivel, aunque las clases de conversación se aprovechan más a partir de un nivel intermedio bajo, más o menos un A2 alto o un B1.',
+  },
+  {
+    q: '¿Enseñas inglés británico o americano?',
+    a: 'Soy británico y es el acento que vas a oír en mis clases, pero lo que buscamos es que entiendas y te entiendan igual en Londres que en Nueva York.',
+  },
+  {
+    q: '¿Y si me da mucha vergüenza hablar?',
+    a: 'Es lo más normal del mundo y es justo para lo que está pensada la comunidad. En tu primera clase puedes limitarte a escuchar, y empiezas a hablar con tu compañero de práctica, que está en tu misma situación, antes de dar el salto a los grupos.',
+  },
+  {
+    q: '¿La comunidad está en inglés o en español?',
+    a: 'Dentro todo está en inglés, para que te acostumbres desde el primer día, y si te pierdes con algo me lo puedes preguntar.',
+  },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+};
+
+const fmt = (d: Date) => d.toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
+---
+
+<Base
+  title={SITE.name}
+  description="Rob, profesor británico de inglés para hispanohablantes. Si entiendes inglés pero te bloqueas al hablar, aquí aprendes a soltarte con práctica real cada semana."
+  schema={[organization, website, faqSchema]}
+>
+  <section class="hero">
+    <div class="wrap hero__grid">
+      <div class="hero__text">
+        <h1>
+          Entiendes inglés, pero cuando te toca hablar te quedas en <span class="blank"><span class="sr-only">blanco</span></span>
+        </h1>
+        <p class="lede">
+          Soy Rob, profesor británico, y llevo unos diez años enseñando a hispanohablantes. En mi comunidad practicas hablando cada semana, con
+          clases en directo y gente real, hasta que dejas de bloquearte.
+        </p>
+        <div class="hero__actions">
+          <a class="btn btn--primary" href={skoolLink('home', 'hero')}>Prueba {PRICES.trialDays} días gratis</a>
+          <a class="hero__secondary" href="#primera-semana">Mira cómo es tu primera semana</a>
+        </div>
+        <p class="microcopy">
+          Después, {PRICES.standardMonth} $ al mes con Standard o {PRICES.premiumMonth} $ con Premium, y puedes cancelar desde Skool cuando quieras.
+        </p>
+      </div>
+      <Photo alt="Rob dando una clase de inglés" class="hero__photo" />
+    </div>
+  </section>
+
+  <section class="proof" aria-label="Quién soy en números">
+    <ul class="wrap proof__list">
+      <li><strong>Más de 200.000</strong> personas me siguen en Instagram como @profedeenglish_</li>
+      <li><strong>Unos 10 años</strong> dando clase a hispanohablantes</li>
+      <li><strong>Británico en España</strong> y aprendí español por inmersión</li>
+    </ul>
+  </section>
+
+  <section class="section">
+    <div class="wrap two-col">
+      <div>
+        <h2>¿Te suena alguna de estas frases?</h2>
+        <p class="prose-width">
+          Casi nunca es un problema de gramática, sino de práctica: casi nadie ha hablado lo suficiente, en situaciones reales y con alguien que le
+          corrija, como para que las frases salgan solas. Y eso sí se entrena.
+        </p>
+      </div>
+      <ul class="freezes">
+        {freezes.map((f) => <li>«{f}»</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section--sheet">
+    <div class="wrap">
+      <h2>Cómo lo trabajamos: el método ATLAS</h2>
+      <p class="prose-width section-intro">
+        Es la forma en la que organizo todo dentro de la comunidad, y cada letra es una parte del camino.
+      </p>
+      <ol class="atlas">
+        {
+          atlas.map(([letter, name, text]) => (
+            <li>
+              <span class="atlas__letter" aria-hidden="true">
+                {letter}
+              </span>
+              <div>
+                <h3>{name}</h3>
+                <p>{text}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="section section--wine" id="primera-semana">
+    <div class="wrap">
+      <h2>Tu primera semana dentro</h2>
+      <p class="prose-width section-intro">Los {PRICES.trialDays} días de prueba no son para mirar vídeos, sino para que hables desde el principio.</p>
+      <ol class="week">
+        {
+          week.map(([day, text]) => (
+            <li>
+              <span class="week__day">{day}</span>
+              <p>{text}</p>
+            </li>
+          ))
+        }
+      </ol>
+      <a class="btn week__cta" href={skoolLink('home', 'primera_semana')}>Empieza tus {PRICES.trialDays} días gratis</a>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap about">
+      <Photo alt="Retrato de Rob" class="about__photo" />
+      <div class="about__text">
+        <h2>Hola, soy Rob</h2>
+        <p>
+          Soy británico y llevo unos diez años enseñando inglés a hispanohablantes. Vivo en España y aprendí español igual que te propongo a ti,
+          hablándolo, equivocándome y volviendo a intentarlo, así que conozco bien los sitios en los que uno se atasca, porque yo me atasqué en
+          los mismos pero al revés.
+        </p>
+        <p>
+          Escribo mis propios materiales y cursos, y en mis vídeos de Instagram, TikTok y YouTube enseño el inglés que de verdad vas a necesitar.
+        </p>
+        <a href="/sobre-mi">Lee mi historia completa</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--sheet" id="precios">
+    <div class="wrap">
+      <h2>Precios</h2>
+      <p class="prose-width section-intro">Los dos planes empiezan con {PRICES.trialDays} días gratis.</p>
+      <div class="plans">
+        <article class="plan">
+          <h3>Standard</h3>
+          <p class="plan__price"><span>{PRICES.standardMonth} $</span> al mes</p>
+          <p class="plan__alt">o {PRICES.standardYear} $ al año</p>
+          <ul>
+            <li>Una clase semanal en directo de gramática o pronunciación</li>
+            <li>Compañero de práctica para hablar entre semana</li>
+            <li>Intercambio semanal con hablantes nativos</li>
+            <li>Biblioteca de cursos de A1 a C1, con más de 100 horas</li>
+            <li>El programa de 90 días para dejar de bloquearte</li>
+          </ul>
+          <a class="btn btn--ghost" href={skoolLink('home', 'precio_standard')}>Prueba Standard gratis</a>
+        </article>
+        <article class="plan plan--featured">
+          <h3>Premium</h3>
+          <p class="plan__price"><span>{PRICES.premiumMonth} $</span> al mes</p>
+          <p class="plan__alt">o {PRICES.premiumYear} $ al año</p>
+          <ul>
+            <li>Todo lo que incluye Standard</li>
+            <li>Todas las clases de conversación en directo de la semana</li>
+            <li>
+              La garantía del programa de 90 días: si completas las 90 tareas y sigues sin sentirte seguro hablando, sigo trabajando contigo uno a
+              uno sin coste extra
+            </li>
+            <li>Preparación de exámenes: Cambridge B1, B2 y C1, Aptis, EOI y Trinity ISE</li>
+          </ul>
+          <a class="btn btn--primary" href={skoolLink('home', 'precio_premium')}>Prueba Premium gratis</a>
+        </article>
+      </div>
+      <p class="microcopy plans__note">
+        Precios en dólares estadounidenses. Skool te muestra el importe final antes de confirmar, y la garantía tiene condiciones (nivel intermedio y
+        las 90 tareas completadas) que verás el primer día del programa.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap faq-wrap">
+      <h2>Preguntas frecuentes</h2>
+      <div class="faq prose-width">
+        {
+          faq.map((f) => (
+            <details>
+              <summary>{f.q}</summary>
+              <p>{f.a}</p>
+            </details>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  {
+    articles.length > 0 && (
+      <section class="section section--sheet">
+        <div class="wrap">
+          <h2>Últimos artículos</h2>
+          <ul class="latest">
+            {articles.map((a) => (
+              <li>
+                <a href={`/articulos/${a.id}`}>{a.data.title}</a>
+                <time datetime={a.data.published.toISOString()}>{fmt(a.data.published)}</time>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+
+  <section class="section final">
+    <div class="wrap final__inner">
+      <h2>Empieza a hablar esta misma semana</h2>
+      <a class="btn btn--primary" href={skoolLink('home', 'final')}>Prueba {PRICES.trialDays} días gratis</a>
+      <p class="microcopy">Después, desde {PRICES.standardMonth} $ al mes, y cancelas desde Skool cuando quieras.</p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  /* Hero: la frase termina en un hueco de ejercicio, el "en blanco" literal */
+  .hero {
+    padding: clamp(2.5rem, 7vw, 5.5rem) 0 clamp(2.5rem, 6vw, 4.5rem);
+  }
+  .hero__grid {
+    display: grid;
+    grid-template-columns: 1.35fr 1fr;
+    gap: clamp(2rem, 5vw, 4.5rem);
+    align-items: center;
+  }
+  .hero h1 {
+    margin-bottom: 0.45em;
+  }
+  .blank {
+    display: inline-block;
+    width: 3.6em;
+    height: 0.9em;
+    vertical-align: baseline;
+    border-bottom: 0.075em solid var(--mustard);
+    transform-origin: left;
+    animation: draw-blank 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) 0.4s both;
+  }
+  @keyframes draw-blank {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 1.5rem;
+    margin-top: 1.75rem;
+  }
+  .hero__secondary {
+    font-weight: 500;
+  }
+  .hero__photo {
+    max-width: 26rem;
+    justify-self: end;
+    width: 100%;
+  }
+
+  /* Prueba social */
+  .proof {
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    background: var(--sheet);
+  }
+  .proof__list {
+    list-style: none;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    padding-top: 1.4rem;
+    padding-bottom: 1.4rem;
+    font-size: 0.97rem;
+    color: var(--muted);
+  }
+  .proof__list li {
+    padding: 0 1.5rem;
+    border-left: 1px solid var(--rule);
+  }
+  .proof__list li:first-child {
+    padding-left: 0;
+    border-left: 0;
+  }
+  .proof__list strong {
+    display: block;
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 1.45rem;
+    color: var(--wine);
+    line-height: 1.2;
+  }
+
+  /* ¿Te suena? */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: start;
+  }
+  .freezes {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .freezes li {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(1.3rem, 2.4vw, 1.6rem);
+    line-height: 1.3;
+    color: var(--wine);
+    padding: 0.9rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .freezes li:first-child {
+    padding-top: 0;
+  }
+
+  .section-intro {
+    margin-bottom: 2.5rem;
+  }
+
+  /* ATLAS como acróstico */
+  .atlas {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 1.5rem;
+    max-width: 52rem;
+  }
+  .atlas li {
+    display: grid;
+    grid-template-columns: 4.5rem 1fr;
+    gap: 1.25rem;
+    align-items: start;
+  }
+  .atlas__letter {
+    font-family: var(--serif);
+    font-size: 4.2rem;
+    line-height: 0.85;
+    color: var(--mustard);
+    text-align: center;
+  }
+  .atlas h3 {
+    margin-bottom: 0.25rem;
+  }
+  .atlas p {
+    margin: 0;
+    max-width: 58ch;
+  }
+
+  /* Primera semana */
+  .week {
+    list-style: none;
+    margin: 0 0 2.5rem;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-top: 2px solid var(--mustard);
+  }
+  .week li {
+    padding: 1.25rem 1.25rem 0 0;
+  }
+  .week__day {
+    display: block;
+    font-family: var(--serif);
+    font-size: 1.5rem;
+    color: var(--mustard);
+    margin-bottom: 0.35rem;
+  }
+  .week p {
+    margin: 0;
+  }
+  .week__cta {
+    background: var(--mustard);
+    color: var(--wine);
+  }
+  .week__cta:hover {
+    background: #e0b85c;
+    color: var(--wine);
+  }
+
+  /* Sobre mí */
+  .about {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: center;
+  }
+  .about__photo {
+    max-width: 22rem;
+  }
+  .about__text {
+    max-width: var(--measure);
+  }
+
+  /* Precios */
+  .plans {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    max-width: 56rem;
+  }
+  .plan {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-m);
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+  }
+  .plan--featured {
+    background: #fff;
+    border: 2px solid var(--wine);
+  }
+  .plan h3 {
+    font-size: 1.6rem;
+    margin-bottom: 0.4rem;
+  }
+  .plan__price {
+    margin: 0;
+    color: var(--muted);
+  }
+  .plan__price span {
+    font-family: var(--serif);
+    font-size: 2.6rem;
+    color: var(--wine);
+    line-height: 1;
+    margin-right: 0.2rem;
+  }
+  .plan__alt {
+    font-size: 0.92rem;
+    color: var(--muted);
+  }
+  .plan ul {
+    margin: 0.5rem 0 1.75rem;
+    padding-left: 1.1rem;
+    flex: 1;
+  }
+  .plan li {
+    margin-bottom: 0.55rem;
+  }
+  .plan li::marker {
+    color: var(--mustard);
+  }
+  .plan .btn {
+    align-self: flex-start;
+  }
+  .plans__note {
+    max-width: 56rem;
+    margin-top: 1.25rem;
+  }
+
+  /* Últimos artículos */
+  .latest {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    max-width: var(--measure);
+  }
+  .latest li {
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    flex-direction: column;
+  }
+  .latest a {
+    font-family: var(--serif);
+    font-size: 1.35rem;
+    text-decoration: none;
+  }
+  .latest time {
+    font-size: 0.875rem;
+    color: var(--muted);
+  }
+
+  .final__inner {
+    text-align: center;
+  }
+  .final h2 {
+    margin-bottom: 1.25rem;
+  }
+
+  @media (max-width: 52rem) {
+    .hero__grid,
+    .two-col,
+    .about,
+    .plans {
+      grid-template-columns: 1fr;
+    }
+    .hero__photo {
+      justify-self: start;
+      max-width: 17rem;
+    }
+    .proof__list {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    .proof__list li {
+      padding: 0;
+      border-left: 0;
+    }
+    .week {
+      grid-template-columns: 1fr 1fr;
+      row-gap: 1.25rem;
+    }
+    .about__photo {
+      max-width: 16rem;
+    }
+  }
+  @media (max-width: 30rem) {
+    .week {
+      grid-template-columns: 1fr;
+    }
+    .atlas li {
+      grid-template-columns: 3rem 1fr;
+      gap: 0.9rem;
+    }
+    .atlas__letter {
+      font-size: 3.2rem;
+    }
+  }
+</style>

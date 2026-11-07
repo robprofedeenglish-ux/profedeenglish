@@ -1,0 +1,82 @@
+---
+import { SITE } from '../config';
+const year = new Date().getFullYear();
+const social = [
+  { href: SITE.instagram, label: 'Instagram' },
+  { href: SITE.tiktok, label: 'TikTok' },
+  { href: SITE.youtube, label: 'YouTube' },
+].filter((s) => s.href);
+---
+
+<footer class="site-footer">
+  <div class="wrap site-footer__inner">
+    <div>
+      <p class="site-footer__name">Profe de English</p>
+      <p>Inglés para hispanohablantes que entienden pero se bloquean al hablar. Mi comunidad se llama Real English With Rob.</p>
+    </div>
+    <nav aria-label="Pie de página" class="site-footer__links">
+      <a href="/articulos">Artículos</a>
+      <a href="/sobre-mi">Sobre mí</a>
+      <a href={`mailto:${SITE.email}`}>Contacto</a>
+      {social.map((s) => <a href={s.href} rel="me noopener">{s.label}</a>)}
+    </nav>
+    <nav aria-label="Legal" class="site-footer__links site-footer__legal">
+      <a href="/aviso-legal">Aviso legal</a>
+      <a href="/privacidad">Privacidad</a>
+      <a href="/cookies">Cookies</a>
+    </nav>
+  </div>
+  <div class="wrap">
+    <p class="site-footer__copy">© {year} {SITE.author}</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--wine);
+    color: #e9dcc6;
+    padding: 3rem 0 1.5rem;
+    font-size: 0.95rem;
+  }
+  .site-footer__inner {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: 2fr 1fr 1fr;
+  }
+  .site-footer__name {
+    font-family: var(--serif);
+    font-size: 1.5rem;
+    color: var(--paper);
+    margin-bottom: 0.4rem;
+  }
+  .site-footer p {
+    max-width: 38ch;
+  }
+  .site-footer__links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .site-footer a {
+    color: #f4efe5;
+    text-decoration: none;
+  }
+  .site-footer a:hover {
+    color: var(--mustard);
+    text-decoration: underline;
+  }
+  .site-footer__copy {
+    margin: 2rem 0 0;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(244, 239, 229, 0.2);
+    font-size: 0.85rem;
+  }
+  @media (max-width: 44rem) {
+    .site-footer__inner {
+      grid-template-columns: 1fr 1fr;
+    }
+    .site-footer__inner > div:first-child {
+      grid-column: 1 / -1;
+    }
+  }
+</style>

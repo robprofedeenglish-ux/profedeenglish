@@ -1,0 +1,96 @@
+---
+import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { getArticles, CATEGORIES, fmtDate } from '../../lib/articles';
+import { breadcrumbs } from '../../lib/schema';
+import { SITE } from '../../config';
+
+const articles = await getArticles();
+const crumbs = [
+  { label: 'Inicio', href: '/' },
+  { label: 'Artículos', href: '/articulos' },
+];
+---
+
+<Base
+  title="Artículos para hablar inglés sin bloquearte"
+  description="Artículos de Rob, profesor británico, para hispanohablantes que entienden inglés pero se bloquean al hablar, además de guías de speaking para la EOI y Aptis."
+  schema={[breadcrumbs(crumbs)]}
+>
+  <section class="section">
+    <div class="wrap">
+      <Breadcrumbs items={crumbs} />
+      <h1>Artículos</h1>
+      <p class="lede">
+        Lo que veo en clase cada semana, explicado para que lo puedas poner en práctica: cómo dejar de bloquearte, cómo preparar el speaking de la EOI
+        y Aptis, y qué apps y clases te sirven de verdad para hablar.
+      </p>
+
+      {
+        articles.length === 0 ? (
+          <p class="empty">
+            Estoy escribiendo los primeros artículos. Mientras tanto, tienes vídeos nuevos cada semana en{' '}
+            <a href={SITE.instagram} rel="noopener">
+              mi Instagram
+            </a>
+            .
+          </p>
+        ) : (
+          <ul class="list">
+            {articles.map((a) => (
+              <li>
+                <span class="list__cat">{CATEGORIES[a.data.category]}</span>
+                <a href={`/articulos/${a.id}`}>{a.data.title}</a>
+                <p>{a.data.description}</p>
+                <time datetime={a.data.published.toISOString()}>{fmtDate(a.data.published)}</time>
+              </li>
+            ))}
+          </ul>
+        )
+      }
+    </div>
+  </section>
+</Base>
+
+<style>
+  .lede {
+    max-width: 52ch;
+    margin-bottom: 3rem;
+  }
+  .empty {
+    max-width: 52ch;
+    padding: 1.5rem;
+    background: var(--sheet);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-m);
+  }
+  .list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    max-width: var(--measure);
+  }
+  .list li {
+    padding: 1.5rem 0;
+    border-top: 1px solid var(--rule);
+  }
+  .list__cat {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 0.25rem;
+  }
+  .list a {
+    font-family: var(--serif);
+    font-size: 1.6rem;
+    line-height: 1.2;
+    text-decoration: none;
+  }
+  .list p {
+    margin: 0.4rem 0 0.4rem;
+  }
+  .list time {
+    font-size: 0.875rem;
+    color: var(--muted);
+  }
+</style>

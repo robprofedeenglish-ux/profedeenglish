@@ -1,0 +1,23 @@
+---
+// Muestra una foto real de Rob si existe en /public/fotos/, y si no, un hueco marcado.
+// Para poner una foto: guarda el archivo en public/fotos/ y pasa src="/fotos/nombre.jpg".
+interface Props {
+  src?: string;
+  alt: string;
+  label?: string;
+  class?: string;
+}
+const { src, alt, label = 'Aquí va una foto real de Rob', class: cls = '' } = Astro.props;
+---
+
+{
+  src ? (
+    <figure class={`photo ${cls}`}>
+      <img src={src} alt={alt} loading="lazy" decoding="async" />
+    </figure>
+  ) : (
+    <div class={`photo photo--placeholder ${cls}`} role="img" aria-label={alt}>
+      {label}
+    </div>
+  )
+}

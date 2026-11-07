@@ -1,0 +1,90 @@
+---
+import { skoolLink } from '../config';
+const path = Astro.url.pathname;
+const links = [
+  { href: '/articulos', label: 'Artículos' },
+  { href: '/sobre-mi', label: 'Sobre mí' },
+  { href: '/#precios', label: 'Precios' },
+];
+---
+
+<header class="site-header">
+  <div class="wrap site-header__inner">
+    <a href="/" class="wordmark" aria-label="Profe de English, inicio">
+      <span class="wordmark__name">Profe de English</span>
+      <span class="wordmark__sub">Real English With Rob</span>
+    </a>
+    <nav aria-label="Principal" class="site-nav">
+      {
+        links.map((l) => (
+          <a href={l.href} aria-current={path.startsWith(l.href) && l.href !== '/#precios' ? 'page' : undefined}>
+            {l.label}
+          </a>
+        ))
+      }
+    </nav>
+    <a class="btn btn--primary btn--small header-cta" href={skoolLink('header', 'header')}>Prueba 7 días gratis</a>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    border-bottom: 1px solid var(--rule);
+    background: var(--paper);
+  }
+  .site-header__inner {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding-top: 0.9rem;
+    padding-bottom: 0.9rem;
+  }
+  .wordmark {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    line-height: 1.05;
+    margin-right: auto;
+  }
+  .wordmark__name {
+    font-family: var(--serif);
+    font-size: 1.55rem;
+    font-weight: 500;
+    color: var(--wine);
+  }
+  .wordmark__sub {
+    font-size: 0.75rem;
+    color: var(--muted);
+    letter-spacing: 0.01em;
+  }
+  .site-nav {
+    display: flex;
+    gap: 1.4rem;
+  }
+  .site-nav a {
+    color: var(--ink);
+    text-decoration: none;
+    font-size: 0.97rem;
+  }
+  .site-nav a:hover,
+  .site-nav a[aria-current='page'] {
+    color: var(--wine);
+    text-decoration: underline;
+    text-decoration-color: var(--mustard);
+    text-decoration-thickness: 2px;
+  }
+  @media (max-width: 52rem) {
+    .site-nav {
+      display: none;
+    }
+  }
+  @media (max-width: 26rem) {
+    .header-cta {
+      padding: 0.55rem 0.75rem;
+      font-size: 0.88rem;
+    }
+    .wordmark__name {
+      font-size: 1.35rem;
+    }
+  }
+</style>
