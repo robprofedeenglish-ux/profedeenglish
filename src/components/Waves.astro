@@ -1,0 +1,28 @@
+---
+// The signature motif: two flat wave bands, Light Sea on top and Sea Blue below.
+// `above` is the colour behind the waves (the section they sit under).
+// Use sparingly: hero bottom and above the footer.
+interface Props {
+  above?: string;
+  class?: string;
+}
+const { above = 'var(--cream)', class: cls = '' } = Astro.props;
+---
+
+<div class={`waves ${cls}`} style={`background:${above}`} aria-hidden="true">
+  <svg viewBox="0 0 1440 120" preserveAspectRatio="none" focusable="false">
+    <path d="M0 40 C 240 70, 480 75, 720 45 S 1200 10, 1440 38 L1440 120 L0 120 Z" fill="#6FB3D2"></path>
+    <path d="M0 78 C 260 55, 520 60, 760 85 S 1220 105, 1440 72 L1440 120 L0 120 Z" fill="#1F6F96"></path>
+  </svg>
+</div>
+
+<style>
+  .waves {
+    line-height: 0;
+  }
+  .waves svg {
+    display: block;
+    width: 100%;
+    height: clamp(48px, 7vw, 96px);
+  }
+</style>

@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Photo from '../components/Photo.astro';
+import Waves from '../components/Waves.astro';
 import ReviewCard from '../components/ReviewCard.astro';
 import { reviews, REVIEWS_RATING } from '../data/opiniones';
 import { getCollection } from 'astro:content';
@@ -77,6 +78,7 @@ const fmt = (d: Date) => d.toLocaleDateString('es-ES', { day: 'numeric', month: 
   schema={[organization, website, faqSchema]}
 >
   <section class="hero">
+    <span class="hero__stripes" aria-hidden="true"></span>
     <div class="wrap hero__grid">
       <div class="hero__text">
         <h1>
@@ -94,8 +96,9 @@ const fmt = (d: Date) => d.toLocaleDateString('es-ES', { day: 'numeric', month: 
           Después, {PRICES.standardMonth} $ al mes con Standard o {PRICES.premiumMonth} $ con Premium, más impuestos, y puedes cancelar desde Skool cuando quieras.
         </p>
       </div>
-      <Photo src="/fotos/rob-retrato.jpg" alt="Rob, profesor británico de inglés" class="hero__photo" eager />
+      <Photo src="/fotos/rob-sol.jpg" alt="Rob, profesor británico de inglés" class="hero__photo" eager />
     </div>
+    <Waves class="hero__waves" />
   </section>
 
   <section class="proof" aria-label="Quién soy en números">
@@ -121,7 +124,7 @@ const fmt = (d: Date) => d.toLocaleDateString('es-ES', { day: 'numeric', month: 
     </div>
   </section>
 
-  <section class="section section--sheet">
+  <section class="section section--atlas">
     <div class="wrap">
       <h2>Cómo lo trabajamos: el método ATLAS</h2>
       <p class="prose-width section-intro">
@@ -145,7 +148,7 @@ const fmt = (d: Date) => d.toLocaleDateString('es-ES', { day: 'numeric', month: 
     </div>
   </section>
 
-  <section class="section section--wine" id="primera-semana">
+  <section class="section section--navy" id="primera-semana">
     <div class="wrap">
       <h2>Tu primera semana dentro</h2>
       <p class="prose-width section-intro">Los {PRICES.trialDays} días de prueba no son para mirar vídeos, sino para que hables desde el principio.</p>
@@ -163,7 +166,7 @@ const fmt = (d: Date) => d.toLocaleDateString('es-ES', { day: 'numeric', month: 
     </div>
   </section>
 
-  <section class="section section--sheet">
+  <section class="section">
     <div class="wrap">
       <h2>Lo que dicen los miembros</h2>
       <p class="prose-width section-intro">
@@ -194,7 +197,7 @@ const fmt = (d: Date) => d.toLocaleDateString('es-ES', { day: 'numeric', month: 
     </div>
   </section>
 
-  <section class="section section--sheet" id="precios">
+  <section class="section section--prices" id="precios">
     <div class="wrap">
       <h2>Precios</h2>
       <p class="prose-width section-intro">Los dos planes empiezan con {PRICES.trialDays} días gratis.</p>
@@ -254,7 +257,7 @@ const fmt = (d: Date) => d.toLocaleDateString('es-ES', { day: 'numeric', month: 
 
   {
     articles.length > 0 && (
-      <section class="section section--sheet">
+      <section class="section">
         <div class="wrap">
           <h2>Últimos artículos</h2>
           <ul class="latest">
@@ -280,34 +283,37 @@ const fmt = (d: Date) => d.toLocaleDateString('es-ES', { day: 'numeric', month: 
 </Base>
 
 <style>
-  .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip: rect(0 0 0 0);
-    white-space: nowrap;
-  }
-
-  /* Hero: la frase termina en un hueco de ejercicio, el "en blanco" literal */
+  /* Hero: the sentence ends in a gap-fill blank, literally "en blanco" */
   .hero {
-    padding: clamp(2.5rem, 7vw, 5.5rem) 0 clamp(2.5rem, 6vw, 4.5rem);
+    position: relative;
+    padding-top: clamp(2.5rem, 7vw, 5rem);
+  }
+  /* Deckchair stripes: the one place they appear on the site */
+  .hero__stripes {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 34px;
+    background: repeating-linear-gradient(90deg, var(--coral) 0 10px, var(--cream) 10px 17px);
   }
   .hero__grid {
     display: grid;
-    grid-template-columns: 1.35fr 1fr;
+    grid-template-columns: 1.45fr 1fr;
     gap: clamp(2rem, 5vw, 4.5rem);
     align-items: center;
+    padding-bottom: clamp(2rem, 5vw, 3.5rem);
   }
   .hero h1 {
     margin-bottom: 0.45em;
+    font-size: clamp(2.4rem, 6.2vw, 3.7rem);
   }
   .blank {
     display: inline-block;
-    width: 3.6em;
-    height: 0.9em;
+    width: 3.2em;
+    height: 0.85em;
     vertical-align: baseline;
-    border-bottom: 0.075em solid var(--mustard);
+    border-bottom: 0.1em solid var(--sun);
     transform-origin: left;
     animation: draw-blank 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) 0.4s both;
   }
@@ -327,49 +333,41 @@ const fmt = (d: Date) => d.toLocaleDateString('es-ES', { day: 'numeric', month: 
     margin-top: 1.75rem;
   }
   .hero__secondary {
-    font-weight: 500;
+    font-weight: 700;
   }
-  .hero__photo {
-    max-width: 26rem;
-    justify-self: end;
+  :global(.hero__photo) {
+    max-width: 27rem;
     width: 100%;
+    justify-self: end;
+    aspect-ratio: 1 / 1;
+  }
+  .hero__waves {
+    margin-top: 0;
   }
 
-  /* Prueba social */
+  /* Proof row continues the sea from the hero waves */
   .proof {
-    border-top: 1px solid var(--rule);
-    border-bottom: 1px solid var(--rule);
-    background: var(--sheet);
+    background: var(--sea);
+    color: var(--cream);
   }
   .proof__list {
     list-style: none;
     margin: 0 auto;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 0;
-    padding-top: 1.4rem;
-    padding-bottom: 1.4rem;
-    font-size: 0.97rem;
-    color: var(--muted);
-  }
-  .proof__list li {
-    padding: 0 1.5rem;
-    border-left: 1px solid var(--rule);
-  }
-  .proof__list li:first-child {
-    padding-left: 0;
-    border-left: 0;
+    gap: 1.5rem;
+    padding-top: 0.5rem;
+    padding-bottom: 2.25rem;
+    font-size: 1rem;
   }
   .proof__list strong {
     display: block;
-    font-family: var(--serif);
-    font-weight: 500;
-    font-size: 1.45rem;
-    color: var(--wine);
+    font-size: 1.6rem;
     line-height: 1.2;
+    color: var(--white);
   }
 
-  /* ¿Te suena? */
+  /* ¿Te suena?: phrases as chat bubbles, like messages from a mate */
   .two-col {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -380,25 +378,38 @@ const fmt = (d: Date) => d.toLocaleDateString('es-ES', { day: 'numeric', month: 
     list-style: none;
     margin: 0;
     padding: 0;
+    display: grid;
+    gap: 1rem;
   }
   .freezes li {
-    font-family: var(--serif);
-    font-style: italic;
-    font-size: clamp(1.3rem, 2.4vw, 1.6rem);
-    line-height: 1.3;
-    color: var(--wine);
-    padding: 0.9rem 0;
-    border-bottom: 1px solid var(--rule);
+    position: relative;
+    justify-self: start;
+    max-width: 30rem;
+    background: var(--cream);
+    border: var(--outline);
+    border-radius: var(--radius);
+    border-bottom-left-radius: 4px;
+    padding: 0.85rem 1.1rem;
+    font-size: 1.1rem;
+    line-height: 1.45;
   }
-  .freezes li:first-child {
-    padding-top: 0;
+  .freezes li:nth-child(even) {
+    justify-self: end;
+    border-bottom-left-radius: var(--radius);
+    border-bottom-right-radius: 4px;
+    background: var(--navy);
+    color: var(--cream);
   }
 
   .section-intro {
     margin-bottom: 2.5rem;
   }
 
-  /* ATLAS como acróstico */
+  /* ATLAS acrostic */
+  .section--atlas {
+    border-top: var(--outline);
+    border-bottom: var(--outline);
+  }
   .atlas {
     list-style: none;
     margin: 0;
@@ -409,58 +420,63 @@ const fmt = (d: Date) => d.toLocaleDateString('es-ES', { day: 'numeric', month: 
   }
   .atlas li {
     display: grid;
-    grid-template-columns: 4.5rem 1fr;
+    grid-template-columns: 4rem 1fr;
     gap: 1.25rem;
     align-items: start;
   }
   .atlas__letter {
-    font-family: var(--serif);
-    font-size: 4.2rem;
-    line-height: 0.85;
-    color: var(--mustard);
+    font-family: var(--display);
+    font-size: 3.6rem;
+    line-height: 0.9;
+    color: var(--coral);
     text-align: center;
   }
   .atlas h3 {
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.2rem;
   }
   .atlas p {
     margin: 0;
     max-width: 58ch;
   }
 
-  /* Primera semana */
+  /* First week, on navy */
   .week {
     list-style: none;
     margin: 0 0 2.5rem;
     padding: 0;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 0;
-    border-top: 2px solid var(--mustard);
+    gap: 1rem;
   }
   .week li {
-    padding: 1.25rem 1.25rem 0 0;
+    padding: 1.1rem 1.2rem 1.25rem;
+    border: 2px solid var(--cream);
+    border-radius: var(--radius);
   }
   .week__day {
-    display: block;
-    font-family: var(--serif);
-    font-size: 1.5rem;
-    color: var(--mustard);
-    margin-bottom: 0.35rem;
+    display: inline-block;
+    background: var(--sun);
+    color: var(--navy);
+    font-weight: 700;
+    font-size: 0.95rem;
+    padding: 0.2rem 0.75rem;
+    border-radius: 999px;
+    margin-bottom: 0.6rem;
   }
   .week p {
     margin: 0;
   }
   .week__cta {
-    background: var(--mustard);
-    color: var(--wine);
+    background: var(--coral);
+    color: var(--white);
+    border-color: var(--cream);
   }
   .week__cta:hover {
-    background: #e0b85c;
-    color: var(--wine);
+    background: #c9432d;
+    color: var(--white);
   }
 
-  /* Opiniones */
+  /* Reviews */
   .reviews {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -468,74 +484,85 @@ const fmt = (d: Date) => d.toLocaleDateString('es-ES', { day: 'numeric', month: 
   }
   .reviews__more {
     margin: 1.5rem 0 0;
-    font-weight: 500;
+    font-weight: 700;
   }
   .plans__whatsapp {
     margin: 1rem 0 0;
   }
 
-  /* Sobre mí */
+  /* About: the one tilted photo, like a postcard on the fridge */
   .about {
     display: grid;
     grid-template-columns: 1fr 1.5fr;
     gap: clamp(2rem, 5vw, 4rem);
     align-items: center;
   }
-  .about__photo {
+  :global(.about__photo) {
     max-width: 22rem;
+    transform: rotate(-2deg);
   }
   .about__text {
     max-width: var(--measure);
   }
+  .about__text a {
+    font-weight: 700;
+  }
 
-  /* Precios */
+  /* Prices */
+  .section--prices {
+    border-top: var(--outline);
+  }
   .plans {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1.5rem;
     max-width: 56rem;
+    align-items: stretch;
   }
   .plan {
-    background: var(--paper);
-    border: 1px solid var(--rule);
-    border-radius: var(--radius-m);
+    background: var(--cream);
+    border: var(--outline);
+    border-radius: var(--radius);
     padding: 1.75rem;
     display: flex;
     flex-direction: column;
   }
   .plan--featured {
-    background: #fff;
-    border: 2px solid var(--wine);
+    border: 3px solid var(--coral);
   }
   .plan h3 {
-    font-size: 1.6rem;
+    font-size: 1.5rem;
+    color: var(--navy);
     margin-bottom: 0.4rem;
+  }
+  .plan--featured h3 {
+    color: var(--coral);
   }
   .plan__price {
     margin: 0;
-    color: var(--muted);
+    color: var(--navy-soft);
   }
   .plan__price span {
-    font-family: var(--serif);
+    font-weight: 700;
     font-size: 2.6rem;
-    color: var(--wine);
+    color: var(--navy);
     line-height: 1;
     margin-right: 0.2rem;
   }
   .plan__alt {
     font-size: 0.92rem;
-    color: var(--muted);
+    color: var(--navy-soft);
   }
   .plan ul {
     margin: 0.5rem 0 1.75rem;
-    padding-left: 1.1rem;
+    padding-left: 1.2rem;
     flex: 1;
   }
   .plan li {
     margin-bottom: 0.55rem;
   }
   .plan li::marker {
-    color: var(--mustard);
+    color: var(--coral);
   }
   .plan .btn {
     align-self: flex-start;
@@ -545,27 +572,35 @@ const fmt = (d: Date) => d.toLocaleDateString('es-ES', { day: 'numeric', month: 
     margin-top: 1.25rem;
   }
 
-  /* Últimos artículos */
+  /* Latest articles */
   .latest {
     list-style: none;
     margin: 0;
     padding: 0;
     max-width: var(--measure);
+    display: grid;
+    gap: 1rem;
   }
   .latest li {
-    padding: 1rem 0;
-    border-bottom: 1px solid var(--rule);
+    padding: 1.1rem 1.3rem;
+    border: var(--outline);
+    border-radius: var(--radius);
     display: flex;
     flex-direction: column;
   }
   .latest a {
-    font-family: var(--serif);
-    font-size: 1.35rem;
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: var(--navy);
     text-decoration: none;
+  }
+  .latest a:hover {
+    color: var(--sea);
+    text-decoration: underline;
   }
   .latest time {
     font-size: 0.875rem;
-    color: var(--muted);
+    color: var(--navy-soft);
   }
 
   .final__inner {
@@ -575,7 +610,10 @@ const fmt = (d: Date) => d.toLocaleDateString('es-ES', { day: 'numeric', month: 
     margin-bottom: 1.25rem;
   }
 
-  @media (max-width: 52rem) {
+  @media (max-width: 56rem) {
+    .hero__stripes {
+      display: none;
+    }
     .hero__grid,
     .reviews,
     .two-col,
@@ -583,24 +621,20 @@ const fmt = (d: Date) => d.toLocaleDateString('es-ES', { day: 'numeric', month: 
     .plans {
       grid-template-columns: 1fr;
     }
-    .hero__photo {
+    :global(.hero__photo) {
       justify-self: start;
-      max-width: 17rem;
+      max-width: 19rem;
     }
     .proof__list {
       grid-template-columns: 1fr;
       gap: 1rem;
     }
-    .proof__list li {
-      padding: 0;
-      border-left: 0;
-    }
     .week {
       grid-template-columns: 1fr 1fr;
-      row-gap: 1.25rem;
     }
-    .about__photo {
-      max-width: 16rem;
+    :global(.about__photo) {
+      max-width: 17rem;
+      margin-left: 0.5rem;
     }
   }
   @media (max-width: 30rem) {
@@ -612,7 +646,7 @@ const fmt = (d: Date) => d.toLocaleDateString('es-ES', { day: 'numeric', month: 
       gap: 0.9rem;
     }
     .atlas__letter {
-      font-size: 3.2rem;
+      font-size: 3rem;
     }
   }
 </style>

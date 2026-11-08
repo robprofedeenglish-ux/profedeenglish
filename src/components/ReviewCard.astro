@@ -24,17 +24,22 @@ const { name, months, lang, text } = Astro.props;
   .review {
     margin: 0;
     padding: 1.5rem;
-    background: var(--sheet);
-    border: 1px solid var(--rule);
-    border-radius: var(--radius-m);
+    background: var(--cream);
+    border: var(--outline);
+    border-radius: var(--radius);
     display: flex;
     flex-direction: column;
   }
   .review__stars {
-    color: var(--mustard);
-    letter-spacing: 0.15em;
-    margin: 0 0 0.6rem;
-    font-size: 1rem;
+    align-self: flex-start;
+    background: var(--navy);
+    color: var(--sun);
+    letter-spacing: 0.12em;
+    margin: 0 0 0.9rem;
+    font-size: 0.95rem;
+    line-height: 1;
+    padding: 0.4rem 0.7rem 0.45rem;
+    border-radius: 999px;
   }
   blockquote {
     margin: 0 0 1rem;
@@ -47,12 +52,14 @@ const { name, months, lang, text } = Astro.props;
     display: flex;
     flex-direction: column;
     font-size: 0.9rem;
+    padding-top: 0.9rem;
+    border-top: 2px dashed var(--navy);
   }
   .review__name {
-    font-weight: 600;
-    color: var(--wine);
+    font-weight: 700;
+    color: var(--navy);
   }
   .review__meta {
-    color: var(--muted);
+    color: var(--navy-soft);
   }
 </style>

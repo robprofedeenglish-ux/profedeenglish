@@ -4,7 +4,7 @@ The original look of profedeenglish.com, archived on 8 November 2026 before the 
 
 ## Restore it
 
-The code for this design is tagged in git as `old-brand-vintage-penguin`. To go back to it:
+The code for this design is saved on the GitHub branch `old-brand-vintage-penguin` (and as a local git tag of the same name; GitHub blocked pushing the tag from Claude's sandbox, so the branch is the copy on GitHub). To go back to it:
 
 ```
 git checkout old-brand-vintage-penguin -- src public astro.config.mjs package.json package-lock.json

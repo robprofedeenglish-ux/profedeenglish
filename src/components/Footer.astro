@@ -1,5 +1,6 @@
 ---
 import { SITE } from '../config';
+import Waves from './Waves.astro';
 const year = new Date().getFullYear();
 const social = [
   { href: SITE.instagram, label: 'Instagram' },
@@ -8,10 +9,11 @@ const social = [
 ].filter((s) => s.href);
 ---
 
+<Waves />
 <footer class="site-footer">
   <div class="wrap site-footer__inner">
     <div>
-      <p class="site-footer__name">Profe de English</p>
+      <p class="site-footer__name"><img src="/logo-r.png" alt="" width="36" height="36" />Profe de English</p>
       <p>Inglés para hispanohablantes que entienden pero se bloquean al hablar. Mi comunidad se llama Real English With Rob.</p>
     </div>
     <nav aria-label="Pie de página" class="site-footer__links">
@@ -35,8 +37,8 @@ const social = [
 
 <style>
   .site-footer {
-    background: var(--wine);
-    color: #e9dcc6;
+    background: var(--navy);
+    color: var(--cream);
     padding: 3rem 0 1.5rem;
     font-size: 0.95rem;
   }
@@ -46,10 +48,17 @@ const social = [
     grid-template-columns: 2fr 1fr 1fr;
   }
   .site-footer__name {
-    font-family: var(--serif);
-    font-size: 1.5rem;
-    color: var(--paper);
-    margin-bottom: 0.4rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: var(--cream);
+    margin-bottom: 0.6rem;
+  }
+  .site-footer__name img {
+    border-radius: 8px;
+    border: 2px solid var(--cream);
   }
   .site-footer p {
     max-width: 38ch;
@@ -60,17 +69,18 @@ const social = [
     gap: 0.5rem;
   }
   .site-footer a {
-    color: #f4efe5;
+    color: var(--cream);
     text-decoration: none;
   }
   .site-footer a:hover {
-    color: var(--mustard);
+    color: var(--sun);
     text-decoration: underline;
+    text-decoration-thickness: 2px;
   }
   .site-footer__copy {
     margin: 2rem 0 0;
     padding-top: 1rem;
-    border-top: 1px solid rgba(244, 239, 229, 0.2);
+    border-top: 1px solid rgba(244, 239, 229, 0.25);
     font-size: 0.85rem;
   }
   @media (max-width: 44rem) {

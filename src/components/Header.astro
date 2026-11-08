@@ -12,8 +12,11 @@ const links = [
 <header class="site-header">
   <div class="wrap site-header__inner">
     <a href="/" class="wordmark" aria-label="Profe de English, inicio">
-      <span class="wordmark__name">Profe de English</span>
-      <span class="wordmark__sub">Real English With Rob</span>
+      <img class="wordmark__mark" src="/logo-r.png" alt="" width="44" height="44" />
+      <span class="wordmark__text">
+        <span class="wordmark__name">Profe de English</span>
+        <span class="wordmark__sub">Real English With Rob</span>
+      </span>
     </a>
     <nav aria-label="Principal" class="site-nav">
       {
@@ -30,62 +33,71 @@ const links = [
 
 <style>
   .site-header {
-    border-bottom: 1px solid var(--rule);
-    background: var(--paper);
+    background: var(--cream);
+    border-bottom: var(--outline);
   }
   .site-header__inner {
     display: flex;
     align-items: center;
     gap: 1.5rem;
-    padding-top: 0.9rem;
-    padding-bottom: 0.9rem;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
   }
   .wordmark {
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    gap: 0.65rem;
     text-decoration: none;
-    line-height: 1.05;
     margin-right: auto;
   }
+  .wordmark__mark {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    border: var(--outline);
+  }
+  .wordmark__text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+  }
   .wordmark__name {
-    font-family: var(--serif);
-    font-size: 1.55rem;
-    font-weight: 500;
-    color: var(--wine);
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: var(--navy);
   }
   .wordmark__sub {
-    font-size: 0.75rem;
-    color: var(--muted);
-    letter-spacing: 0.01em;
+    font-size: 0.78rem;
+    color: var(--navy-soft);
   }
   .site-nav {
     display: flex;
-    gap: 1.4rem;
+    gap: 1.5rem;
   }
   .site-nav a {
-    color: var(--ink);
+    color: var(--navy);
+    font-weight: 700;
+    font-size: 1rem;
     text-decoration: none;
-    font-size: 0.97rem;
   }
   .site-nav a:hover,
   .site-nav a[aria-current='page'] {
-    color: var(--wine);
+    color: var(--sea);
     text-decoration: underline;
-    text-decoration-color: var(--mustard);
     text-decoration-thickness: 2px;
   }
-  @media (max-width: 52rem) {
+  @media (max-width: 56rem) {
     .site-nav {
       display: none;
     }
   }
-  @media (max-width: 26rem) {
-    .header-cta {
-      padding: 0.55rem 0.75rem;
-      font-size: 0.88rem;
+  /* On phones the R mark stands in for the name so the button keeps its accessible size */
+  @media (max-width: 30rem) {
+    .wordmark__text {
+      display: none;
     }
-    .wordmark__name {
-      font-size: 1.35rem;
+    .site-header__inner {
+      gap: 0.75rem;
     }
   }
 </style>

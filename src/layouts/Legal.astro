@@ -25,11 +25,11 @@ const { title, description, path } = Astro.props;
     max-width: calc(var(--measure) + 2 * var(--gutter));
   }
   .legal :global(h2) {
-    font-size: 1.5rem;
+    font-size: clamp(1.7rem, 4.4vw, 2rem);
     margin-top: 2rem;
   }
   .legal :global(.todo) {
-    background: var(--mustard-soft);
+    background: var(--sun);
     padding: 0 0.25em;
     border-radius: 2px;
   }

@@ -1,27 +1,31 @@
-@import '@fontsource/eb-garamond/400.css';
-@import '@fontsource/eb-garamond/500.css';
-@import '@fontsource/eb-garamond/400-italic.css';
-@import '@fontsource-variable/inter';
+/* Wish You Were Here: British seaside theme (November 2026)
+   Fonts are self-hosted copies of the Google Fonts versions (fontsource), with font-display: swap.
+   Loading them from fonts.googleapis.com would send every visitor's IP to Google and break the
+   no-cookie-banner setup (see CLAUDE.md). Only the weights used are imported. */
+@import '@fontsource/shrikhand/400.css';
+@import '@fontsource/dm-sans/400.css';
+@import '@fontsource/dm-sans/700.css';
 
 :root {
-  --wine: #4a1820;
-  --wine-2: #6d2434;
-  --mustard: #d4a847;
-  --mustard-soft: #efe0b4;
-  --paper: #f4efe5;
-  --sheet: #fbf8f1;
-  --ink: #2a2a2a;
-  --muted: #615850;
-  --rule: #ddd3c2;
+  --cream: #f4efe5;
+  --navy: #1e2a3a;
+  --coral: #e04e36;
+  --sea: #1f6f96;
+  --sea-light: #6fb3d2;
+  --sun: #f2b84b;
+  --white: #ffffff;
+  /* navy blended with cream, for small secondary text (6.6:1 on cream) */
+  --navy-soft: #4d5560;
 
-  --serif: 'EB Garamond', Garamond, 'Times New Roman', serif;
-  --sans: 'Inter Variable', Inter, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --display: 'Shrikhand', 'Cooper Black', Georgia, serif;
+  --sans: 'DM Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
 
   --measure: 66ch;
   --wrap: 72rem;
   --gutter: clamp(1rem, 4vw, 2.5rem);
-  --radius-s: 4px;
-  --radius-m: 10px;
+  --radius: 14px;
+  --outline: 2px solid var(--navy);
+  --outline-thick: 3px solid var(--navy);
 }
 
 *,
@@ -37,9 +41,10 @@ html {
 
 body {
   margin: 0;
-  background: var(--paper);
-  color: var(--ink);
+  background: var(--cream);
+  color: var(--navy);
   font-family: var(--sans);
+  font-weight: 400;
   font-size: 1.0625rem;
   line-height: 1.65;
   text-rendering: optimizeLegibility;
@@ -57,46 +62,59 @@ img {
   display: block;
 }
 
+/* Links: sea blue. Inside text they keep a thin underline (sea blue is only 2.6:1 against
+   navy text, so colour alone isn't enough); navigation links underline on hover only. */
 a {
-  color: var(--wine-2);
+  color: var(--sea);
+  text-decoration-line: underline;
   text-decoration-thickness: 1px;
-  text-underline-offset: 0.18em;
+  text-underline-offset: 0.2em;
 }
 a:hover {
-  color: var(--wine);
   text-decoration-thickness: 2px;
 }
 
 :focus-visible {
-  outline: 3px solid var(--mustard);
+  outline: 3px solid var(--sea);
   outline-offset: 3px;
-  border-radius: 2px;
+  border-radius: 4px;
 }
 
+/* Headlines: Shrikhand in coral, big sizes only (coral is 3.45:1 on cream, fine for large text) */
 h1,
-h2,
-h3 {
-  font-family: var(--serif);
-  font-weight: 500;
-  color: var(--wine);
+h2 {
+  font-family: var(--display);
+  font-weight: 400;
+  color: var(--coral);
   line-height: 1.12;
   margin: 0 0 0.5em;
-  letter-spacing: -0.005em;
+  letter-spacing: 0.005em;
   text-wrap: balance;
 }
 h1 {
-  font-size: clamp(2.3rem, 6.4vw, 4.1rem);
-  line-height: 1.04;
+  font-size: clamp(2.4rem, 7.2vw, 4.3rem);
+  line-height: 1.06;
 }
 h2 {
-  font-size: clamp(1.7rem, 3.6vw, 2.35rem);
+  font-size: clamp(1.85rem, 4.2vw, 2.6rem);
 }
+/* Subheadings: DM Sans Bold in sea blue */
 h3 {
-  font-size: 1.35rem;
+  font-family: var(--sans);
+  font-weight: 700;
+  color: var(--sea);
+  font-size: 1.25rem;
+  line-height: 1.3;
+  margin: 0 0 0.4em;
 }
 
 p {
   margin: 0 0 1em;
+}
+
+strong,
+b {
+  font-weight: 700;
 }
 
 .wrap {
@@ -109,12 +127,21 @@ p {
   max-width: var(--measure);
 }
 
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
 .skip-link {
   position: absolute;
   left: -999px;
   top: 0.5rem;
-  background: var(--wine);
-  color: var(--paper);
+  background: var(--navy);
+  color: var(--cream);
   padding: 0.5rem 1rem;
   z-index: 10;
 }
@@ -122,81 +149,100 @@ p {
   left: 0.5rem;
 }
 
-/* Botones */
+/* Buttons: pill-shaped. White on coral needs bold text of at least 18.66px (AA large text). */
 .btn {
   display: inline-block;
   font-family: var(--sans);
-  font-weight: 600;
-  font-size: 1rem;
+  font-weight: 700;
+  font-size: 1.1875rem;
   line-height: 1.2;
   text-decoration: none;
-  padding: 0.95rem 1.4rem;
-  border-radius: var(--radius-s);
-  border: 2px solid transparent;
-  transition: background-color 0.15s ease;
+  padding: 0.85rem 1.6rem;
+  border-radius: 999px;
+  border: var(--outline);
+  transition: background-color 0.15s ease, color 0.15s ease;
 }
 .btn--primary {
-  background: var(--wine);
-  color: var(--sheet);
+  background: var(--coral);
+  color: var(--white);
 }
 .btn--primary:hover {
-  background: var(--wine-2);
-  color: var(--sheet);
+  background: #c9432d;
+  color: var(--white);
 }
 .btn--ghost {
-  border-color: var(--wine);
-  color: var(--wine);
   background: transparent;
+  color: var(--sea);
+  border-color: var(--sea);
 }
 .btn--ghost:hover {
-  background: var(--sheet);
-  color: var(--wine);
+  background: var(--sea);
+  color: var(--white);
 }
 .btn--small {
-  padding: 0.6rem 1rem;
-  font-size: 0.95rem;
+  padding: 0.55rem 1.1rem;
 }
 
 .microcopy {
   font-size: 0.875rem;
-  color: var(--muted);
+  color: var(--navy-soft);
   margin-top: 0.6rem;
 }
 
-/* Secciones */
+/* Sections */
 .section {
-  padding: clamp(3.5rem, 8vw, 6.5rem) 0;
+  padding: clamp(3.5rem, 8vw, 6rem) 0;
 }
-.section--sheet {
-  background: var(--sheet);
-  border-top: 1px solid var(--rule);
-  border-bottom: 1px solid var(--rule);
+.section--navy {
+  background: var(--navy);
+  color: var(--cream);
 }
-.section--wine {
-  background: var(--wine);
-  color: #f1e7d6;
+.section--navy a:not(.btn) {
+  color: var(--sun);
 }
-.section--wine h2,
-.section--wine h3 {
-  color: var(--paper);
+.section--sea {
+  background: var(--sea);
+  color: var(--cream);
 }
-.section--wine a:not(.btn) {
-  color: var(--mustard);
+.section--sea h2 {
+  color: var(--cream);
 }
 
 .lede {
   font-size: 1.15em;
-  color: var(--muted);
-  max-width: 40ch;
+  color: var(--navy);
+  max-width: 42ch;
 }
 
-/* Foto (hasta que Rob mande las suyas) */
+/* Cards: postcard style, flat, with a navy outline */
+.card {
+  background: var(--cream);
+  border: var(--outline);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+}
+
+/* Small badge (sunshine) */
+.badge {
+  display: inline-block;
+  background: var(--sun);
+  color: var(--navy);
+  font-weight: 700;
+  font-size: 0.85rem;
+  line-height: 1.2;
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  border: var(--outline);
+}
+
+/* Photos */
 .photo {
   margin: 0;
   position: relative;
   aspect-ratio: 4 / 5;
-  background: #e8dfcd;
-  border-radius: var(--radius-m);
+  background: var(--cream);
+  border: var(--outline-thick);
+  border-radius: var(--radius);
   overflow: hidden;
 }
 .photo img {
@@ -207,22 +253,22 @@ p {
 .photo--placeholder {
   display: grid;
   place-items: center;
-  color: var(--muted);
+  color: var(--navy-soft);
   font-size: 0.9rem;
   text-align: center;
   padding: 1rem;
-  border: 1px dashed #c9bca5;
+  border-style: dashed;
 }
 
-/* Vídeo lite: solo carga YouTube cuando se pulsa */
+/* Lite YouTube: only loads YouTube when tapped */
 .lite-yt {
   position: relative;
   display: block;
   width: 100%;
   aspect-ratio: 16 / 9;
-  background: #1d1414 center / cover no-repeat;
-  border: 0;
-  border-radius: var(--radius-m);
+  background: var(--navy) center / cover no-repeat;
+  border: var(--outline-thick);
+  border-radius: var(--radius);
   cursor: pointer;
   overflow: hidden;
   padding: 0;
@@ -235,10 +281,11 @@ p {
   position: absolute;
   inset: 50% auto auto 50%;
   transform: translate(-50%, -50%);
-  width: 4.2rem;
-  height: 4.2rem;
+  width: 4.4rem;
+  height: 4.4rem;
   border-radius: 50%;
-  background: var(--mustard);
+  background: var(--coral);
+  border: var(--outline-thick);
   display: grid;
   place-items: center;
 }
@@ -247,7 +294,7 @@ p {
   margin-left: 0.3rem;
   border-style: solid;
   border-width: 0.75rem 0 0.75rem 1.2rem;
-  border-color: transparent transparent transparent var(--wine);
+  border-color: transparent transparent transparent var(--white);
 }
 .lite-yt iframe {
   position: absolute;
@@ -259,16 +306,20 @@ p {
 
 /* FAQ */
 .faq details {
-  border-bottom: 1px solid var(--rule);
+  border-bottom: var(--outline);
   padding: 1rem 0;
+}
+.faq details:first-of-type {
+  border-top: var(--outline);
 }
 .faq summary {
   cursor: pointer;
-  font-weight: 600;
-  color: var(--wine);
+  font-weight: 700;
+  color: var(--navy);
   list-style: none;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   gap: 1rem;
 }
 .faq summary::-webkit-details-marker {
@@ -276,10 +327,16 @@ p {
 }
 .faq summary::after {
   content: '+';
-  font-family: var(--serif);
-  font-size: 1.5rem;
+  flex: none;
+  width: 1.9rem;
+  height: 1.9rem;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--coral);
+  color: var(--white);
+  font-size: 1.3rem;
   line-height: 1;
-  color: var(--mustard);
 }
 .faq details[open] summary::after {
   content: '\2212';
