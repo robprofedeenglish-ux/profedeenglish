@@ -35,6 +35,7 @@ The site must not set cookies or use browser storage (localStorage, sessionStora
 ## Other standing rules
 
 - Never mention or imply that Rob is a Cambridge examiner.
-- Don't set `launched: true` in `src/config.ts` or add Rob's address to the legal pages unless Rob says so.
+- Don't set `launched: true` in `src/config.ts` unless Rob says so.
+- Rob's home address is in `/aviso-legal` only (required by LSSI art. 10, confirmed with his gestor, 9 Nov 2026). That page must stay `noindex` (prop on `<Legal>` plus `public/_headers`) and out of the sitemap, and must stay linked in the footer. Never put the address on any other page, never hide it visually (same-colour text etc.), and never block `/aviso-legal` in robots.txt, because Google then can't see the noindex.
 - Spanish copy: tú, neutral Spanish, no em or en dashes, no choppy sentence strings, no motivational sign-offs.
 - Prices are shown as USD "más impuestos".

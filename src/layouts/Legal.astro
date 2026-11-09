@@ -6,11 +6,12 @@ interface Props {
   title: string;
   description: string;
   path: string;
+  noindex?: boolean;
 }
-const { title, description, path } = Astro.props;
+const { title, description, path, noindex = false } = Astro.props;
 ---
 
-<Base title={title} description={description}>
+<Base title={title} description={description} noindex={noindex}>
   <section class="section">
     <div class="wrap legal">
       <Breadcrumbs items={[{ label: 'Inicio', href: '/' }, { label: title, href: path }]} />

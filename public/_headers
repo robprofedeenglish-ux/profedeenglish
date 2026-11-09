@@ -1,0 +1,5 @@
+# Cloudflare Pages: refuerzo del noindex del aviso legal (el domicilio no debe salir en buscadores)
+/aviso-legal
+  X-Robots-Tag: noindex, nofollow
+/aviso-legal.html
+  X-Robots-Tag: noindex, nofollow

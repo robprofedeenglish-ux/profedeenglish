@@ -8,7 +8,7 @@ export default defineConfig({
   build: { format: 'file' },
   integrations: [
     sitemap({
-      filter: (page) => !page.includes('/404'),
+      filter: (page) => !page.includes('/404') && !page.includes('/aviso-legal'),
     }),
   ],
   markdown: {

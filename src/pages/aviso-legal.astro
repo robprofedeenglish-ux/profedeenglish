@@ -3,7 +3,8 @@ import Legal from '../layouts/Legal.astro';
 import { SITE } from '../config';
 ---
 
-<Legal title="Aviso legal" description="Datos del titular de profedeenglish.com y condiciones de uso del sitio." path="/aviso-legal">
+<!-- noindex: la página sigue enlazada en el pie (lo exige la LSSI), pero no aparece en Google, para no exponer el domicilio en búsquedas -->
+<Legal title="Aviso legal" description="Datos del titular de profedeenglish.com y condiciones de uso del sitio." path="/aviso-legal" noindex>
   <h2>Titular del sitio</h2>
   <p>
     En cumplimiento del artículo 10 de la Ley 34/2002, de servicios de la sociedad de la información y de comercio electrónico (LSSI-CE), te informo de
@@ -12,7 +13,7 @@ import { SITE } from '../config';
   <ul>
     <li>Titular: {SITE.author}</li>
     <li>NIE: Y6605667N</li>
-    <li>Domicilio: <span class="todo">[pendiente]</span></li>
+    <li>Domicilio: Calle Lepanto 9, 2F, 13700 Tomelloso (Ciudad Real), España</li>
     <li>Correo electrónico: <a href={`mailto:${SITE.email}`}>{SITE.email}</a></li>
     <li>Actividad: enseñanza de inglés y creación de contenidos educativos</li>
   </ul>
