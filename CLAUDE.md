@@ -22,6 +22,16 @@ The site must not set cookies or use browser storage (localStorage, sessionStora
 - Styles for a class passed into a child component (e.g. `<Photo class="x">`) must use `:global(.x)` in the parent, because Astro scopes styles per component.
 - The previous design is on the branch `old-brand-vintage-penguin`.
 
+## Community offer (from 9 Nov 2026; this OVERRIDES the older facts in the profedeenglish-articles skill)
+
+- **No free trial.** Never write "prueba gratis", "7 días gratis" or anything implying one. Buttons say "Empieza tus 90 días".
+- Promises: "Deja de bloquearte en 90 días"; Premium: "Que el mejor inglés de la sala sea el tuyo".
+- **Standard: 23 $/mes o 197 $/año, más impuestos.** Reto de 90 días para hablar sin bloquearte; intercambios con nativos; una clase en directo a la semana con Rob; test de nivel y más de 100 horas de material; respuestas en el foro en menos de 24 h.
+- **Premium: 1.457 $/año, más impuestos, solo anual.** Coaching 1 a 1 con Rob con un plan hecho solo para ti, empieces donde empieces y sea cual sea tu meta (trabajo, entrevistas, viajes o un examen), más todo lo de Standard. Plazas limitadas; the CTA is WhatsApp ("Escríbeme y lo hablamos"). Don't state a session frequency.
+- The 90-task guarantee, the separate exam-prep bullet and the old trial week are gone; don't mention them. Exam prep now sits under Premium's 1:1 coaching.
+- The 90-day journey ("Tus próximos 90 días", homepage section `#tus-90-dias`): Día 1 Guardamos tu antes; Día 30 Entiendes a la primera; Día 60 Te sueltas a hablar; Día 90 Hablas sin pensarlo. All included in Standard; with Premium it's done 1 to 1.
+- When describing the programme, don't make it sound like work: say what happens to the reader ("la confianza llega sola", "sin darte cuenta ya llevas horas hablando"), not chores ("tareas", "retos", "entrenar", "tienes que").
+
 ## Other standing rules
 
 - Never mention or imply that Rob is a Cambridge examiner.
