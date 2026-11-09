@@ -28,15 +28,15 @@ const showToc = h2s.length >= 4;
 const endAsk = {
   info: {
     title: 'Leerlo ayuda, pero lo que te quita el bloqueo es hablar',
-    text: 'En mi comunidad practicas cada semana con clases en directo, un compañero de práctica e intercambios con nativos, y empiezas a hablar desde el primer día de la prueba.',
+    text: 'En mi comunidad practicas cada semana con clases en directo e intercambios con nativos, con un plan de 90 días que se adapta a ti, y empiezas a hablar desde el primer día.',
   },
   compra: {
     title: 'Si lo que buscas es un sitio donde hablar cada semana',
-    text: 'Real English With Rob es mi comunidad: clases de conversación en directo, compañero de práctica, intercambios con nativos y un plan para dejar de bloquearte, con 7 días gratis para que veas si te encaja.',
+    text: 'Real English With Rob es mi comunidad: un reto de 90 días para dejar de bloquearte, intercambios con nativos, una clase en directo a la semana conmigo y más de 100 horas de material, desde 23 $ al mes.',
   },
   examen: {
     title: 'Prepara el speaking hablando, no solo leyendo modelos',
-    text: 'En Premium preparamos el speaking de la EOI, Aptis y Cambridge con práctica en directo y corrección según los criterios oficiales de evaluación.',
+    text: 'Con Premium lo preparamos 1 a 1, con un plan hecho para tu examen, ya sea la EOI, Aptis o Cambridge, y corrección según los criterios oficiales de evaluación.',
   },
 }[data.intent];
 
@@ -96,7 +96,7 @@ const articleSchema = {
 
       <p class="ask-top">
         ¿Prefieres trabajarlo hablando conmigo y con más gente?
-        <a href={skoolLink('articulo', 'top_box', slug)}>Prueba la comunidad {PRICES.trialDays} días gratis</a>.
+        <a href={skoolLink('articulo', 'top_box', slug)}>Empieza tus 90 días en la comunidad</a>.
       </p>
 
       {
@@ -144,8 +144,8 @@ const articleSchema = {
       <aside class="end-ask">
         <h2>{endAsk.title}</h2>
         <p>{endAsk.text}</p>
-        <a class="btn end-ask__btn" href={skoolLink('articulo', 'final', slug)}>Prueba {PRICES.trialDays} días gratis</a>
-        <p class="end-ask__micro">Después, desde {PRICES.standardMonth} $ al mes más impuestos, y puedes cancelar desde Skool cuando quieras.</p>
+        <a class="btn end-ask__btn" href={skoolLink('articulo', 'final', slug)}>Empieza tus 90 días</a>
+        <p class="end-ask__micro">Desde {PRICES.standardMonth} $ al mes más impuestos, y puedes cancelar desde Skool cuando quieras.</p>
       </aside>
 
       <section class="author" aria-label="Sobre el autor">

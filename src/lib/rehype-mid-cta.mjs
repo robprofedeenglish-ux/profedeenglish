@@ -1,5 +1,5 @@
 // Inserta la caja "Dentro de la comunidad" antes del tercer H2 de cada artículo,
-// para que el artículo pida la prueba a mitad de lectura sin tener que escribirlo a mano.
+// para que el artículo invite a unirse a mitad de lectura sin tener que escribirlo a mano.
 // Si el artículo tiene menos de tres H2, la caja va antes del último H2 (o no va).
 
 const el = (tagName, properties, children = []) => ({
@@ -36,14 +36,14 @@ export default function rehypeMidCta() {
       el('p', { className: ['cta-mid__title'] }, [text('Si quieres practicar esto con gente, no solo leerlo')]),
       el('p', {}, [
         text(
-          'En mi comunidad, Real English With Rob, hablas cada semana en clases en directo, con un compañero de práctica y en intercambios con nativos, y yo te digo qué te bloquea y cómo trabajarlo.'
+          'En mi comunidad, Real English With Rob, hablas cada semana en clases en directo y en intercambios con nativos, y en 90 días pasas de quedarte en blanco a hablar con soltura.'
         ),
       ]),
       el('p', { className: ['cta-mid__action'] }, [
-        el('a', { href, className: ['btn', 'btn--primary'], rel: ['noopener'] }, [text('Prueba 7 días gratis')]),
+        el('a', { href, className: ['btn', 'btn--primary'], rel: ['noopener'] }, [text('Empieza tus 90 días')]),
       ]),
       el('p', { className: ['microcopy'] }, [
-        text('Después, desde 25 $ al mes más impuestos. Puedes cancelar desde Skool antes de que acabe la prueba.'),
+        text('Desde 23 $ al mes más impuestos, y cancelas desde Skool cuando quieras.'),
       ]),
     ]);
 

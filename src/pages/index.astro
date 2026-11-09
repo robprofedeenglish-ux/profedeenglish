@@ -29,17 +29,17 @@ const atlas = [
   ['S', 'Speaking', 'Y sobre todo hablas, en clases en directo, con tu compañero de práctica y en intercambios con nativos.'],
 ];
 
-const week = [
-  ['Día 1', 'Una videollamada de bienvenida conmigo para ver tu nivel y qué es lo que te bloquea.'],
-  ['Días 2 y 3', 'Conoces a tu compañero de práctica y empiezas a apuntar los momentos en los que te bloqueas.'],
-  ['Días 4 y 5', 'Recibes tu plan personalizado y vas a tu primera clase en directo, donde puedes limitarte a escuchar si te da corte.'],
-  ['Días 6 y 7', 'Haces tu primer intercambio con un hablante nativo.'],
+const journey = [
+  ['Día 1', 'Guardamos tu antes', 'Descubrir qué te bloquea, para que el día 90 veas hasta dónde has llegado.'],
+  ['Día 30', 'Entiendes a la primera', 'Ya sabes qué te frenaba, y tu oído se ha hecho al inglés real, así que entiendes aunque te hablen rápido.'],
+  ['Día 60', 'Te sueltas a hablar', 'Sin darte cuenta, ya llevas horas hablando con nativos y en clases en directo, y la confianza llega sola.'],
+  ['Día 90', 'Hablas sin pensarlo', 'Tu pronunciación se pule y ninguna conversación te pilla por sorpresa. Escuchas tu antes y no te reconoces.'],
 ];
 
 const faq = [
   {
-    q: '¿Me piden tarjeta para la prueba gratis?',
-    a: 'Sí, Skool te pide un método de pago al empezar los 7 días de prueba. Si cancelas antes de que terminen, no se te cobra nada.',
+    q: '¿Qué diferencia hay entre Standard y Premium?',
+    a: 'Con Standard tienes el reto de 90 días, intercambios con nativos, una clase en directo a la semana conmigo y todo el material. Premium incluye todo eso y además coaching 1 a 1 conmigo durante un año, con un plan hecho para tu meta, ya sea el trabajo, una entrevista, un viaje o un examen.',
   },
   {
     q: '¿Cómo cancelo?',
@@ -55,7 +55,7 @@ const faq = [
   },
   {
     q: '¿Y si me da mucha vergüenza hablar?',
-    a: 'Es lo más normal del mundo y es justo para lo que está pensada la comunidad. En tu primera clase puedes limitarte a escuchar, y empiezas a hablar con tu compañero de práctica, que está en tu misma situación, antes de dar el salto a los grupos.',
+    a: 'Es lo más normal del mundo y es justo para lo que está pensada la comunidad. En las clases en directo puedes empezar solo escuchando, y das el salto a hablar cuando te sientas preparado, rodeado de gente que está en tu misma situación.',
   },
   {
     q: '¿La comunidad está en inglés o en español?',
@@ -85,15 +85,15 @@ const fmt = (d: Date) => d.toLocaleDateString('es-ES', { day: 'numeric', month: 
           Entiendes inglés, pero cuando te toca hablar te quedas en <span class="blank"><span class="sr-only">blanco</span></span>
         </h1>
         <p class="lede">
-          Soy Rob, profesor británico, y llevo casi diez años enseñando a hispanohablantes. En mi comunidad practicas hablando cada semana, con
-          clases en directo y gente real, hasta que dejas de bloquearte.
+          Soy Rob, profesor británico, y llevo casi diez años enseñando a hispanohablantes. En 90 días pasas de quedarte en blanco a hablar con
+          soltura, con clases en directo, intercambios con nativos y un plan que se adapta a ti.
         </p>
         <div class="hero__actions">
-          <a class="btn btn--primary" href={skoolLink('home', 'hero')}>Prueba {PRICES.trialDays} días gratis</a>
-          <a class="hero__secondary" href="#primera-semana">Mira cómo es tu primera semana</a>
+          <a class="btn btn--primary" href={skoolLink('home', 'hero')}>Empieza tus 90 días</a>
+          <a class="hero__secondary" href="#tus-90-dias">Mira cómo son tus 90 días</a>
         </div>
         <p class="microcopy">
-          Después, {PRICES.standardMonth} $ al mes con Standard o {PRICES.premiumMonth} $ con Premium, más impuestos, y puedes cancelar desde Skool cuando quieras.
+          Desde {PRICES.standardMonth} $ al mes más impuestos, y puedes cancelar desde Skool cuando quieras.
         </p>
       </div>
       <Photo src="/fotos/rob-sol.jpg" alt="Rob, profesor británico de inglés" class="hero__photo" eager />
@@ -148,21 +148,23 @@ const fmt = (d: Date) => d.toLocaleDateString('es-ES', { day: 'numeric', month: 
     </div>
   </section>
 
-  <section class="section section--navy" id="primera-semana">
+  <section class="section section--navy" id="tus-90-dias">
     <div class="wrap">
-      <h2>Tu primera semana dentro</h2>
-      <p class="prose-width section-intro">Los {PRICES.trialDays} días de prueba no son para mirar vídeos, sino para que hables desde el principio.</p>
+      <h2>Tus próximos 90 días</h2>
+      <p class="prose-width section-intro">Así pasas de quedarte en blanco a hablar con soltura.</p>
       <ol class="week">
         {
-          week.map(([day, text]) => (
+          journey.map(([day, title, text]) => (
             <li>
               <span class="week__day">{day}</span>
+              <h3>{title}</h3>
               <p>{text}</p>
             </li>
           ))
         }
       </ol>
-      <a class="btn week__cta" href={skoolLink('home', 'primera_semana')}>Empieza tus {PRICES.trialDays} días gratis</a>
+      <p class="week__included">Todo esto está incluido en el plan Standard. <strong>Con Premium, lo hacemos 1 a 1.</strong></p>
+      <a class="btn week__cta" href={skoolLink('home', 'tus_90_dias')}>Empieza tus 90 días</a>
     </div>
   </section>
 
@@ -200,40 +202,38 @@ const fmt = (d: Date) => d.toLocaleDateString('es-ES', { day: 'numeric', month: 
   <section class="section section--prices" id="precios">
     <div class="wrap">
       <h2>Precios</h2>
-      <p class="prose-width section-intro">Los dos planes empiezan con {PRICES.trialDays} días gratis.</p>
+      <p class="prose-width section-intro">Dos formas de hacerlo: en la comunidad, o conmigo 1 a 1.</p>
       <div class="plans">
         <article class="plan">
           <h3>Standard</h3>
           <p class="plan__price"><span>{PRICES.standardMonth} $</span> al mes más impuestos</p>
           <p class="plan__alt">o {PRICES.standardYear} $ al año</p>
           <ul>
-            <li>Una clase semanal en directo de gramática o pronunciación</li>
-            <li>Compañero de práctica para hablar entre semana</li>
-            <li>Intercambio semanal con hablantes nativos</li>
-            <li>Biblioteca de cursos de A1 a C1, con más de 100 horas</li>
-            <li>El programa de 90 días para dejar de bloquearte</li>
+            <li>Reto de 90 días para hablar sin bloquearte</li>
+            <li>Intercambios con nativos</li>
+            <li>Una clase en directo a la semana conmigo</li>
+            <li>Test de nivel y más de 100 horas de material</li>
+            <li>Te respondo en el foro en menos de 24 h</li>
           </ul>
-          <a class="btn btn--ghost" href={skoolLink('home', 'precio_standard')}>Prueba Standard gratis</a>
+          <a class="btn btn--ghost" href={skoolLink('home', 'precio_standard')}>Empieza con Standard</a>
         </article>
         <article class="plan plan--featured">
           <h3>Premium</h3>
-          <p class="plan__price"><span>{PRICES.premiumMonth} $</span> al mes más impuestos</p>
-          <p class="plan__alt">o {PRICES.premiumYear} $ al año</p>
+          <p class="plan__price"><span>{PRICES.premiumYear} $</span> al año más impuestos</p>
+          <p class="plan__alt">Solo plan anual</p>
+          <p class="plan__promise">Que el mejor inglés de la sala sea el tuyo.</p>
           <ul>
-            <li>Todo lo que incluye Standard</li>
-            <li>Todas las clases de conversación en directo de la semana</li>
-            <li>
-              La garantía del programa de 90 días: si completas las 90 tareas y sigues sin sentirte seguro hablando, sigo trabajando contigo uno a
-              uno sin coste extra
-            </li>
-            <li>Preparación de exámenes: Cambridge B1, B2 y C1, Aptis, EOI y Trinity ISE</li>
+            <li>Coaching 1 a 1 conmigo, con un plan hecho solo para ti</li>
+            <li>Empieces donde empieces y sea cual sea tu meta: trabajo, entrevistas, viajes o un examen</li>
+            <li>Todo lo de Standard incluido</li>
           </ul>
-          <a class="btn btn--primary" href={skoolLink('home', 'precio_premium')}>Prueba Premium gratis</a>
+          <p class="plan__limited">Plazas limitadas, porque mi tiempo también lo es.</p>
+          <a class="btn btn--primary" href={SITE.whatsapp} rel="noopener">Escríbeme y lo hablamos</a>
         </article>
       </div>
       <p class="microcopy plans__note">
         Precios en dólares estadounidenses y sin impuestos. Skool añade el IVA u otros impuestos si corresponden en tu país y te muestra el importe
-        final antes de confirmar. La garantía tiene condiciones (nivel intermedio y las 90 tareas completadas) que verás el primer día del programa.
+        final antes de confirmar.
       </p>
       <p class="plans__whatsapp">¿Tienes dudas antes de empezar? <a href={SITE.whatsapp} rel="noopener">Escríbeme por WhatsApp</a>.</p>
     </div>
@@ -276,8 +276,8 @@ const fmt = (d: Date) => d.toLocaleDateString('es-ES', { day: 'numeric', month: 
   <section class="section final">
     <div class="wrap final__inner">
       <h2>Empieza a hablar esta misma semana</h2>
-      <a class="btn btn--primary" href={skoolLink('home', 'final')}>Prueba {PRICES.trialDays} días gratis</a>
-      <p class="microcopy">Después, desde {PRICES.standardMonth} $ al mes más impuestos, y cancelas desde Skool cuando quieras.</p>
+      <a class="btn btn--primary" href={skoolLink('home', 'final')}>Empieza tus 90 días</a>
+      <p class="microcopy">Desde {PRICES.standardMonth} $ al mes más impuestos, y cancelas desde Skool cuando quieras.</p>
     </div>
   </section>
 </Base>
@@ -463,8 +463,19 @@ const fmt = (d: Date) => d.toLocaleDateString('es-ES', { day: 'numeric', month: 
     border-radius: 999px;
     margin-bottom: 0.6rem;
   }
+  .week h3 {
+    color: var(--cream);
+    font-size: 1.2rem;
+    margin-bottom: 0.35rem;
+  }
   .week p {
     margin: 0;
+  }
+  .week__included {
+    margin: 0 0 1.75rem;
+  }
+  .week__included strong {
+    color: var(--sun);
   }
   .week__cta {
     background: var(--coral);
@@ -552,6 +563,17 @@ const fmt = (d: Date) => d.toLocaleDateString('es-ES', { day: 'numeric', month: 
   .plan__alt {
     font-size: 0.92rem;
     color: var(--navy-soft);
+  }
+  .plan__promise {
+    text-wrap: balance;
+    font-weight: 700;
+    color: var(--coral);
+    font-size: 1.2rem;
+    margin: 0.25rem 0 0.25rem;
+  }
+  .plan__limited {
+    font-size: 0.92rem;
+    margin: 0 0 1rem;
   }
   .plan ul {
     margin: 0.5rem 0 1.75rem;

@@ -19,17 +19,16 @@ export const SITE = {
 };
 
 export const PRICES = {
-  standardMonth: 25,
-  standardYear: 249,
-  premiumMonth: 49,
-  premiumYear: 449,
-  trialDays: 7,
+  // Desde el 8/11/2026: sin prueba gratis. Premium es solo anual (coaching 1 a 1).
+  standardMonth: 23,
+  standardYear: 197,
+  premiumYear: '1.457',
 };
 
 const SKOOL_ABOUT = 'https://www.skool.com/realenglishwithrob/about';
 
 /**
- * Enlace a Skool con etiquetas UTM, para saber qué página y qué botón trae cada prueba.
+ * Enlace a Skool con etiquetas UTM, para saber qué página y qué botón trae cada alta.
  * medium: tipo de página (home, articulo, sobre-mi...)
  * content: el hueco del botón (hero, mid_box, final...)
  * term: el slug del artículo, si lo hay
