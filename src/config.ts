@@ -15,7 +15,7 @@ export const SITE = {
   whatsappDisplay: '+34 673 24 69 37',
   // Mientras esté en false, Google no indexa el sitio (meta noindex).
   // Cámbialo a true el día del lanzamiento.
-  launched: false,
+  launched: true,
 };
 
 export const PRICES = {
