@@ -1,0 +1,428 @@
+/* Wish You Were Here: estilo de los PDF descargables (mismos colores y fuentes que la web) */
+/* Fuentes de la web (fontsource, ya instaladas con npm install) */
+@font-face { font-family: 'Shrikhand'; font-weight: 400; src: url('../node_modules/@fontsource/shrikhand/files/shrikhand-latin-400-normal.woff2') format('woff2'); }
+@font-face { font-family: 'DM Sans'; font-weight: 400; src: url('../node_modules/@fontsource/dm-sans/files/dm-sans-latin-400-normal.woff2') format('woff2'); }
+@font-face { font-family: 'DM Sans'; font-weight: 400; font-style: italic; src: url('../node_modules/@fontsource/dm-sans/files/dm-sans-latin-400-italic.woff2') format('woff2'); }
+@font-face { font-family: 'DM Sans'; font-weight: 700; src: url('../node_modules/@fontsource/dm-sans/files/dm-sans-latin-700-normal.woff2') format('woff2'); }
+
+:root {
+  --cream: #f4efe5;
+  --navy: #1e2a3a;
+  --coral: #e04e36;
+  --sea: #1f6f96;
+  --sea-light: #6fb3d2;
+  --sun: #f2b84b;
+  --white: #ffffff;
+  --navy-soft: #4d5560;
+}
+
+@page {
+  size: A4;
+  margin: 14mm 0 16mm 0;
+}
+
+html {
+  background: var(--cream);
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+body {
+  margin: 0;
+  padding: 0 17mm;
+  font-family: 'DM Sans', 'DejaVu Sans', sans-serif;
+  font-size: 10.5pt;
+  line-height: 1.5;
+  color: var(--navy);
+}
+
+/* ---------- Cabecera de la primera página ---------- */
+.cover {
+  position: relative;
+  padding: 2mm 0 7mm;
+  margin-bottom: 7mm;
+  border-bottom: 2px solid var(--navy);
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 3mm;
+  font-weight: 700;
+  font-size: 9.5pt;
+  letter-spacing: 0.02em;
+}
+.brand img {
+  width: 11mm;
+  height: 11mm;
+  border-radius: 2.5mm;
+  border: 1.5px solid var(--navy);
+}
+.brand small {
+  display: block;
+  font-weight: 400;
+  color: var(--navy-soft);
+  font-size: 8.5pt;
+}
+.kicker {
+  display: inline-block;
+  margin-top: 8mm;
+  background: var(--sun);
+  border: 1.5px solid var(--navy);
+  border-radius: 999px;
+  padding: 0.6mm 3.2mm;
+  font-weight: 700;
+  font-size: 8.5pt;
+}
+h1,
+.subtitle,
+.kicker {
+  position: relative;
+  z-index: 1;
+}
+h1 {
+  font-family: 'Shrikhand', Georgia, serif;
+  font-weight: 400;
+  color: var(--coral);
+  font-size: 30pt;
+  line-height: 1.08;
+  margin: 4mm 0 3mm;
+  max-width: 150mm;
+}
+.subtitle {
+  font-size: 12pt;
+  margin: 0;
+  max-width: 140mm;
+}
+.cover .sun {
+  position: absolute;
+  right: -34mm;
+  top: -24mm;
+  width: 62mm;
+  height: 62mm;
+  border-radius: 50%;
+  background: var(--sun);
+  border: 1.5px solid var(--navy);
+}
+
+/* ---------- Texto ---------- */
+h2 {
+  font-family: 'Shrikhand', Georgia, serif;
+  font-weight: 400;
+  color: var(--coral);
+  font-size: 18pt;
+  line-height: 1.15;
+  margin: 8mm 0 3mm;
+  break-after: avoid;
+}
+h2:first-child {
+  margin-top: 0;
+}
+h3 {
+  font-weight: 700;
+  color: var(--sea);
+  font-size: 12pt;
+  line-height: 1.3;
+  margin: 5mm 0 1.5mm;
+  break-after: avoid;
+}
+p {
+  margin: 0 0 2.5mm;
+}
+ul,
+ol {
+  margin: 0 0 3mm;
+  padding-left: 5mm;
+}
+li {
+  margin-bottom: 1.2mm;
+}
+.en {
+  font-weight: 700;
+}
+.es {
+  color: var(--navy-soft);
+}
+.small {
+  font-size: 9pt;
+  color: var(--navy-soft);
+}
+.ipa {
+  font-family: 'DejaVu Sans', sans-serif;
+  font-size: 0.92em;
+}
+.page-break {
+  break-before: page;
+}
+
+/* ---------- Tablas ---------- */
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1.5px solid var(--navy);
+  border-radius: 3mm;
+  overflow: hidden;
+  margin: 0 0 5mm;
+  font-size: 10pt;
+}
+th {
+  background: var(--sea);
+  color: var(--white);
+  text-align: left;
+  font-weight: 700;
+  padding: 2mm 3mm;
+  font-size: 9pt;
+  letter-spacing: 0.02em;
+}
+td {
+  padding: 1.6mm 3mm;
+  border-top: 1px solid rgba(30, 42, 58, 0.25);
+  vertical-align: top;
+  background: var(--white);
+}
+tr:nth-child(even) td {
+  background: #fbf8f2;
+}
+tr {
+  break-inside: avoid;
+}
+td.num {
+  width: 7mm;
+  font-weight: 700;
+  color: var(--coral);
+}
+td.group {
+  background: var(--cream) !important;
+  font-weight: 700;
+  color: var(--sea);
+  font-size: 9pt;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* ---------- Tarjetas ---------- */
+.card {
+  background: var(--white);
+  border: 1.5px solid var(--navy);
+  border-radius: 3.5mm;
+  padding: 4mm 5mm;
+  margin: 0 0 4mm;
+  break-inside: avoid;
+}
+.card > :last-child {
+  margin-bottom: 0;
+}
+.card h3:first-child {
+  margin-top: 0;
+}
+.grid2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4mm;
+  margin-bottom: 4mm;
+}
+.grid2 > .card {
+  margin: 0;
+}
+.grid3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 3mm;
+  margin-bottom: 4mm;
+}
+.grid3 > .card {
+  margin: 0;
+  padding: 3mm 4mm;
+}
+
+/* Etiquetas */
+.tag {
+  display: inline-block;
+  border: 1.2px solid var(--navy);
+  border-radius: 999px;
+  padding: 0.2mm 2.4mm;
+  font-size: 7.5pt;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  vertical-align: 1px;
+}
+.tag--sun {
+  background: var(--sun);
+}
+.tag--sea {
+  background: var(--sea-light);
+}
+.tag--coral {
+  background: var(--coral);
+  color: var(--white);
+}
+.tag--cream {
+  background: var(--cream);
+}
+
+/* Bien / mal */
+.wrong,
+.right {
+  margin: 0 0 1mm;
+  padding-left: 13mm;
+  text-indent: -13mm;
+}
+.wrong::before,
+.right::before {
+  display: inline-block;
+  width: 10.5mm;
+  margin-right: 2.5mm;
+  text-indent: 0;
+  text-align: center;
+  font-weight: 700;
+  font-size: 7.5pt;
+  letter-spacing: 0.04em;
+  border-radius: 999px;
+  padding: 0.2mm 0;
+  border: 1.2px solid var(--navy);
+  vertical-align: 1px;
+}
+.wrong::before {
+  content: 'MAL';
+  background: var(--coral);
+  color: var(--white);
+}
+.right::before {
+  content: 'BIEN';
+  background: var(--sea-light);
+  color: var(--navy);
+}
+.wrong s {
+  text-decoration-color: var(--coral);
+  text-decoration-thickness: 1.5px;
+}
+
+/* Consejo */
+.tip {
+  background: var(--white);
+  border: 1.5px solid var(--navy);
+  border-left: 6px solid var(--sun);
+  border-radius: 3mm;
+  padding: 3.5mm 5mm;
+  margin: 0 0 4mm;
+  break-inside: avoid;
+}
+.tip > :last-child {
+  margin-bottom: 0;
+}
+.tip strong:first-child {
+  color: var(--sea);
+}
+
+/* Prompt para copiar */
+.prompt {
+  background: var(--white);
+  border: 1.5px dashed var(--sea);
+  border-radius: 3mm;
+  padding: 3.5mm 5mm;
+  margin: 0 0 4mm;
+  break-inside: avoid;
+}
+.prompt .label {
+  font-weight: 700;
+  color: var(--sea);
+  font-size: 9pt;
+  margin-bottom: 1.5mm;
+}
+.prompt pre {
+  white-space: pre-wrap;
+  font-family: 'DM Sans', sans-serif;
+  margin: 0;
+  font-size: 10pt;
+}
+
+/* Ejercicios */
+.exercise ol {
+  padding-left: 7mm;
+}
+.exercise li {
+  margin-bottom: 2.2mm;
+}
+.blank {
+  display: inline-block;
+  min-width: 22mm;
+  border-bottom: 1px solid var(--navy);
+}
+.answers {
+  font-size: 9.5pt;
+}
+.answers ol {
+  columns: 2;
+  column-gap: 8mm;
+}
+
+/* Números grandes en círculo */
+.step {
+  display: flex;
+  gap: 4mm;
+  align-items: flex-start;
+  margin-bottom: 3mm;
+  break-inside: avoid;
+}
+.step .n {
+  flex: none;
+  width: 8mm;
+  height: 8mm;
+  border-radius: 50%;
+  background: var(--coral);
+  color: var(--white);
+  border: 1.5px solid var(--navy);
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  font-size: 10pt;
+}
+.step > div > :last-child {
+  margin-bottom: 0;
+}
+
+/* ---------- Cierre ---------- */
+.end {
+  margin: 8mm -17mm 0;
+  break-inside: avoid;
+}
+.end svg {
+  display: block;
+  width: 100%;
+  height: 16mm;
+}
+.end__body {
+  background: var(--navy);
+  color: var(--cream);
+  padding: 7mm 17mm 9mm;
+}
+.end h2 {
+  color: var(--sun);
+  margin: 0 0 3mm;
+  font-size: 22pt;
+}
+.end p {
+  max-width: 150mm;
+}
+.end a {
+  color: var(--sun);
+  font-weight: 700;
+}
+.end .btn {
+  display: inline-block;
+  margin-top: 2mm;
+  background: var(--coral);
+  color: var(--white);
+  border: 1.5px solid var(--cream);
+  border-radius: 999px;
+  padding: 2.4mm 6mm;
+  font-weight: 700;
+  font-size: 11.5pt;
+  text-decoration: none;
+}
+.end .small {
+  color: var(--cream);
+  opacity: 0.85;
+  margin-top: 4mm;
+}

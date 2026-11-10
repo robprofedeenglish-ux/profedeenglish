@@ -1,0 +1,159 @@
+---
+import Base from '../layouts/Base.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { PRICES, SITE, skoolLink } from '../config';
+import { breadcrumbs } from '../lib/schema';
+import recursos from '../data/recursos.json';
+
+// Los PDF se generan con recursos-fuente/build.py, que también actualiza src/data/recursos.json.
+const categories = [
+  { id: 'gramatica', label: 'Gramática' },
+  { id: 'vocabulario', label: 'Vocabulario' },
+  { id: 'pronunciacion', label: 'Pronunciación' },
+  { id: 'series-y-peliculas', label: 'Series y películas' },
+  { id: 'ia', label: 'Practicar con IA' },
+  { id: 'plan', label: 'Plan de estudio' },
+];
+
+const groups = categories
+  .map((c) => ({ ...c, items: recursos.filter((r) => r.category === c.id) }))
+  .filter((g) => g.items.length > 0);
+
+const crumbs = [
+  { label: 'Inicio', href: '/' },
+  { label: 'Recursos', href: '/recursos' },
+];
+
+const collection = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  url: `${SITE.url}/recursos`,
+  name: 'Recursos gratis para aprender inglés',
+  inLanguage: 'es',
+  hasPart: recursos.map((r) => ({
+    '@type': 'DigitalDocument',
+    name: r.title,
+    description: r.description,
+    url: `${SITE.url}${r.file}`,
+    encodingFormat: 'application/pdf',
+    isAccessibleForFree: true,
+  })),
+};
+---
+
+<Base
+  title="Recursos gratis para aprender inglés"
+  description="Guías y chuletas en PDF para aprender inglés: gramática, vocabulario, pronunciación, series y películas por niveles. Gratis y sin dejar tu correo."
+  schema={[collection, breadcrumbs(crumbs)]}
+>
+  <section class="section">
+    <div class="wrap">
+      <Breadcrumbs items={crumbs} />
+      <h1>Recursos gratis</h1>
+      <p class="lede">
+        Estas son las guías y chuletas que he ido preparando para mis alumnos y para Instagram, todas en PDF. Descárgalas, imprímelas o guárdalas
+        en el móvil, sin registrarte ni dejar tu correo.
+      </p>
+
+      <nav class="jump" aria-label="Categorías">
+        {groups.map((g) => <a href={`#${g.id}`}>{g.label}</a>)}
+      </nav>
+
+      {
+        groups.map((g) => (
+          <section class="group" id={g.id} aria-labelledby={`h-${g.id}`}>
+            <h2 id={`h-${g.id}`}>{g.label}</h2>
+            <ul class="list" role="list">
+              {g.items.map((r) => (
+                <li class="card res">
+                  <span class="badge">{r.level}</span>
+                  <h3>{r.title}</h3>
+                  <p>{r.description}</p>
+                  <p class="res__meta">
+                    PDF · {r.pages} {r.pages === 1 ? 'página' : 'páginas'} · {r.sizeKb} KB
+                  </p>
+                  <a class="btn btn--ghost btn--small" href={r.file} type="application/pdf">
+                    Descargar<span class="sr-only"> {r.title}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="section section--navy end">
+    <div class="wrap end__inner">
+      <h2>Deja de bloquearte en 90 días</h2>
+      <p>
+        Las guías te ayudan a entender el inglés, pero soltarte a hablar llega cuando lo usas con gente de verdad. En la comunidad hablas cada
+        semana con nativos y conmigo, y sin darte cuenta ya llevas horas hablando en inglés.
+      </p>
+      <a class="btn btn--primary" href={skoolLink('recursos', 'final')}>Empieza tus 90 días</a>
+      <p class="microcopy">Desde {PRICES.standardMonth} $ al mes más impuestos, y cancelas desde Skool cuando quieras.</p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .jump {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin: 1.5rem 0 1rem;
+  }
+  .jump a {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--navy);
+    text-decoration: none;
+    border: var(--outline);
+    border-radius: 999px;
+    padding: 0.35rem 0.9rem;
+    background: var(--white);
+  }
+  .jump a:hover {
+    background: var(--sun);
+  }
+  .group {
+    margin-top: 3rem;
+    scroll-margin-top: 1rem;
+  }
+  .list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: repeat(auto-fill, minmax(19rem, 1fr));
+  }
+  .res {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background: var(--white);
+  }
+  .res h3 {
+    margin-top: 0.8rem;
+    color: var(--navy);
+  }
+  .res p {
+    font-size: 0.98rem;
+  }
+  .res__meta {
+    margin-top: auto;
+    font-size: 0.85rem !important;
+    color: var(--navy-soft);
+  }
+  .end h2 {
+    color: var(--sun);
+  }
+  .end__inner {
+    max-width: 46rem;
+  }
+  .end .microcopy {
+    color: var(--cream);
+  }
+</style>

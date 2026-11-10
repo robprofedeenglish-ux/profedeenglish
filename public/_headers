@@ -3,3 +3,7 @@
   X-Robots-Tag: noindex, nofollow
 /aviso-legal.html
   X-Robots-Tag: noindex, nofollow
+
+# PDFs descargables: que Google mande a la gente a /recursos (con la página y el botón), no al PDF suelto
+/descargas/*
+  X-Robots-Tag: noindex
