@@ -15,7 +15,7 @@ Hace falta Python con `playwright` (Chromium) y `pypdf`. El pie de página usa l
 
 El script:
 
-- crea `public/descargas/<slug>.pdf` (servidos con `X-Robots-Tag: noindex` desde `public/_headers`, para que Google mande a la gente a `/recursos` y no al PDF suelto);
+- crea `public/descargas/<slug>.pdf` (indexables a propósito: si Google los posiciona, también traen visitas, y cada PDF acaba con el enlace a Skool);
 - actualiza `src/data/recursos.json`, que es lo que lista la página `src/pages/recursos.astro`;
 - se niega a generar un PDF si el texto lleva rayas (em o en dash).
 
