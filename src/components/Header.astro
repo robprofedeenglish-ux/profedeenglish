@@ -3,6 +3,7 @@ import { skoolLink } from '../config';
 const path = Astro.url.pathname;
 const links = [
   { href: '/articulos', label: 'Artículos' },
+  { href: '/test-de-nivel', label: 'Test de nivel' },
   { href: '/recursos', label: 'Recursos' },
   { href: '/sobre-mi', label: 'Sobre mí' },
   { href: '/opiniones', label: 'Opiniones' },
@@ -87,9 +88,28 @@ const links = [
     text-decoration: underline;
     text-decoration-thickness: 2px;
   }
-  @media (max-width: 56rem) {
+  /* Below desktop width the menu drops to its own row under the logo and scrolls sideways,
+     so phones can still reach every section (the test de nivel link sits near the start). */
+  @media (max-width: 64rem) {
+    .site-header__inner {
+      flex-wrap: wrap;
+      row-gap: 0.4rem;
+    }
     .site-nav {
+      order: 3;
+      width: 100%;
+      gap: 1.25rem;
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding: 0.15rem 0 0.1rem;
+    }
+    .site-nav::-webkit-scrollbar {
       display: none;
+    }
+    .site-nav a {
+      white-space: nowrap;
+      font-size: 0.95rem;
+      padding: 0.35rem 0;
     }
   }
   /* On phones the R mark stands in for the name so the button keeps its accessible size */

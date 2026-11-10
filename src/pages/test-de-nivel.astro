@@ -1,0 +1,794 @@
+---
+// Test de nivel gratis. La lógica y las preguntas están en public/test-de-nivel/app.js
+// (script clásico, sin bundling, para que los onclick del test funcionen tal cual).
+// No usa cookies ni almacenamiento: todo vive en memoria mientras la página está abierta.
+import Base from '../layouts/Base.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { SITE, skoolLink } from '../config';
+import { breadcrumbs } from '../lib/schema';
+
+const waNumber = SITE.whatsapp.match(/wa\.me\/(\d+)/)?.[1] ?? '';
+const crumbs = [
+  { label: 'Inicio', href: '/' },
+  { label: 'Test de nivel', href: '/test-de-nivel' },
+];
+const title = 'Test de nivel de inglés gratis (A2 a C1) con listening';
+const description =
+  'Test de nivel de inglés gratis y sin registro, de A2 a C1. Gramática, vocabulario, lectura y listening corregidos al momento, y tu redacción la corrijo yo.';
+---
+
+<Base title={title} description={description} image="/test-de-nivel/portada.jpg" schema={[breadcrumbs(crumbs)]}>
+  <section class="lt-section">
+    <div class="wrap lt-wrap">
+      <Breadcrumbs items={crumbs} />
+      <div
+        id="lt"
+        class="lt"
+        lang="es"
+        data-wa={waNumber}
+        data-wa-display={SITE.whatsappDisplay}
+        data-skool-result={skoolLink('test-de-nivel', 'resultado')}
+        data-skool-a1={skoolLink('test-de-nivel', 'a1')}
+      >
+        <div id="ltLang" class="lt-lang" role="group" aria-label="Idioma de las instrucciones / Instructions language"></div>
+
+        <section class="lt-screen on" id="lt-welcome">
+          <img class="lt-banner" src="/test-de-nivel/portada.jpg" width="1400" height="744" alt="Rob sonriendo junto al lema Deja de bloquearte en 90 días" />
+          <h1>Test de nivel de inglés gratis</h1>
+          <p class="lt-lede">
+            Descubre tu nivel de inglés, de A2 a C1, con un test que he preparado yo basándome en el formato de los exámenes de Cambridge English. La
+            gramática, el vocabulario, la lectura y el listening se corrigen al momento, y si haces la redacción, te la corrijo yo.
+          </p>
+          <p>
+            Al terminar verás tu nivel del MCER con un desglose por destreza, y podrás guardar tu informe en PDF o mandármelo por WhatsApp.
+          </p>
+          <p class="lt-meta">Es gratis, no tienes que registrarte ni dejar tu correo, y la prueba rápida dura unos 20 minutos.</p>
+          <noscript><p class="lt-warn">Para hacer el test necesitas tener JavaScript activado en tu navegador.</p></noscript>
+        </section>
+        <section class="lt-screen" id="lt-rules"></section>
+        <section class="lt-screen" id="lt-level"></section>
+        <section class="lt-screen" id="lt-a1"></section>
+        <section class="lt-screen" id="lt-mode"></section>
+        <section class="lt-screen" id="lt-test"></section>
+        <section class="lt-screen" id="lt-results"></section>
+      </div>
+    </div>
+  </section>
+  <script is:inline src="/test-de-nivel/app.js?v=8" defer></script>
+</Base>
+
+<style is:global>
+  /* El contenido del test lo dibuja app.js, así que estos estilos son globales con el prefijo .lt */
+  .lt-section {
+    padding: clamp(1.5rem, 4vw, 2.5rem) 0 clamp(3rem, 7vw, 5rem);
+  }
+  .lt-wrap {
+    max-width: calc(46rem + 2 * var(--gutter));
+  }
+  .lt {
+    scroll-margin-top: 0.75rem;
+  }
+  .lt-screen {
+    display: none;
+  }
+  .lt-screen.on {
+    display: block;
+  }
+  .lt p:last-child {
+    margin-bottom: 0;
+  }
+  .lt .btn {
+    display: block;
+    width: 100%;
+    text-align: center;
+    cursor: pointer;
+  }
+  .lt .btn:disabled {
+    background: var(--cream);
+    color: var(--navy-soft);
+    border-color: var(--navy-soft);
+    cursor: not-allowed;
+  }
+  .lt-mt,
+  .lt .lt-back {
+    margin-top: 0.75rem;
+  }
+  .lt h1 {
+    font-size: clamp(2.2rem, 6.5vw, 3.4rem);
+  }
+  .lt h2 {
+    font-size: clamp(1.8rem, 5vw, 2.4rem);
+  }
+  .lt-lede {
+    font-size: 1.12em;
+  }
+  .lt-meta,
+  .lt-small {
+    font-size: 0.92rem;
+    color: var(--navy-soft);
+  }
+  .lt-meta {
+    margin-bottom: 1.25rem;
+  }
+  .lt-small {
+    margin: 0.6rem 0 1rem;
+  }
+  .lt-build {
+    text-align: center;
+    font-size: 0.75rem;
+    color: var(--navy-soft);
+    margin-top: 1rem;
+  }
+  .lt-eyebrow {
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--sea);
+    margin: 0 0 0.4rem;
+  }
+  .lt-instr {
+    color: var(--navy-soft);
+  }
+
+  /* language switch */
+  .lt-lang {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0 0 1.25rem;
+  }
+  .lt-lang[hidden],
+  .lt [hidden] {
+    display: none !important;
+  }
+  .lt-lang__label {
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin-right: 0.25rem;
+  }
+  .lt-lang button {
+    font: inherit;
+    font-weight: 700;
+    font-size: 0.95rem;
+    padding: 0.4rem 1rem;
+    border-radius: 999px;
+    border: var(--outline);
+    background: var(--cream);
+    color: var(--navy);
+    cursor: pointer;
+    min-height: 44px;
+  }
+  .lt-lang button[aria-pressed='true'] {
+    background: var(--navy);
+    color: var(--cream);
+  }
+
+  .lt-banner {
+    width: 100%;
+    border: var(--outline-thick);
+    border-radius: var(--radius);
+    margin: 0 0 1.75rem;
+  }
+
+  /* cards and boxes */
+  .lt .card {
+    margin: 0 0 1rem;
+  }
+  .lt .lt-tight {
+    padding: 1.1rem 1.25rem;
+  }
+  .lt-warn {
+    background: var(--white);
+    border: var(--outline);
+    border-left: 8px solid var(--coral);
+    border-radius: var(--radius);
+    padding: 1rem 1.25rem;
+    margin: 0 0 1rem;
+  }
+  .lt-optional {
+    background: var(--white);
+    border: var(--outline);
+    border-left: 8px solid var(--sun);
+    border-radius: var(--radius);
+    padding: 1rem 1.25rem;
+    margin: 0 0 1.25rem;
+  }
+  .lt-label {
+    display: block;
+    font-weight: 700;
+    margin: 1.5rem 0 0.4rem;
+  }
+  .lt-input {
+    font: inherit;
+    width: 100%;
+    max-width: 16rem;
+    padding: 0.65rem 0.85rem;
+    border: var(--outline);
+    border-radius: 10px;
+    background: var(--white);
+    color: var(--navy);
+  }
+  .lt-input--wide {
+    max-width: 100%;
+  }
+  .lt-check {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    background: var(--cream);
+    border: var(--outline);
+    border-radius: var(--radius);
+    padding: 1rem;
+    cursor: pointer;
+    margin: 0 0 1rem;
+  }
+  .lt-check.sel {
+    background: var(--white);
+    border-color: var(--sea);
+  }
+  .lt-check input {
+    width: 22px;
+    height: 22px;
+    flex: 0 0 22px;
+    margin-top: 2px;
+    accent-color: var(--sea);
+  }
+  .lt-check span {
+    font-size: 0.95rem;
+  }
+  .lt-btnrow {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+  }
+  .lt-btnrow .btn {
+    flex: 1;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+
+  /* level and mode choices */
+  .lt-choice {
+    display: block;
+    width: 100%;
+    text-align: left;
+    font: inherit;
+    color: var(--navy);
+    background: var(--cream);
+    border: var(--outline);
+    border-radius: var(--radius);
+    padding: 1rem 1.25rem;
+    margin: 0 0 0.75rem;
+    cursor: pointer;
+  }
+  .lt-choice:hover {
+    background: var(--white);
+  }
+  .lt-choice.sel {
+    background: var(--white);
+    border-color: var(--sea);
+    box-shadow: inset 0 0 0 1px var(--sea);
+  }
+  .lt-choice__title {
+    display: block;
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: var(--sea);
+    margin-bottom: 0.15rem;
+  }
+  .lt-choice__desc {
+    display: block;
+    font-size: 0.97rem;
+  }
+
+  /* progress */
+  .lt-prog {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    background: var(--cream);
+    padding: 0.75rem 0 0.7rem;
+    margin: 0 0 1.25rem;
+    border-bottom: var(--outline);
+  }
+  .lt-prog__meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 0.45rem;
+  }
+  .lt-prog__bar {
+    height: 10px;
+    border: var(--outline);
+    border-radius: 999px;
+    background: var(--white);
+    overflow: hidden;
+  }
+  .lt-prog__bar i {
+    display: block;
+    height: 100%;
+    background: var(--sea);
+    transition: width 0.3s ease;
+  }
+
+  /* reading passages and questions */
+  .lt h3 {
+    font-size: 1.3rem;
+    color: var(--navy);
+  }
+  .lt-passage {
+    background: var(--white);
+    border: var(--outline);
+    border-left: 8px solid var(--sea-light);
+    border-radius: var(--radius);
+    padding: 1.15rem 1.35rem;
+    margin: 0 0 1.25rem;
+    line-height: 1.75;
+  }
+  .lt-passage p {
+    margin: 0 0 0.85rem;
+  }
+  .lt .gap {
+    display: inline-block;
+    min-width: 2.75rem;
+    text-align: center;
+    background: var(--sun);
+    border: 2px solid var(--navy);
+    border-radius: 999px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    line-height: 1.2;
+    padding: 0.05rem 0.45rem;
+  }
+  .lt .note {
+    display: inline-block;
+    background: var(--sun);
+    border: 2px solid var(--navy);
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 0 0.55rem;
+    margin-left: 0.25rem;
+  }
+  .lt .email-box {
+    background: var(--cream);
+    border: 2px dashed var(--navy);
+    border-radius: 10px;
+    padding: 0.85rem 1rem;
+    margin: 0.75rem 0;
+  }
+  .lt .email-box p {
+    margin: 0 0 0.6rem;
+  }
+  .lt .email-box p:last-child {
+    margin: 0;
+  }
+  .lt-questions {
+    padding: 0.25rem 1.25rem;
+  }
+  .lt-q {
+    padding: 1.1rem 0;
+    border-bottom: 2px solid var(--cream);
+  }
+  .lt-questions .lt-q {
+    border-bottom-color: rgba(30, 42, 58, 0.15);
+  }
+  .lt-q:last-child {
+    border-bottom: 0;
+  }
+  .lt-qhead {
+    display: flex;
+    gap: 0.7rem;
+    margin-bottom: 0.6rem;
+  }
+  .lt-qnum {
+    flex: 0 0 28px;
+    width: 28px;
+    height: 28px;
+    background: var(--navy);
+    color: var(--cream);
+    border-radius: 50%;
+    font-size: 0.8rem;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .lt-qtext {
+    flex: 1;
+  }
+  .lt-qlead {
+    margin-bottom: 0.5rem;
+  }
+  .lt-qhint {
+    display: inline-block;
+    background: var(--navy);
+    color: var(--sun);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    padding: 0.2rem 0.6rem;
+    border-radius: 6px;
+    margin-bottom: 0.5rem;
+  }
+  .lt-notice {
+    background: var(--cream);
+    border: 2px dashed var(--navy);
+    border-radius: 10px;
+    padding: 0.8rem 1rem;
+    margin-bottom: 0.75rem;
+  }
+  .lt .card.lt-questions {
+    background: var(--white);
+  }
+  .lt-opts {
+    margin-left: 2.4rem;
+  }
+  .lt-opts--flat {
+    margin: 0 0 1rem;
+  }
+  .lt-opt {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    width: 100%;
+    text-align: left;
+    font: inherit;
+    color: var(--navy);
+    background: transparent;
+    padding: 0.55rem 0.75rem;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-bottom: 0.2rem;
+  }
+  .lt-opt:hover {
+    background: var(--cream);
+  }
+  .lt-opt.sel {
+    border-color: var(--sea);
+    background: var(--cream);
+  }
+  .lt-opt--boxed {
+    border-color: var(--navy);
+    background: var(--cream);
+    margin-bottom: 0.5rem;
+  }
+  .lt-opt--boxed.sel {
+    background: var(--white);
+    border-color: var(--sea);
+  }
+  .lt-ltr {
+    flex: 0 0 24px;
+    height: 24px;
+    border: 2px solid var(--navy);
+    border-radius: 50%;
+    font-size: 0.75rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1px;
+  }
+  .lt-opt.sel .lt-ltr {
+    background: var(--sea);
+    border-color: var(--sea);
+    color: var(--white);
+  }
+  .lt-txt {
+    flex: 1;
+  }
+  .lt-inline-opts {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem;
+    margin-left: 2.4rem;
+  }
+  .lt-inline-opts .lt-qnum {
+    margin-right: 0.2rem;
+  }
+  .lt-inline-opts .lt-opt {
+    width: auto;
+    border: 2px solid var(--navy);
+    background: var(--cream);
+    padding: 0.4rem 0.75rem;
+    margin: 0;
+    align-items: center;
+  }
+  .lt-inline-opts .lt-opt.sel {
+    border-color: var(--sea);
+    background: var(--white);
+  }
+  .lt-tin {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-left: 2.4rem;
+  }
+  .lt-brief {
+    background: var(--white);
+  }
+  .lt-brief ul {
+    margin: 0.5rem 0 0;
+    padding-left: 1.25rem;
+  }
+  .lt-storyimg {
+    width: 100%;
+    background: var(--white);
+    border: var(--outline);
+    border-radius: var(--radius);
+    margin: 0 0 1rem;
+  }
+  .lt-textarea {
+    display: block;
+    width: 100%;
+    min-height: 15rem;
+    font: inherit;
+    line-height: 1.65;
+    padding: 0.9rem 1rem;
+    border: var(--outline);
+    border-radius: var(--radius);
+    background: var(--white);
+    color: var(--navy);
+    resize: vertical;
+  }
+  .lt-wcount {
+    text-align: right;
+    font-size: 0.85rem;
+    color: var(--navy-soft);
+    margin-top: 0.35rem;
+  }
+
+  /* listening player */
+  .lt-player {
+    background: var(--navy);
+    color: var(--cream);
+    border-radius: var(--radius);
+    padding: 1.35rem;
+    margin: 0 0 1.25rem;
+    text-align: center;
+  }
+  .lt-player__title {
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--sun);
+    margin: 0 0 0.35rem;
+  }
+  .lt-player .btn {
+    max-width: 20rem;
+    margin: 1rem auto 0;
+    border-color: var(--cream);
+  }
+  .lt-player .btn:disabled {
+    background: var(--navy-soft);
+    color: var(--cream);
+    border-color: var(--navy-soft);
+  }
+  .lt-player__bar {
+    height: 8px;
+    background: var(--navy-soft);
+    border-radius: 999px;
+    overflow: hidden;
+    margin-top: 1rem;
+  }
+  .lt-player__bar i {
+    display: block;
+    height: 100%;
+    width: 0;
+    background: var(--sun);
+  }
+  .lt-player__state {
+    margin: 0.6rem 0 0;
+    font-size: 0.9rem;
+    min-height: 1.4em;
+  }
+
+  /* results */
+  .lt-verdict {
+    background: var(--navy);
+    color: var(--cream);
+    border-radius: var(--radius);
+    padding: 1.75rem 1.5rem;
+    text-align: center;
+    margin: 0 0 1rem;
+  }
+  .lt-verdict__eyebrow {
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--sun);
+    margin: 0 0 0.25rem;
+  }
+  .lt .lt-verdict__band {
+    color: var(--cream);
+    font-size: clamp(3.6rem, 14vw, 5rem);
+    line-height: 1.05;
+    margin: 0 0 0.2rem;
+  }
+  .lt .lt-verdict__band--none {
+    font-size: clamp(2.2rem, 8vw, 3rem);
+  }
+  .lt-verdict__sub {
+    font-size: 1.05rem;
+    margin: 0 0 0.5rem;
+  }
+  .lt-verdict__pct {
+    color: var(--sun);
+    font-weight: 700;
+    margin: 0.5rem 0 0.25rem;
+  }
+  .lt-verdict__test {
+    font-size: 0.88rem;
+    margin: 0;
+  }
+  .lt-skill {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.55rem 0;
+  }
+  .lt-skill__nm {
+    flex: 0 0 6.5rem;
+    font-weight: 700;
+    font-size: 0.95rem;
+  }
+  .lt-skill__track {
+    flex: 1;
+    height: 12px;
+    border: var(--outline);
+    border-radius: 999px;
+    background: var(--white);
+    overflow: hidden;
+  }
+  .lt-skill__track i {
+    display: block;
+    height: 100%;
+    background: var(--sea);
+  }
+  .lt-skill__val {
+    flex: 0 0 5.5rem;
+    text-align: right;
+    font-size: 0.88rem;
+    color: var(--navy-soft);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  .lt-share,
+  .lt-cta {
+    border: var(--outline-thick);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    margin: 1.75rem 0 1rem;
+  }
+  .lt-share {
+    background: var(--white);
+  }
+  .lt-linkbtn {
+    font: inherit;
+    font-weight: 700;
+    color: var(--sea);
+    background: none;
+    border: 0;
+    padding: 0.75rem 0 0;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+    cursor: pointer;
+    margin-right: 0.5rem;
+  }
+  .lt-sharetext {
+    display: none;
+    width: 100%;
+    min-height: 10rem;
+    font: inherit;
+    font-size: 0.9rem;
+    padding: 0.75rem;
+    border: var(--outline);
+    border-radius: 10px;
+    background: var(--cream);
+    color: var(--navy);
+  }
+  .lt-sharetext.on {
+    display: block;
+  }
+  .lt-speak h3 {
+    color: var(--sea);
+  }
+  .lt-cta {
+    background: var(--sea);
+    color: var(--cream);
+  }
+  .lt .lt-cta h2 {
+    color: var(--cream);
+  }
+  .lt-cta .btn {
+    margin-top: 1rem;
+  }
+
+  /* on-screen report, used only if the PDF can't be created */
+  .lt-report {
+    background: var(--white);
+    border: var(--outline);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+    margin: 0 0 1rem;
+  }
+  .lt-report__banner {
+    border-radius: 8px;
+    margin-bottom: 1rem;
+  }
+  .lt-report__title {
+    font-family: var(--display);
+    color: var(--coral);
+    font-size: 1.8rem;
+    line-height: 1.15;
+  }
+  .lt-report__band {
+    background: var(--navy);
+    color: var(--cream);
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+  }
+  .lt-report__table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+  }
+  .lt-report__table td {
+    padding: 0.4rem 0;
+    border-bottom: 1px solid var(--navy);
+  }
+  .lt-report__table td + td {
+    text-align: right;
+  }
+  .lt-report__writing {
+    white-space: pre-wrap;
+  }
+  @media print {
+    .site-header,
+    .site-footer,
+    .crumbs,
+    .waves,
+    .lt-lang,
+    #lt-results > :not(#reportPanel) {
+      display: none !important;
+    }
+    .lt-report {
+      border: 0;
+      padding: 0;
+    }
+    .lt-report__band {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+  }
+
+  @media (max-width: 34rem) {
+    .lt-opts,
+    .lt-inline-opts,
+    .lt-tin {
+      margin-left: 0;
+    }
+    .lt-skill__nm {
+      flex-basis: 5.5rem;
+      font-size: 0.88rem;
+    }
+    .lt-skill__val {
+      flex-basis: 4.8rem;
+      font-size: 0.82rem;
+    }
+    .lt-share,
+    .lt-cta {
+      padding: 1.25rem;
+    }
+  }
+</style>
