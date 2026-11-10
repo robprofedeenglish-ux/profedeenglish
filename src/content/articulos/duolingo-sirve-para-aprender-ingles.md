@@ -2,7 +2,7 @@
 title: "¿Duolingo sirve para aprender inglés en 2027? Lo que hace bien y lo que no"
 description: "¿Duolingo sirve para aprender inglés? Lo probé y te cuento qué hace bien, dónde se queda corto y cómo combinarlo para acabar hablando de verdad."
 shortAnswer: "Duolingo sirve para aprender vocabulario y gramática básica, y además es gratis, pero con la app sola no vas a llegar a hablar inglés con soltura. Úsalo como complemento de clases o de práctica real hablando, no como sustituto."
-published: 2026-11-07
+published: 2026-11-10
 category: apps-y-clases
 intent: compra
 youtubeId: "ZeCXzoVRdR8"
@@ -20,7 +20,6 @@ faq:
     a: "Sí, se puede usar gratis, con anuncios y, en el teléfono, con límites de práctica (el sistema de energía). El plan Super quita ambas cosas y, según la ficha de la App Store de España, tiene una prueba gratuita de 14 días."
   - q: "¿Vale la pena pagar Duolingo Super para aprender inglés?"
     a: "Depende de lo que busques. Si lo que quieres es más práctica de conversación, mi opinión es que con conversaciones tan cortas quizá te rinda más una clase al mes con un profesor, mientras que si solo quieres practicar cada día sin anuncios ni límites, es una cuestión de presupuesto."
-draft: true
 ---
 
 Si llevas tiempo viendo cómo sube tu racha en Duolingo y te preguntas si con eso vas a acabar hablando inglés, o si en realidad estás jugando a aprender, la respuesta honesta depende de lo que esperes de la app. Yo la probé hace poco y hasta hice una reseña en mi canal de YouTube, así que aquí te cuento lo que me gusta, lo que le falta y cómo sacarle partido sin quedarte solo en ella.
