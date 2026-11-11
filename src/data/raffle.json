@@ -1,0 +1,19 @@
+{
+  "title": "November Raffle",
+  "drawDate": "2026-11-30T20:00:00+01:00",
+  "revealed": false,
+  "ticketTiers": [
+    { "upTo": 30, "weight": 1 },
+    { "upTo": 60, "weight": 0.5 },
+    { "upTo": null, "weight": 0.25 }
+  ],
+  "showTierRule": true,
+  "hostKeyHash": "bde17b89a110da5c69c869bce41999ea0bd6c78927d9d5d4d20f9bd46605313c",
+  "prizes": [
+    { "name": "Voice-note feedback", "description": "Send me one recording and I'll reply with personal feedback on it." },
+    { "name": "Pronunciation assessment", "description": "A personal video breaking down your pronunciation, with what to work on first." },
+    { "name": "30-minute private class", "description": "One-to-one with Rob, on whatever you want to work on." }
+  ],
+  "entries": [],
+  "winners": []
+}

@@ -1,0 +1,394 @@
+---
+// Members-only monthly raffle for the Skool community (Real English With Rob).
+// Not linked anywhere on the site, kept out of the sitemap (astro.config.mjs) and
+// noindexed twice (meta tag below + X-Robots-Tag in public/_headers).
+// No cookies, no storage, no third-party requests: fonts are self-hosted via fontsource.
+//
+// Each month, only edit src/data/raffle.json:
+//   1. Set the title, drawDate and prizes (drawn in the order listed, biggest last).
+//   2. On draw day, add entries [{ "name": "Lucía M.", "points": 42 }] and set "revealed": true.
+//      While "revealed" is false, the names are not even included in the page.
+//   3. After the live draw, add winners [{ "prize": "...", "name": "..." }].
+// Spin controls only appear at /raffle?host=KEY, where sha256(KEY) === hostKeyHash.
+import '@fontsource/shrikhand/400.css';
+import '@fontsource/dm-sans/400.css';
+import '@fontsource/dm-sans/700.css';
+import raffle from '../data/raffle.json';
+
+const data = { ...raffle, entries: raffle.revealed ? raffle.entries : [] };
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>{raffle.title} · Real English With Rob</title>
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" href="/favicon-32x32.png" type="image/png" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
+    <meta name="theme-color" content="#F4EFE5" />
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <div class="kicker">Real English With Rob</div>
+        <h1 id="title">{raffle.title}</h1>
+        <p class="sub" id="intro"></p>
+        <div class="countdown" id="countdown"></div>
+      </header>
+
+      <section id="resultsSec" class="hidden">
+        <div class="results">
+          <h2 class="plain">This month's winners</h2>
+          <ul id="resultsList"></ul>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="plain">Prizes this month</h2>
+        <div class="prizes" id="prizes"></div>
+      </section>
+
+      <section>
+        <h2 class="plain">The wheel</h2>
+        <div class="wheel-box">
+          <div id="lockedView">
+            <div class="locked"></div>
+            <div class="lock-msg"><div><h2>Locked</h2><span id="lockText"></span></div></div>
+          </div>
+          <div id="liveView" class="hidden">
+            <div class="pointer"></div>
+            <canvas id="wheel" width="920" height="920"></canvas>
+            <img class="hub" src="/logo-r.png" width="96" height="96" alt="" />
+          </div>
+        </div>
+        <div class="controls hidden" id="hostControls">
+          <div class="host-tag">Host controls (only you see this)</div>
+          <div class="next" id="nextText"></div>
+          <button id="spinBtn" type="button">Spin the wheel</button>
+        </div>
+      </section>
+
+      <section id="entriesSec" class="hidden">
+        <h2 class="plain">Who's on the wheel</h2>
+        <table>
+          <thead><tr><th>Member</th><th class="n">Points</th><th class="n">Chance</th></tr></thead>
+          <tbody id="entries"></tbody>
+        </table>
+      </section>
+
+      <section>
+        <div class="how">
+          <h2 class="plain">How it works</h2>
+          <ul id="howList"></ul>
+        </div>
+      </section>
+
+      <footer>Members only · please don't share this link outside the community</footer>
+    </div>
+
+    <div class="overlay" id="overlay">
+      <div class="card">
+        <div class="kicker">And the winner is</div>
+        <h2 class="who" id="winWho"></h2>
+        <div class="what" id="winWhat"></div>
+        <button id="closeWin" type="button">Carry on</button>
+      </div>
+    </div>
+
+    <script type="application/json" id="raffle-data" set:html={JSON.stringify(data)} />
+
+    <script is:inline>
+      const cfg = JSON.parse(document.getElementById('raffle-data').textContent);
+      const COLORS = ['#E04E36', '#1F6F96', '#F2B84B', '#6FB3D2', '#1E2A3A'];
+      const TEXT_ON = { '#E04E36': '#F4EFE5', '#1F6F96': '#F4EFE5', '#F2B84B': '#1E2A3A', '#6FB3D2': '#1E2A3A', '#1E2A3A': '#F4EFE5' };
+      const $ = (id) => document.getElementById(id);
+
+      let isHost = false;
+      let pool = [], drawIndex = 0, rotation = 0, spinning = false;
+      const sessionWinners = [];
+
+      async function checkHost() {
+        const key = new URLSearchParams(location.search).get('host');
+        if (!key || !cfg.hostKeyHash || !window.crypto || !crypto.subtle) return false;
+        const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(key));
+        const hex = Array.from(new Uint8Array(buf)).map((b) => b.toString(16).padStart(2, '0')).join('');
+        return hex === cfg.hostKeyHash;
+      }
+
+      function ticketsFor(p) {
+        const tiers = cfg.ticketTiers || [{ upTo: null, weight: 1 }];
+        let t = 0, prev = 0;
+        for (const tier of tiers) {
+          const top = tier.upTo == null ? Infinity : tier.upTo;
+          if (p > prev) t += (Math.min(p, top) - prev) * tier.weight;
+          prev = top;
+          if (p <= top) break;
+        }
+        return Math.max(0, t);
+      }
+
+      function li(text) { const el = document.createElement('li'); el.textContent = text; return el; }
+
+      function render() {
+        const d = new Date(cfg.drawDate);
+        const dateStr = d.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', timeZone: 'Europe/Madrid' });
+        const timeStr = d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Madrid' });
+        $('intro').textContent = 'Every point you earn in the community this month gets you a bigger slice of the wheel. It spins live on ' + dateStr + ' at ' + timeStr + ' (Spain time).';
+
+        const tiers = cfg.ticketTiers || [];
+        const rule = cfg.showTierRule && tiers.length > 1
+          ? "So one person can't take over the wheel, your first " + tiers[0].upTo + " points count in full and each point after that counts a bit less, but there's no limit and every point still grows your slice."
+          : null;
+        [
+          'Every like on one of your posts or comments is 1 point, and every point you earn this month makes your slice of the wheel bigger.',
+          rule,
+          'One point is enough to be in. More points means a bigger slice, but anyone can win.',
+          'Nobody can win twice in the same month, so once a name comes up it leaves the wheel.',
+          'Prizes are drawn in the order listed, with the biggest one last.',
+        ].filter(Boolean).forEach((t) => $('howList').appendChild(li(t)));
+
+        renderPrizes();
+
+        const winners = cfg.winners || [];
+        if (winners.length) {
+          $('resultsSec').classList.remove('hidden');
+          winners.forEach((w) => {
+            const el = document.createElement('li');
+            const b = document.createElement('b'); b.textContent = w.name;
+            el.append(b, ': ' + w.prize);
+            $('resultsList').appendChild(el);
+          });
+        }
+
+        if (cfg.revealed && (cfg.entries || []).length) {
+          $('lockedView').classList.add('hidden');
+          $('liveView').classList.remove('hidden');
+          $('countdown').classList.add('hidden');
+          pool = cfg.entries.map((e) => ({ name: e.name, tickets: ticketsFor(e.points) })).filter((e) => e.tickets > 0);
+          pool.forEach((e, i) => (e.color = COLORS[i % COLORS.length]));
+          if (pool.length > 1 && pool.length % COLORS.length === 1) pool[pool.length - 1].color = COLORS[2];
+          $('entriesSec').classList.remove('hidden');
+          renderEntries();
+          drawWheel();
+          if (isHost && !winners.length) { $('hostControls').classList.remove('hidden'); updateNext(); }
+        } else {
+          $('lockText').textContent = 'The names go on the wheel on ' + dateStr + ', once this month’s points are final.';
+          tick();
+          setInterval(tick, 1000);
+        }
+      }
+
+      function renderPrizes() {
+        const winners = (cfg.winners || []).concat(sessionWinners);
+        $('prizes').innerHTML = '';
+        cfg.prizes.forEach((p, i) => {
+          const el = document.createElement('div');
+          el.className = 'prize' + (i === cfg.prizes.length - 1 ? ' top' : '');
+          el.innerHTML = '<div class="num"></div><div><h3></h3><p></p></div>';
+          el.querySelector('.num').textContent = i + 1;
+          el.querySelector('h3').textContent = p.name;
+          el.querySelector('p').textContent = p.description || '';
+          const w = winners.find((w) => w.prize === p.name);
+          if (w) { const s = document.createElement('div'); s.className = 'won'; s.textContent = 'Won by ' + w.name; el.lastChild.appendChild(s); }
+          $('prizes').appendChild(el);
+        });
+      }
+
+      function renderEntries() {
+        const total = pool.reduce((a, e) => a + e.tickets, 0);
+        const all = cfg.entries.map((e) => ({ name: e.name, points: e.points, tickets: ticketsFor(e.points) }))
+          .filter((e) => e.tickets > 0).sort((a, b) => b.points - a.points);
+        $('entries').innerHTML = '';
+        all.forEach((e) => {
+          const live = pool.find((p) => p.name === e.name);
+          const tr = document.createElement('tr');
+          if (!live) tr.className = 'out';
+          const pct = live && total ? (live.tickets / total) * 100 : 0;
+          tr.innerHTML = '<td><span class="dot"></span><span></span></td><td class="n"></td><td class="n"></td>';
+          tr.querySelector('.dot').style.background = live ? live.color : '#ccc';
+          tr.children[0].lastChild.textContent = e.name;
+          tr.children[1].textContent = e.points;
+          tr.children[2].textContent = live ? (pct < 1 ? pct.toFixed(1) : Math.round(pct)) + '%' : 'won';
+          $('entries').appendChild(tr);
+        });
+      }
+
+      function drawWheel() {
+        const c = $('wheel'), ctx = c.getContext('2d');
+        const W = c.width, R = W / 2 - 10, cx = W / 2, cy = W / 2;
+        ctx.clearRect(0, 0, W, W);
+        const total = pool.reduce((a, e) => a + e.tickets, 0);
+        if (!total) return;
+        let a = rotation;
+        pool.forEach((e) => {
+          const sweep = (e.tickets / total) * Math.PI * 2;
+          ctx.beginPath(); ctx.moveTo(cx, cy); ctx.arc(cx, cy, R, a, a + sweep); ctx.closePath();
+          ctx.fillStyle = e.color; ctx.fill();
+          if (pool.length > 1) { ctx.strokeStyle = '#F4EFE5'; ctx.lineWidth = 4; ctx.stroke(); }
+          if (sweep > 0.12) {
+            ctx.save(); ctx.translate(cx, cy); ctx.rotate(a + sweep / 2);
+            ctx.fillStyle = TEXT_ON[e.color]; ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+            const size = Math.max(20, Math.min(40, sweep * 120));
+            ctx.font = '700 ' + size + "px 'DM Sans', sans-serif";
+            let label = e.name; const maxW = R - 110;
+            while (ctx.measureText(label).width > maxW && label.length > 3) label = label.slice(0, -2) + '…';
+            ctx.fillText(label, R - 24, 0);
+            ctx.restore();
+          }
+          a += sweep;
+        });
+        ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI * 2); ctx.lineWidth = 10; ctx.strokeStyle = '#1E2A3A'; ctx.stroke();
+      }
+
+      function updateNext() {
+        if (drawIndex >= cfg.prizes.length || !pool.length) {
+          $('nextText').textContent = drawIndex >= cfg.prizes.length ? 'All prizes drawn. Send Claude the winners so they show on the page.' : 'No names left on the wheel.';
+          $('spinBtn').disabled = true;
+          return;
+        }
+        $('nextText').textContent = 'Draw ' + (drawIndex + 1) + ' of ' + cfg.prizes.length + ': ';
+        const b = document.createElement('b'); b.textContent = cfg.prizes[drawIndex].name; $('nextText').appendChild(b);
+        $('spinBtn').disabled = false;
+      }
+
+      function randomUnit() { const u = new Uint32Array(1); crypto.getRandomValues(u); return u[0] / 4294967296; }
+
+      function spin() {
+        if (spinning || !pool.length) return;
+        spinning = true; $('spinBtn').disabled = true;
+        const TAU = Math.PI * 2;
+        const total = pool.reduce((a, e) => a + e.tickets, 0);
+        let r = randomUnit() * total, idx = 0;
+        for (; idx < pool.length; idx++) { r -= pool[idx].tickets; if (r < 0) break; }
+        idx = Math.min(idx, pool.length - 1);
+        let start = 0; for (let i = 0; i < idx; i++) start += (pool[i].tickets / total) * TAU;
+        const sweep = (pool[idx].tickets / total) * TAU;
+        const landing = start + sweep * (0.15 + 0.7 * randomUnit());
+        const pointer = -Math.PI / 2;
+        let target = pointer - landing;
+        target = rotation + (((target - rotation) % TAU) + TAU) % TAU + TAU * 6;
+        const from = rotation, dur = 6500, t0 = performance.now();
+        function frame(now) {
+          const t = Math.min(1, (now - t0) / dur);
+          rotation = from + (target - from) * (1 - Math.pow(1 - t, 4));
+          drawWheel();
+          if (t < 1) requestAnimationFrame(frame); else finish(idx);
+        }
+        requestAnimationFrame(frame);
+      }
+
+      function finish(idx) {
+        const winner = pool[idx], prize = cfg.prizes[drawIndex];
+        sessionWinners.push({ prize: prize.name, name: winner.name });
+        $('winWho').textContent = winner.name;
+        $('winWhat').textContent = 'wins the ' + prize.name.toLowerCase();
+        $('overlay').classList.add('show');
+        confetti();
+        renderPrizes();
+      }
+
+      $('closeWin').onclick = () => {
+        $('overlay').classList.remove('show');
+        const last = sessionWinners[sessionWinners.length - 1];
+        pool = pool.filter((p) => p.name !== last.name);
+        rotation = rotation % (Math.PI * 2);
+        drawIndex++; spinning = false;
+        renderEntries(); drawWheel(); updateNext();
+      };
+      $('spinBtn').onclick = spin;
+
+      function confetti() {
+        for (let i = 0; i < 90; i++) {
+          const p = document.createElement('div');
+          p.className = 'confetti';
+          p.style.left = Math.random() * 100 + 'vw';
+          p.style.background = COLORS[i % 4];
+          p.style.animationDuration = 2.2 + Math.random() * 2 + 's';
+          p.style.animationDelay = Math.random() * 0.6 + 's';
+          document.body.appendChild(p);
+          setTimeout(() => p.remove(), 5000);
+        }
+      }
+
+      function tick() {
+        const ms = new Date(cfg.drawDate) - Date.now();
+        if (ms <= 0) { $('countdown').innerHTML = '<div class="cd"><b>Today</b><span>draw day</span></div>'; return; }
+        const d = Math.floor(ms / 864e5), h = Math.floor(ms / 36e5) % 24, m = Math.floor(ms / 6e4) % 60, s = Math.floor(ms / 1e3) % 60;
+        $('countdown').innerHTML = [[d, 'days'], [h, 'hours'], [m, 'mins'], [s, 'secs']]
+          .map(([v, l]) => '<div class="cd"><b>' + v + '</b><span>' + l + '</span></div>').join('');
+      }
+
+      (async () => {
+        isHost = await checkHost();
+        render();
+        if (document.fonts) document.fonts.ready.then(() => { if (pool.length) drawWheel(); });
+      })();
+    </script>
+
+    <style is:global>
+      :root { --coral:#E04E36; --sea:#1F6F96; --sun:#F2B84B; --light:#6FB3D2; --cream:#F4EFE5; --navy:#1E2A3A; --line:rgba(30,42,58,.12); }
+      *, *::before, *::after { box-sizing: border-box; }
+      html, body { margin: 0; }
+      body { background: var(--cream); color: var(--navy); font-family: 'DM Sans', system-ui, sans-serif; line-height: 1.5; }
+      .wrap { max-width: 760px; margin: 0 auto; padding: 28px 18px 60px; }
+      header { text-align: center; margin-bottom: 26px; }
+      .kicker { font-weight: 700; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; color: var(--sea); }
+      h1 { font-family: 'Shrikhand', Georgia, serif; font-weight: 400; color: var(--coral); font-size: clamp(34px, 8vw, 54px); line-height: 1.1; margin: 6px 0 10px; }
+      h2 { margin: 0 0 12px; }
+      h2.plain { font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 20px; color: var(--navy); }
+      .sub { max-width: 520px; margin: 0 auto; font-size: 16px; }
+      section { margin-top: 30px; }
+      .countdown { display: flex; justify-content: center; gap: 10px; margin-top: 18px; }
+      .cd { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 8px 12px; min-width: 68px; text-align: center; }
+      .cd b { display: block; font-size: 24px; line-height: 1.1; }
+      .cd span { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+      .prizes { display: grid; gap: 10px; }
+      .prize { display: flex; gap: 14px; align-items: flex-start; background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; }
+      .prize .num { flex: 0 0 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; color: #fff; background: var(--sea); }
+      .prize.top .num { background: var(--coral); }
+      .prize h3 { margin: 0; font-size: 16px; }
+      .prize p { margin: 2px 0 0; font-size: 14px; color: #4d5560; }
+      .prize .won { margin-top: 6px; font-size: 14px; font-weight: 700; }
+      .how { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; }
+      .how ul { margin: 0; padding-left: 18px; }
+      .how li { margin: 4px 0; }
+      .wheel-box { position: relative; max-width: 460px; margin: 0 auto; }
+      canvas { display: block; width: 100%; height: auto; }
+      .hub { position: absolute; left: 50%; top: 50%; width: 15%; height: auto; transform: translate(-50%, -50%); border-radius: 50%; border: 3px solid var(--navy); }
+      .pointer { position: absolute; top: -6px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 16px solid transparent; border-right: 16px solid transparent; border-top: 30px solid var(--navy); z-index: 2; }
+      #lockedView { position: relative; }
+      .locked { aspect-ratio: 1; border-radius: 50%; border: 6px solid var(--navy); opacity: .22; background: conic-gradient(var(--coral) 0 18%, var(--sea) 0 34%, var(--sun) 0 52%, var(--light) 0 70%, var(--navy) 0 84%, var(--coral) 0 100%); }
+      .lock-msg { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; padding: 20px; }
+      .lock-msg > div { background: var(--cream); border: 2px solid var(--navy); border-radius: 16px; padding: 16px 20px; max-width: 280px; }
+      .lock-msg h2, .card h2 { font-family: 'Shrikhand', Georgia, serif; font-weight: 400; color: var(--coral); }
+      .lock-msg h2 { font-size: 26px; margin-bottom: 4px; }
+      .controls { text-align: center; margin-top: 18px; }
+      .next { font-size: 15px; margin-bottom: 10px; }
+      button { font-family: inherit; font-weight: 700; font-size: 19px; border: 0; border-radius: 99px; padding: 13px 28px; background: var(--coral); color: #fff; cursor: pointer; }
+      button:disabled { opacity: .45; cursor: default; }
+      .host-tag { display: inline-block; font-size: 12px; font-weight: 700; background: var(--navy); color: var(--cream); padding: 3px 10px; border-radius: 99px; margin-bottom: 10px; }
+      table { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid var(--line); font-size: 15px; }
+      th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--line); }
+      th { font-size: 12px; text-transform: uppercase; letter-spacing: .08em; font-weight: 700; color: #4d5560; }
+      tr:last-child td { border-bottom: 0; }
+      td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; }
+      .dot { display: inline-block; width: 11px; height: 11px; border-radius: 50%; margin-right: 8px; vertical-align: middle; }
+      .out td { opacity: .45; text-decoration: line-through; }
+      .results { background: var(--navy); color: var(--cream); border-radius: 14px; padding: 16px 18px; }
+      .results h2.plain { color: var(--sun); }
+      .results ul { margin: 0; padding-left: 18px; }
+      .overlay { position: fixed; inset: 0; background: rgba(30,42,58,.55); display: none; place-items: center; z-index: 10; padding: 20px; }
+      .overlay.show { display: grid; }
+      .card { background: var(--cream); border-radius: 20px; padding: 26px 24px; text-align: center; max-width: 360px; width: 100%; border: 3px solid var(--sun); }
+      .card .who { font-size: 38px; line-height: 1.15; margin: 6px 0; }
+      .card .what { font-size: 16px; margin-bottom: 18px; }
+      .confetti { position: fixed; top: -12px; width: 9px; height: 14px; z-index: 11; pointer-events: none; animation: fall linear forwards; }
+      @keyframes fall { to { transform: translateY(110vh) rotate(720deg); } }
+      footer { text-align: center; font-size: 13px; color: #4d5560; margin-top: 40px; }
+      .hidden { display: none !important; }
+    </style>
+  </body>
+</html>

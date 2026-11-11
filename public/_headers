@@ -4,3 +4,9 @@
 /aviso-legal.html
   X-Robots-Tag: noindex, nofollow
 
+
+# Members-only raffle page (Skool community): never indexed, not in the sitemap, not linked on the site
+/raffle
+  X-Robots-Tag: noindex, nofollow
+/raffle.html
+  X-Robots-Tag: noindex, nofollow
