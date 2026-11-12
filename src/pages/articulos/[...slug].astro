@@ -304,6 +304,23 @@ const articleSchema = {
   .prose :global(strong) {
     color: var(--navy);
   }
+  /* Prompts para copiar (bloques ```): texto que se ajusta al ancho del móvil */
+  .prose :global(pre) {
+    margin: 1.5rem 0;
+    padding: 1rem 1.25rem;
+    background: var(--white);
+    border: var(--outline);
+    border-left: 8px solid var(--sun);
+    border-radius: var(--radius);
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+  .prose :global(pre code) {
+    font-family: var(--sans);
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: var(--navy);
+  }
   /* English examples: a blockquote (>) becomes a postcard-style example card */
   .prose :global(blockquote) {
     margin: 1.5rem 0;

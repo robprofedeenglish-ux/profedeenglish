@@ -426,3 +426,335 @@ td.group {
   opacity: 0.85;
   margin-top: 4mm;
 }
+
+/* ---------- Tarjetas de temas para el speaking (temas-speaking-eoi-b2) ---------- */
+.theme {
+  break-before: page;
+  display: flex;
+  align-items: baseline;
+  gap: 3mm;
+  margin: 0 0 1.5mm;
+}
+.theme .tag {
+  flex: none;
+}
+.theme h2 {
+  margin: 0;
+}
+.theme-intro {
+  margin: 0 0 5mm;
+  color: var(--navy-soft);
+}
+.topic {
+  background: var(--white);
+  border: 1.5px solid var(--navy);
+  border-radius: 3.5mm;
+  padding: 4.5mm 6mm 4mm;
+  margin: 0 0 5mm;
+  break-inside: avoid;
+}
+.topic--newpage {
+  break-before: page;
+}
+/* Dos tarjetas por página: la tarjeta crece y el espacio libre va a las líneas para notas */
+.topic {
+  display: flex;
+  flex-direction: column;
+  min-height: 126mm;
+  box-sizing: border-box;
+}
+.topic--first {
+  min-height: 108mm;
+}
+.notes {
+  flex: 1 1 auto;
+  min-height: 7mm;
+  margin-top: 2.5mm;
+  padding-top: 2.5mm;
+  border-top: 1px dashed rgba(30, 42, 58, 0.35);
+  /* Líneas para escribir: una raya fina al final de cada franja de 7,6 mm */
+  background-image: linear-gradient(to bottom, transparent 7.3mm, rgba(31, 111, 150, 0.4) 7.3mm);
+  background-size: 100% 7.6mm;
+  background-origin: content-box;
+  background-clip: content-box;
+  background-repeat: repeat;
+}
+.notes .label {
+  display: inline-block;
+  background: var(--white);
+  padding-right: 2mm;
+  font-weight: 700;
+  font-size: 7.5pt;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--sea);
+}
+.topic__head {
+  display: flex;
+  align-items: center;
+  gap: 3mm;
+  margin-bottom: 3mm;
+}
+.topic__n {
+  flex: none;
+  width: 10mm;
+  height: 10mm;
+  border-radius: 50%;
+  background: var(--sun);
+  border: 1.5px solid var(--navy);
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  font-size: 10pt;
+}
+.topic__title {
+  font-family: 'Shrikhand', Georgia, serif;
+  color: var(--coral);
+  font-size: 18pt;
+  line-height: 1.1;
+}
+.topic__es {
+  font-size: 10pt;
+  color: var(--navy-soft);
+}
+.topic__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5mm;
+}
+.topic__block .label {
+  font-weight: 700;
+  font-size: 8.2pt;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--sea);
+  margin-bottom: 1.5mm;
+}
+.topic__block p,
+.topic__block ul {
+  font-size: 10.4pt;
+  line-height: 1.45;
+}
+.topic__block p {
+  margin: 0 0 1.5mm;
+}
+.topic__block ul {
+  margin: 0;
+  padding-left: 4.2mm;
+}
+.topic__block li {
+  margin-bottom: 1mm;
+}
+.topic__block--dialogue {
+  border-left: 1.5px dashed var(--sea-light);
+  padding-left: 5mm;
+}
+.vocab {
+  margin-top: 3mm;
+  padding-top: 2.5mm;
+  border-top: 1px dashed rgba(30, 42, 58, 0.35);
+  font-size: 9.8pt;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.6mm 5mm;
+}
+.vocab .label {
+  font-weight: 700;
+  font-size: 7.5pt;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--coral);
+}
+.vocab .es {
+  color: var(--navy-soft);
+}
+
+/* Lista para ir marcando */
+.checklist {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4mm;
+}
+.checklist table {
+  font-size: 8.8pt;
+  margin: 0;
+}
+.checklist td {
+  padding: 0.9mm 2.5mm;
+}
+.checklist th {
+  padding: 1.5mm 2.5mm;
+  font-size: 8pt;
+}
+.box {
+  display: inline-block;
+  width: 3.4mm;
+  height: 3.4mm;
+  border: 1.2px solid var(--navy);
+  border-radius: 0.8mm;
+  background: var(--white);
+  vertical-align: -0.5mm;
+}
+
+/* Páginas de la comunidad intercaladas */
+.promo {
+  break-before: page;
+  break-after: page;
+}
+.promo h2 {
+  font-size: 22pt;
+  margin: 2mm 0 3mm;
+}
+.promo img {
+  display: block;
+  width: 100%;
+  border: 1.5px solid var(--navy);
+  border-radius: 3.5mm;
+  margin: 5mm 0;
+}
+.promo .btn {
+  display: inline-block;
+  margin-top: 2mm;
+  background: var(--coral);
+  color: var(--white);
+  border: 1.5px solid var(--navy);
+  border-radius: 999px;
+  padding: 2.6mm 7mm;
+  font-weight: 700;
+  font-size: 12pt;
+  text-decoration: none;
+}
+.promo .link {
+  font-weight: 700;
+  color: var(--sea);
+}
+
+/* ---------- Portada a página completa (meta "cover": "full") ---------- */
+.fullcover {
+  position: relative;
+  height: 266mm;
+  margin: 0 -17mm;
+  padding: 4mm 17mm 0 22mm;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  break-after: page;
+}
+.fullcover__stripes {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 9mm;
+  background: linear-gradient(to right, var(--coral) 0, var(--coral) 3mm, var(--cream) 3mm, var(--cream) 5.5mm, var(--coral) 5.5mm, var(--coral) 7.5mm, transparent 7.5mm);
+}
+.fullcover__sun {
+  position: absolute;
+  right: -38mm;
+  top: -62mm;
+  width: 115mm;
+  height: 115mm;
+  border-radius: 50%;
+  background: var(--sun);
+  border: 1.5px solid var(--navy);
+}
+.fullcover .brand {
+  position: relative;
+  z-index: 1;
+}
+.fullcover__main {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.fullcover__main .kicker {
+  align-self: flex-start;
+  font-size: 10pt;
+  padding: 1mm 4mm;
+  margin: 0;
+}
+.fullcover h1 {
+  font-size: 48pt;
+  line-height: 1.04;
+  max-width: 160mm;
+  margin: 6mm 0 6mm;
+}
+.fullcover .subtitle {
+  font-size: 13.5pt;
+  max-width: 150mm;
+}
+.fullcover__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2.5mm;
+  margin-top: 7mm;
+}
+.fullcover__chips span {
+  background: var(--white);
+  border: 1.5px solid var(--navy);
+  border-radius: 999px;
+  padding: 1.2mm 4mm;
+  font-weight: 700;
+  font-size: 10pt;
+}
+.fullcover__by {
+  position: relative;
+  z-index: 1;
+  padding-bottom: 6mm;
+}
+.fullcover__by p {
+  margin: 0 0 3mm;
+  font-size: 10.5pt;
+  color: var(--navy-soft);
+}
+.fullcover__by strong {
+  color: var(--navy);
+}
+.fullcover__banner {
+  display: block;
+  width: 100%;
+  border: 1.5px solid var(--navy);
+  border-radius: 3.5mm;
+}
+
+/* Citas de miembros */
+.quotes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4mm;
+  margin: 5mm 0;
+}
+.quote {
+  background: var(--white);
+  border: 1.5px solid var(--navy);
+  border-left: 6px solid var(--sun);
+  border-radius: 3mm;
+  padding: 4mm 5mm;
+  margin: 0;
+  break-inside: avoid;
+}
+.quote p {
+  font-size: 10.5pt;
+  line-height: 1.5;
+  margin: 0 0 2mm;
+}
+.quote cite {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 9pt;
+  color: var(--sea);
+}
+.quote--wide {
+  grid-column: 1 / -1;
+}
+.promo .badge {
+  display: block;
+  width: 42mm;
+  margin: 6mm 0;
+  border: 1.5px solid var(--navy);
+  border-radius: 6mm;
+}

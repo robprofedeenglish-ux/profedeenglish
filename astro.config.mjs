@@ -12,6 +12,8 @@ export default defineConfig({
     }),
   ],
   markdown: {
+    // Sin resaltado de código: los bloques ``` se usan para prompts que el lector copia, con el estilo de la plantilla.
+    syntaxHighlight: false,
     rehypePlugins: [rehypeMidCta],
   },
 });

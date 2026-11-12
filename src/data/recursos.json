@@ -48,6 +48,18 @@
     "sizeKb": 96
   },
   {
+    "slug": "temas-speaking-eoi-b2",
+    "file": "/descargas/temas-speaking-eoi-b2.pdf",
+    "title": "50 temas para el speaking B2 de la EOI",
+    "description": "50 temas para practicar el monólogo y el diálogo del examen oral B2 de la EOI: familia, viajes, trabajo, tecnología y más, con preguntas y vocabulario útil.",
+    "category": "examenes",
+    "level": "B2",
+    "lang": "es",
+    "order": 5,
+    "pages": 34,
+    "sizeKb": 1037
+  },
+  {
     "slug": "preposiciones-in-on-at",
     "file": "/descargas/preposiciones-in-on-at.pdf",
     "title": "In, on, at",
