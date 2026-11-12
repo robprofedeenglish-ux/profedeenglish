@@ -14,7 +14,9 @@ interface Props {
 }
 
 const { title, description, image, type = 'website', schema = [], noindex = false } = Astro.props;
-const canonical = new URL(Astro.url.pathname, SITE.url).toString();
+// El build genera archivos .html, pero las URLs públicas (y las del sitemap) no llevan la extensión.
+const canonicalPath = Astro.url.pathname.replace(/(\/index)?\.html$/, '') || '/';
+const canonical = new URL(canonicalPath, SITE.url).toString();
 const fullTitle = title === SITE.name ? title : `${title} | ${SITE.name}`;
 const ogImage = new URL(image ?? '/og-default.png', SITE.url).toString();
 const blockIndex = noindex || !SITE.launched;
