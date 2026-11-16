@@ -217,7 +217,8 @@ def main():
 
     # Quita de la lista los recursos cuyo archivo fuente ya no existe
     slugs = {d.stem for d in docs}
-    index = sorted((r for s, r in by_slug.items() if s in slugs), key=lambda r: (r['order'], r['title']))
+    # Los recursos con 'prebuilt' se hicieron fuera de este script y se conservan
+    index = sorted((r for s, r in by_slug.items() if s in slugs or r.get('prebuilt')), key=lambda r: (r['order'], r['title']))
     DATA.write_text(json.dumps(index, ensure_ascii=False, indent=2) + '\n')
 
 

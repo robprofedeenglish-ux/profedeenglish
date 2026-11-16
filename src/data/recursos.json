@@ -1,5 +1,18 @@
 [
   {
+    "slug": "gramatica-inglesa-esencial",
+    "file": "/descargas/gramatica-inglesa-esencial.pdf",
+    "title": "Gramática inglesa esencial",
+    "description": "Siete guías en una: los 12 tiempos verbales, los modales, los condicionales, comparativos y superlativos, preguntas y auxiliares, 30 verbos irregulares y 20 conectores, con traducción y errores típicos.",
+    "category": "gramatica",
+    "level": "A2 a B2",
+    "lang": "es",
+    "order": 0,
+    "pages": 8,
+    "sizeKb": 113,
+    "prebuilt": true
+  },
+  {
     "slug": "tiempos-verbales-ingles",
     "file": "/descargas/tiempos-verbales-ingles.pdf",
     "title": "Los tiempos verbales en inglés",

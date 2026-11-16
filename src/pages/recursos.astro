@@ -66,7 +66,7 @@ const collection = {
             <h2 id={`h-${g.id}`}>{g.label}</h2>
             <ul class="list" role="list">
               {g.items.map((r) => (
-                <li class="card res">
+                <li class="card res" id={r.slug}>
                   <span class="badge">{r.level}</span>
                   <h3>{r.title}</h3>
                   <p>{r.description}</p>
@@ -135,6 +135,13 @@ const collection = {
     flex-direction: column;
     align-items: flex-start;
     background: var(--white);
+  }
+  .res {
+    scroll-margin-top: 1.5rem;
+  }
+  .res:target {
+    outline: 4px solid var(--sun);
+    outline-offset: 4px;
   }
   .res h3 {
     margin-top: 0.8rem;
