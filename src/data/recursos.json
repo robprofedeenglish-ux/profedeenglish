@@ -226,5 +226,17 @@
     "order": 60,
     "pages": 3,
     "sizeKb": 83
+  },
+  {
+    "slug": "freeze-tracker",
+    "file": "/descargas/freeze-tracker.pdf",
+    "title": "Day 1: The Freeze Tracker",
+    "description": "Apunta cada vez que te bloqueas al hablar en inglés: cuándo pasó, dónde estabas, con quién hablabas y qué lo hizo difícil. Es la ficha del día 1 del programa de 90 días para dejar de bloquearte.",
+    "category": "plan",
+    "level": "A2 a C1",
+    "lang": "en",
+    "order": 61,
+    "pages": 2,
+    "sizeKb": 85
   }
 ]

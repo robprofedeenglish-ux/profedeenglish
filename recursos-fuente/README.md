@@ -34,4 +34,4 @@ Rehechas en noviembre de 2026 a partir de la carpeta de Drive "Resources for the
 
 ## Fichas de la comunidad (`comunidad/`)
 
-Material del curso de 90 días para los miembros de Skool (por ejemplo `day-1-freeze-tracker.html`). Se generan con `python3 recursos-fuente/build_comunidad.py` y salen en `public/descargas/comunidad/<slug>.pdf`. No aparecen en `/recursos`, no llevan el bloque final de "Empieza tus 90 días" y `public/_headers` las marca como noindex: se comparten solo por enlace dentro de la comunidad.
+Material del curso de 90 días para los miembros de Skool. Se generan con `python3 recursos-fuente/build_comunidad.py` y salen en `public/descargas/comunidad/<slug>.pdf`. No aparecen en `/recursos`, no llevan el bloque final de "Empieza tus 90 días" y `public/_headers` las marca como noindex: se comparten solo por enlace dentro de la comunidad.
