@@ -131,7 +131,7 @@ def page_html(slug: str, meta: dict, body: str) -> str:
 <main>
 {body}
 </main>
-{end_block(slug, meta)}
+{end_block(slug, meta) if meta.get('end', True) else ''}
 </body></html>'''
 
 

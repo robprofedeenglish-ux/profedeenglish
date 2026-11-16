@@ -10,3 +10,7 @@
   X-Robots-Tag: noindex, nofollow
 /raffle.html
   X-Robots-Tag: noindex, nofollow
+
+# Community course worksheets (Skool members): reachable by link, not indexed, not listed on /recursos
+/descargas/comunidad/*
+  X-Robots-Tag: noindex, nofollow
