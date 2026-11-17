@@ -229,6 +229,18 @@
     "sizeKb": 151
   },
   {
+    "slug": "podcasts-para-aprender-ingles",
+    "file": "/descargas/podcasts-para-aprender-ingles.pdf",
+    "title": "Podcasts para aprender inglés",
+    "description": "Podcasts para aprender inglés ordenados por acento (británico, irlandés, americano y australiano) y por nivel, de A2 a C2, con el tema de cada uno y cómo escucharlos para mejorar de verdad.",
+    "category": "series-y-peliculas",
+    "level": "A2 a C2",
+    "lang": "es",
+    "order": 52,
+    "pages": 3,
+    "sizeKb": 103
+  },
+  {
     "slug": "como-llegar-al-b2",
     "file": "/descargas/como-llegar-al-b2.pdf",
     "title": "Cómo llegar al B2",
