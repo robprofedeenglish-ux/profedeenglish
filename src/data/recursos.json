@@ -263,5 +263,18 @@
     "order": 61,
     "pages": 2,
     "sizeKb": 85
+  },
+  {
+    "slug": "escalera-para-hablar-ingles",
+    "file": "/descargas/escalera-para-hablar-ingles.pdf",
+    "title": "Tu escalera para hablar inglés",
+    "description": "Cinco niveles para practicar tu speaking sin bloquearte, desde el reto de 60 segundos y la mini presentación hasta conversar con una IA, con personas y con un profe, con ejemplos y 4 prompts para copiar.",
+    "category": "plan",
+    "level": "A2 a C1",
+    "lang": "es",
+    "order": 62,
+    "pages": 4,
+    "sizeKb": 121,
+    "prebuilt": true
   }
 ]
