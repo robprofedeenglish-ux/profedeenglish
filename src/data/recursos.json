@@ -9,8 +9,9 @@
     "lang": "es",
     "order": 0,
     "pages": 8,
-    "sizeKb": 113,
-    "prebuilt": true
+    "sizeKb": 274,
+    "prebuilt": true,
+    "featured": true
   },
   {
     "slug": "tiempos-verbales-ingles",

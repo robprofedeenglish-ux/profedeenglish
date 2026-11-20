@@ -4,6 +4,7 @@ import Breadcrumbs from '../components/Breadcrumbs.astro';
 import { PRICES, SITE, skoolLink } from '../config';
 import { breadcrumbs } from '../lib/schema';
 import recursos from '../data/recursos.json';
+import { existsSync } from 'node:fs';
 
 // Los PDF se generan con recursos-fuente/build.py, que también actualiza src/data/recursos.json.
 const categories = [
@@ -16,8 +17,13 @@ const categories = [
   { id: 'plan', label: 'Plan de estudio' },
 ];
 
+// El recurso con "featured": true sale el primero, arriba del todo (es al que llevan los enlaces de Instagram).
+// Para destacar otro, quita featured del anterior y pónselo al nuevo; si tiene portada en /descargas/portadas/{slug}.jpg, se muestra.
+const featured = recursos.find((r) => r.featured);
+const featuredCover = featured && existsSync(`public/descargas/portadas/${featured.slug}.jpg`) ? `/descargas/portadas/${featured.slug}.jpg` : null;
+
 const groups = categories
-  .map((c) => ({ ...c, items: recursos.filter((r) => r.category === c.id) }))
+  .map((c) => ({ ...c, items: recursos.filter((r) => r.category === c.id && r !== featured) }))
   .filter((g) => g.items.length > 0);
 
 const crumbs = [
@@ -51,6 +57,27 @@ const collection = {
     <div class="wrap">
       <Breadcrumbs items={crumbs} />
       <h1>Recursos gratis</h1>
+
+      {
+        featured && (
+          <article class="feat" id={featured.slug} aria-labelledby="feat-title">
+            {featuredCover && (
+              <a class="feat__cover" href={featured.file} type="application/pdf" tabindex="-1" aria-hidden="true">
+                <img src={featuredCover} width="496" height="702" alt="" />
+              </a>
+            )}
+            <div class="feat__head">
+              <p class="feat__tag">La guía de Instagram</p>
+              <h2 id="feat-title">{featured.title}</h2>
+              <p class="res__meta">PDF · {featured.pages} páginas · Gratis</p>
+            </div>
+            <a class="btn btn--primary feat__btn" href={featured.file} type="application/pdf">
+              Descargar la guía<span class="sr-only"> {featured.title}</span>
+            </a>
+            <p class="feat__desc">{featured.description}</p>
+          </article>
+        )
+      }
       <p class="lede">
         Estas son las guías y chuletas que he ido preparando para mis alumnos y para Instagram, todas en PDF. Descárgalas, imprímelas o guárdalas
         en el móvil, sin registrarte ni dejar tu correo.
@@ -99,6 +126,83 @@ const collection = {
 </Base>
 
 <style>
+  .feat {
+    display: grid;
+    grid-template-columns: 6.5rem 1fr;
+    grid-template-areas: 'cover head' 'btn btn' 'desc desc';
+    gap: 1rem;
+    align-items: center;
+    margin: 1rem 0 2.5rem;
+    padding: 1rem;
+    background: var(--white);
+    border: var(--outline-thick);
+    border-radius: 18px;
+    outline: 5px solid var(--sun);
+    scroll-margin-top: 1rem;
+  }
+  .feat__cover {
+    grid-area: cover;
+    display: block;
+  }
+  .feat__cover img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: var(--outline);
+    border-radius: 6px;
+  }
+  .feat__head {
+    grid-area: head;
+  }
+  .feat__tag {
+    display: inline-block;
+    margin: 0 0 0.4rem;
+    font-weight: 700;
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: var(--sun);
+    border: var(--outline);
+    border-radius: 999px;
+    padding: 0.15rem 0.7rem;
+  }
+  .feat h2 {
+    margin: 0 0 0.3rem;
+    font-size: 1.7rem;
+    line-height: 1.1;
+  }
+  .feat__head .res__meta {
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--navy-soft);
+  }
+  .feat__btn {
+    grid-area: btn;
+    justify-self: stretch;
+    text-align: center;
+  }
+  .feat__desc {
+    grid-area: desc;
+    margin: 0;
+    font-size: 0.98rem;
+  }
+  @media (min-width: 46rem) {
+    .feat {
+      grid-template-columns: 12rem 1fr;
+      grid-template-areas: 'cover head' 'cover desc' 'cover btn';
+      grid-template-rows: auto auto auto;
+      align-items: start;
+      column-gap: 2rem;
+      row-gap: 0.8rem;
+      padding: 1.75rem;
+    }
+    .feat h2 {
+      font-size: 2.2rem;
+    }
+    .feat__btn {
+      justify-self: start;
+    }
+  }
   .jump {
     display: flex;
     flex-wrap: wrap;
