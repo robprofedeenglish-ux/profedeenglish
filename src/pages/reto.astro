@@ -1,0 +1,478 @@
+---
+// Reto de 5 días (noviembre 2026), versión permanente en la web.
+// Página oculta: a ella solo se llega desde la automatización de ManyChat (palabra clave RETO).
+// No está enlazada en el sitio, no sale en el sitemap (astro.config.mjs) y lleva noindex dos veces
+// (prop noindex de Base + X-Robots-Tag en public/_headers).
+import Base from '../layouts/Base.astro';
+import { PRICES, skoolLink } from '../config';
+
+const tracker = '/descargas/freeze-tracker.pdf';
+const escalera = '/descargas/escalera-para-hablar-ingles.pdf';
+const skool = skoolLink('reto', 'final');
+
+const temas = [
+  'Un día normal en tu vida',
+  'La última vez que comiste fuera',
+  'Un viaje que no olvidas',
+  'Tu trabajo o lo que estudias',
+  'Una serie o peli que te encanta',
+  'Qué harías con un día libre',
+];
+
+const rescate = [
+  { titulo: 'Para ganar tiempo', frases: ['Let me think…', 'How can I put this?', 'Give me a second.'] },
+  { titulo: 'Cuando te falta una palabra', frases: ["It's a kind of…", "It's the thing you use to…", "What's the word…?"] },
+  { titulo: 'Para pedir ayuda', frases: ['How do you say ___ in English?', 'Sorry, could you say that again?'] },
+  { titulo: 'Para volver al hilo', frases: ['What I mean is…', 'Sorry, let me start again.'] },
+];
+
+const niveles = [
+  { t: 'Reto de 60 segundos', w: 'Solo, en casa' },
+  { t: 'Mini presentación', w: 'Solo, 2 o 3 minutos' },
+  { t: 'Conversación con IA', w: 'Alguien te contesta, pero sin presión' },
+  { t: 'Personas de verdad', w: 'Intercambios y compañeros' },
+  { t: 'Un profe que te escucha', w: 'Alguien que ve tus patrones y te dice qué toca' },
+];
+---
+
+<Base
+  title="Reto de 5 días para dejar de bloquearte en inglés"
+  description="El reto gratis de 5 días de Rob: descubre qué te bloquea al hablar inglés, deja de intentar hablar perfecto y ten frases de rescate para cuando te quedas en blanco."
+  noindex
+>
+  <section class="section hero">
+    <div class="wrap narrow">
+      <span class="badge">Reto gratis · 5 días</span>
+      <h1>Deja de bloquearte en inglés en 5 días</h1>
+      <p class="lede">
+        Este es el reto que hice con mis seguidores de Instagram, entero y gratis. Son cinco días de unos 10 o 15 minutos cada uno para descubrir
+        por qué te quedas en blanco cuando hablas inglés y qué hacer cuando te pasa, y puedes hacerlo a tu ritmo sin registrarte ni dejar tu correo.
+      </p>
+
+      <div class="kit">
+        <h2 class="kit__h">Antes de empezar, descarga esto</h2>
+        <ul class="kit__list" role="list">
+          <li>
+            <div>
+              <b>Freeze tracker</b>
+              <span>Para apuntar cada bloqueo. Lo usas desde el día 1.</span>
+            </div>
+            <a class="btn btn--ghost btn--small" href={tracker} type="application/pdf">Descargar<span class="sr-only"> el freeze tracker</span></a>
+          </li>
+          <li>
+            <div>
+              <b>Tu escalera para hablar inglés</b>
+              <span>Cinco niveles para practicar speaking. Es la guía del día 4.</span>
+            </div>
+            <a class="btn btn--ghost btn--small" href={escalera} type="application/pdf">Descargar<span class="sr-only"> la escalera para hablar inglés</span></a>
+          </li>
+        </ul>
+      </div>
+
+      <nav class="jump" aria-label="Días del reto">
+        <a href="#dia-1">Día 1</a><a href="#dia-2">Día 2</a><a href="#dia-3">Día 3</a><a href="#dia-4">Día 4</a><a href="#dia-5">Día 5</a>
+      </nav>
+    </div>
+  </section>
+
+  <div class="wrap narrow days">
+    <article class="day" id="dia-1" aria-labelledby="h-dia-1">
+      <div class="day__num" aria-hidden="true">1</div>
+      <p class="day__kicker">Día 1</p>
+      <h2 id="h-dia-1">Descubre qué te bloquea a ti</h2>
+      <p>
+        Todo el mundo se bloquea en inglés, pero no todo el mundo se bloquea por lo mismo. Si no sabes por qué te pasa a ti, acabas practicando lo
+        que no es, y mucha gente se pone a estudiar más vocabulario cuando lo que le pasa en realidad es que entra en pánico.
+      </p>
+      <h3>El reto de los 60 segundos</h3>
+      <p>
+        Elige uno de estos temas, pon un temporizador de un minuto y habla sin parar hasta que suene. No importa lo que digas ni que sea perfecto,
+        porque lo importante es no parar.
+      </p>
+      <ul class="temas" role="list">
+        {temas.map((t) => <li>{t}</li>)}
+      </ul>
+      <p>
+        Grábate con el móvil, solo para ti, y guarda la grabación, porque el día 5 vas a repetirlo con el mismo tema y comparar las dos.
+      </p>
+      <p>
+        Cada vez que te bloquees, o notes que te vas a bloquear, apúntalo en tu freeze tracker: qué intentabas decir, qué pasó y cómo te sentiste.
+        Si estos días hablas inglés con alguien, en el trabajo o con nativos, apúntalo también, porque cuantos más datos tengas, más claro verás tu
+        patrón.
+      </p>
+      <div class="hoy">
+        <p class="hoy__label">Hoy</p>
+        <p>Haz el reto de los 60 segundos, guarda la grabación y apunta cada bloqueo en el tracker.</p>
+        <a class="btn btn--ghost btn--small" href={tracker} type="application/pdf">Descargar el tracker</a>
+      </div>
+    </article>
+
+    <article class="day" id="dia-2" aria-labelledby="h-dia-2">
+      <div class="day__num" aria-hidden="true">2</div>
+      <p class="day__kicker">Día 2</p>
+      <h2 id="h-dia-2">Deja de intentar hablar perfecto</h2>
+      <p>
+        Cuando pregunté a la gente del reto por qué se bloqueaba, salieron tres motivos: el vocabulario, los tiempos verbales y la confianza.
+        Después de casi diez años dando clase te digo que, casi siempre, detrás de los tres está lo mismo, que es intentar hablar perfecto, y no
+        hace falta, porque nadie espera que hables perfecto.
+      </p>
+      <h3>El vocabulario</h3>
+      <p>
+        A veces te falta una palabra, y es normal, pero esa palabra no tiene que parar toda la frase. Si no sabes decir <i lang="en">classroom</i>,
+        di <i lang="en">the room where students study</i> y te van a entender igual. Y en vez de estudiar listas enormes, apunta las palabras que de
+        verdad te faltaron cuando hablabas, porque esas son las que necesitas.
+      </p>
+      <h3>Los tiempos verbales</h3>
+      <p>
+        Cuando yo aprendía español decía cosas como «yo trabajan», y aun así me entendían. En inglés es todavía más fácil, porque el verbo casi no
+        cambia (<i lang="en">I work, you work, he works</i>, y <i lang="en">worked</i> para todos), así que si dices
+        <i lang="en">Yesterday I do my homework</i> ya has dicho <i lang="en">yesterday</i> y te entiendo perfectamente. La precisión llega
+        hablando.
+      </p>
+      <h3>La confianza</h3>
+      <p>
+        El miedo a equivocarte o a quedar mal solo se pierde de una forma, que es hablando. Te vas a equivocar, y no pasa nada, porque así es como
+        se aprende.
+      </p>
+      <div class="hoy">
+        <p class="hoy__label">Hoy</p>
+        <p>
+          Repite el reto de los 60 segundos y, cuando te falte una palabra, descríbela en vez de parar. No busques la frase perfecta, busca
+          terminar el minuto.
+        </p>
+      </div>
+    </article>
+
+    <article class="day" id="dia-3" aria-labelledby="h-dia-3">
+      <div class="day__num" aria-hidden="true">3</div>
+      <p class="day__kicker">Día 3</p>
+      <h2 id="h-dia-3">Frases de rescate</h2>
+      <p>
+        Describir una palabra que no sabes ya lo practicaste ayer. Hoy se trata de tener preparadas unas frases para los otros momentos en los que
+        te quedas en blanco, de modo que en lugar de un silencio te salga algo que te da tiempo para pensar.
+      </p>
+      <div class="frases">
+        {
+          rescate.map((g) => (
+            <div class="frases__card">
+              <h3>{g.titulo}</h3>
+              <ul role="list">
+                {g.frases.map((f) => (
+                  <li lang="en">{f}</li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+      <div class="hoy">
+        <p class="hoy__label">Hoy</p>
+        <p>Elige tres frases y úsalas en el reto de los 60 segundos, aunque tengas que forzarlo un poco.</p>
+      </div>
+    </article>
+
+    <article class="day" id="dia-4" aria-labelledby="h-dia-4">
+      <div class="day__num" aria-hidden="true">4</div>
+      <p class="day__kicker">Día 4</p>
+      <h2 id="h-dia-4">Tu escalera para hablar inglés</h2>
+      <p>
+        El bloqueo no se quita estudiando más, se quita hablando. El problema es que pasar de no hablar nunca a una conversación con un nativo da
+        mucho miedo, así que la mayoría de la gente nunca empieza, y por eso he preparado una escalera de cinco niveles en la que cada uno es solo
+        un poco más difícil que el anterior.
+      </p>
+      <ol class="escalera" role="list">
+        {
+          niveles.map((n, i) => (
+            <li>
+              <span class="escalera__n">{i + 1}</span>
+              <span>
+                <b>{n.t}</b>
+                <span class="escalera__w">{n.w}</span>
+              </span>
+            </li>
+          ))
+        }
+      </ol>
+      <p>
+        En la guía tienes cada nivel explicado con ejemplos, cuatro prompts para practicar con la IA y cómo saber cuándo estás listo para subir al
+        siguiente. No hace falta ir en orden estricto: si ya hablas inglés en el trabajo, empieza más arriba.
+      </p>
+      <div class="hoy">
+        <p class="hoy__label">Hoy</p>
+        <p>Descarga la escalera, mira en qué nivel estás y haz hoy una práctica de ese nivel.</p>
+        <a class="btn btn--ghost btn--small" href={escalera} type="application/pdf">Descargar la escalera</a>
+      </div>
+    </article>
+
+    <article class="day" id="dia-5" aria-labelledby="h-dia-5">
+      <div class="day__num" aria-hidden="true">5</div>
+      <p class="day__kicker">Día 5</p>
+      <h2 id="h-dia-5">¿Notas la diferencia?</h2>
+      <p>
+        Hoy toca ver cuánto has avanzado. Repite el reto de los 60 segundos con el mismo tema del día 1, compáralo con tu primera grabación y
+        fíjate en cuántas veces te has parado esta vez y en lo que has hecho cuando te faltaba una palabra. Después, apunta en tu tracker un momento
+        de esta semana en el que el inglés te salió bien.
+      </p>
+      <p>
+        Cinco días no bastan para que el bloqueo desaparezca, pero sí para que sepas qué te bloquea, tengas frases para salir del paso y hayas
+        comprobado que puedes terminar un minuto entero. Lo que falta a partir de aquí es hablar con gente de verdad y a menudo, que es justo lo
+        más difícil de conseguir por tu cuenta.
+      </p>
+      <div class="hoy">
+        <p class="hoy__label">Hoy</p>
+        <p>Repite el reto con el tema del día 1 y escucha tus dos grabaciones, una detrás de otra.</p>
+      </div>
+    </article>
+  </div>
+
+  <section class="section section--navy end">
+    <div class="wrap narrow">
+      <h2>Si quieres seguir, sigue conmigo</h2>
+      <p>
+        Este reto es una muestra del programa de 90 días de mi comunidad, Real English With Rob. Allí hablas cada semana con nativos en los
+        intercambios y conmigo en directo, y como siempre tienes con quién practicar, sin darte cuenta ya llevas horas hablando en inglés y la
+        confianza llega sola.
+      </p>
+      <a class="end__banner" href={skool} tabindex="-1" aria-hidden="true">
+        <img src="/test-de-nivel/portada.jpg" width="1400" height="744" alt="" loading="lazy" decoding="async" />
+      </a>
+      <a class="btn btn--primary" href={skool}>Empieza tus 90 días</a>
+      <p class="microcopy">Desde {PRICES.standardMonth} $ al mes más impuestos, y cancelas desde Skool cuando quieras.</p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .narrow {
+    max-width: 46rem;
+  }
+  .hero {
+    padding-bottom: 2rem;
+  }
+  .hero h1 {
+    margin-top: 0.9rem;
+  }
+  .hero .lede {
+    max-width: none;
+  }
+  .kit {
+    margin: 1.75rem 0 0;
+    padding: 1.25rem;
+    background: var(--white);
+    border: var(--outline-thick);
+    border-radius: 18px;
+    outline: 5px solid var(--sun);
+  }
+  .kit__h {
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--navy);
+    margin: 0 0 0.75rem;
+  }
+  .kit__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 1rem;
+  }
+  .kit__list li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.6rem 1rem;
+  }
+  .kit__list li + li {
+    border-top: var(--outline);
+    padding-top: 1rem;
+  }
+  .kit__list b,
+  .kit__list span {
+    display: block;
+  }
+  .kit__list div span {
+    font-size: 0.95rem;
+    color: var(--navy-soft);
+  }
+  .jump {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin: 1.75rem 0 0;
+  }
+  .jump a {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--navy);
+    text-decoration: none;
+    border: var(--outline);
+    border-radius: 999px;
+    padding: 0.35rem 0.9rem;
+    background: var(--white);
+  }
+  .jump a:hover {
+    background: var(--sun);
+  }
+  .days {
+    padding-bottom: clamp(3rem, 7vw, 5rem);
+    display: grid;
+    gap: 2rem;
+  }
+  .day {
+    position: relative;
+    background: var(--white);
+    border: var(--outline);
+    border-radius: var(--radius);
+    padding: 1.5rem 1.25rem 1.25rem;
+    scroll-margin-top: 1rem;
+  }
+  @media (min-width: 40rem) {
+    .day {
+      padding: 2rem 2rem 1.75rem;
+    }
+  }
+  .day__num {
+    position: absolute;
+    top: -1.1rem;
+    right: 1.25rem;
+    width: 3.2rem;
+    height: 3.2rem;
+    border-radius: 50%;
+    background: var(--sun);
+    border: var(--outline);
+    display: grid;
+    place-items: center;
+    font-family: var(--display);
+    font-size: 1.6rem;
+    line-height: 1;
+  }
+  .day__kicker {
+    margin: 0 0 0.2rem;
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--sea);
+  }
+  .day h2 {
+    margin-top: 0;
+    padding-right: 3rem;
+  }
+  .day h3 {
+    margin-top: 1.4rem;
+  }
+  .temas {
+    list-style: none;
+    margin: 0 0 1em;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .temas li {
+    font-size: 0.95rem;
+    border: var(--outline);
+    border-radius: 999px;
+    padding: 0.25rem 0.8rem;
+    background: var(--cream);
+  }
+  .hoy {
+    margin-top: 1.5rem;
+    padding: 1rem 1.15rem;
+    background: var(--cream);
+    border-left: 6px solid var(--coral);
+    border-radius: 8px;
+  }
+  .hoy p {
+    margin: 0;
+  }
+  .hoy .hoy__label {
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 0.2rem;
+  }
+  .hoy .btn {
+    margin-top: 0.8rem;
+  }
+  .frases {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  }
+  .frases__card {
+    border: var(--outline);
+    border-radius: 10px;
+    padding: 1rem;
+    background: var(--cream);
+  }
+  .frases__card h3 {
+    margin: 0 0 0.4rem;
+    font-size: 1.05rem;
+  }
+  .frases__card ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .frases__card li {
+    font-weight: 700;
+    padding: 0.15rem 0;
+  }
+  .escalera {
+    list-style: none;
+    margin: 0 0 1em;
+    padding: 0;
+    display: grid;
+    gap: 0.5rem;
+  }
+  .escalera li {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    border: var(--outline);
+    border-radius: 10px;
+    padding: 0.6rem 0.9rem;
+    background: var(--cream);
+  }
+  .escalera li:nth-child(2) { margin-left: 0.75rem; }
+  .escalera li:nth-child(3) { margin-left: 1.5rem; }
+  .escalera li:nth-child(4) { margin-left: 2.25rem; background: var(--sun); }
+  .escalera li:nth-child(5) { margin-left: 3rem; background: var(--sun); }
+  .escalera__n {
+    flex-shrink: 0;
+    font-family: var(--display);
+    font-size: 1.4rem;
+    line-height: 1;
+    width: 1.6rem;
+    text-align: center;
+  }
+  .escalera b {
+    display: block;
+    line-height: 1.3;
+  }
+  .escalera__w {
+    display: block;
+    font-size: 0.92rem;
+  }
+  .end h2 {
+    color: var(--sun);
+  }
+  .end__banner {
+    display: block;
+    margin: 1.5rem 0;
+  }
+  .end__banner img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius);
+    border: 3px solid var(--cream);
+  }
+  .end .microcopy {
+    color: var(--cream);
+  }
+</style>
