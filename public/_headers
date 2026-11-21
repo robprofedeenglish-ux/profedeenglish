@@ -15,8 +15,3 @@
 /descargas/comunidad/*
   X-Robots-Tag: noindex, nofollow
 
-# 5-day reto (ManyChat keyword RETO): reachable by link only, never indexed, not in the sitemap, not linked on the site
-/reto
-  X-Robots-Tag: noindex, nofollow
-/reto.html
-  X-Robots-Tag: noindex, nofollow

@@ -124,6 +124,29 @@ const fmt = (d: Date) => d.toLocaleDateString('es-ES', { day: 'numeric', month: 
     </div>
   </section>
 
+  <section class="section reto-home" aria-labelledby="h-reto">
+    <div class="wrap">
+      <div class="reto-home__card">
+        <div>
+          <span class="badge">Gratis · 5 días</span>
+          <h2 id="h-reto">Empieza por el reto de 5 días</h2>
+          <p>
+            Unos 10 minutos al día para descubrir qué es lo que te bloquea a ti, dejar de intentar hablar perfecto y tener frases preparadas para
+            cuando te quedas en blanco. Lo haces a tu ritmo y sin dejar tu correo.
+          </p>
+          <a class="btn btn--primary" href="/reto">Hacer el reto gratis</a>
+        </div>
+        <ol class="reto-home__days" role="list">
+          <li><span>1</span>Descubre qué te bloquea</li>
+          <li><span>2</span>Deja de intentar hablar perfecto</li>
+          <li><span>3</span>Frases de rescate</li>
+          <li><span>4</span>Tu escalera para hablar inglés</li>
+          <li><span>5</span>¿Notas la diferencia?</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
   <section class="section section--atlas">
     <div class="wrap">
       <h2>Cómo lo trabajamos: el método ATLAS</h2>
@@ -669,6 +692,61 @@ const fmt = (d: Date) => d.toLocaleDateString('es-ES', { day: 'numeric', month: 
     }
     .atlas__letter {
       font-size: 3rem;
+    }
+  }
+
+  .reto-home {
+    padding-top: 0;
+  }
+  .reto-home__card {
+    display: grid;
+    gap: 1.5rem;
+    background: var(--white);
+    border: var(--outline-thick);
+    border-radius: 18px;
+    outline: 5px solid var(--sun);
+    padding: 1.5rem 1.25rem;
+  }
+  .reto-home__card h2 {
+    margin: 0.7rem 0 0.5rem;
+  }
+  .reto-home__days {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.5rem;
+    align-content: center;
+  }
+  .reto-home__days li {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-weight: 700;
+    border: var(--outline);
+    border-radius: 10px;
+    padding: 0.5rem 0.8rem;
+    background: var(--cream);
+  }
+  .reto-home__days span {
+    flex-shrink: 0;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background: var(--sun);
+    border: var(--outline);
+    display: grid;
+    place-items: center;
+    font-family: var(--display);
+    font-weight: 400;
+    line-height: 1;
+  }
+  @media (min-width: 52rem) {
+    .reto-home__card {
+      grid-template-columns: 1.2fr 1fr;
+      gap: 2.5rem;
+      padding: 2.25rem;
+      align-items: center;
     }
   }
 </style>

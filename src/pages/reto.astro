@@ -1,8 +1,6 @@
 ---
 // Reto de 5 días (noviembre 2026), versión permanente en la web.
-// Página oculta: a ella solo se llega desde la automatización de ManyChat (palabra clave RETO).
-// No está enlazada en el sitio, no sale en el sitemap (astro.config.mjs) y lleva noindex dos veces
-// (prop noindex de Base + X-Robots-Tag en public/_headers).
+// Página pública (menú, home, /recursos y footer). La automatización de ManyChat (palabra clave RETO) también lleva aquí.
 import Base from '../layouts/Base.astro';
 import { PRICES, skoolLink } from '../config';
 
@@ -38,7 +36,6 @@ const niveles = [
 <Base
   title="Reto de 5 días para dejar de bloquearte en inglés"
   description="El reto gratis de 5 días de Rob: descubre qué te bloquea al hablar inglés, deja de intentar hablar perfecto y ten frases de rescate para cuando te quedas en blanco."
-  noindex
 >
   <section class="section hero">
     <div class="wrap narrow">

@@ -78,6 +78,12 @@ const collection = {
           </article>
         )
       }
+      <a class="reto-card" href="/reto">
+        <span class="badge">Reto gratis · 5 días</span>
+        <span class="reto-card__title">Deja de bloquearte en inglés en 5 días</span>
+        <span class="reto-card__desc">Unos 10 minutos al día para descubrir qué te bloquea y qué hacer cuando te quedas en blanco, con el freeze tracker y la escalera para hablar.</span>
+        <span class="reto-card__go">Empezar el reto</span>
+      </a>
       <p class="lede">
         Estas son las guías y chuletas que he ido preparando para mis alumnos y para Instagram, todas en PDF. Descárgalas, imprímelas o guárdalas
         en el móvil, sin registrarte ni dejar tu correo.
@@ -267,5 +273,36 @@ const collection = {
   }
   .end .microcopy {
     color: var(--cream);
+  }
+
+  .reto-card {
+    display: grid;
+    gap: 0.4rem;
+    justify-items: start;
+    margin: 0 0 2rem;
+    padding: 1.25rem;
+    background: var(--white);
+    border: var(--outline-thick);
+    border-radius: 18px;
+    color: var(--navy);
+    text-decoration: none;
+  }
+  .reto-card:hover {
+    background: var(--cream);
+  }
+  .reto-card__title {
+    font-weight: 700;
+    font-size: 1.35rem;
+    line-height: 1.25;
+    color: var(--sea);
+  }
+  .reto-card__desc {
+    font-size: 0.98rem;
+  }
+  .reto-card__go {
+    font-weight: 700;
+    color: var(--sea);
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
   }
 </style>
