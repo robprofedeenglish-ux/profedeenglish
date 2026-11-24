@@ -26,7 +26,7 @@ The site must not set cookies or use browser storage (localStorage, sessionStora
 
 - **No free trial.** Never write "prueba gratis", "7 días gratis" or anything implying one. Buttons say "Empieza tus 90 días".
 - Promises: "Deja de bloquearte en 90 días"; Premium: "Que el mejor inglés de la sala sea el tuyo".
-- **Standard: 23 $/mes o 197 $/año, más impuestos.** Reto de 90 días para hablar sin bloquearte; intercambios con nativos; una clase en directo a la semana con Rob; test de nivel y más de 100 horas de material; respuestas en el foro en menos de 24 h.
+- **Standard: 23 $/mes o 197 $/año, más impuestos.** Intercambios con nativos (primero en la lista); 5 clases en directo a la semana (desde el 24 nov 2026); reto de 90 días para hablar sin bloquearte; test de nivel y más de 100 horas de material; respuestas en el foro en menos de 24 h.
 - **Premium: 1.457 $/año, más impuestos, solo anual.** Coaching 1 a 1 con Rob con un plan hecho solo para ti, empieces donde empieces y sea cual sea tu meta (trabajo, entrevistas, viajes o un examen), más todo lo de Standard. Plazas limitadas; the CTA is WhatsApp ("Escríbeme y lo hablamos"). Don't state a session frequency.
 - The 90-task guarantee, the separate exam-prep bullet and the old trial week are gone; don't mention them. Exam prep now sits under Premium's 1:1 coaching.
 - The 90-day journey ("Tus próximos 90 días", homepage section `#tus-90-dias`): Día 1 Guardamos tu antes; Día 30 Entiendes a la primera; Día 60 Te sueltas a hablar; Día 90 Hablas sin pensarlo. All included in Standard; with Premium it's done 1 to 1.
